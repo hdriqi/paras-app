@@ -1,0 +1,10 @@
+{
+	"name": "Degree | Digital Credentials on Blockchain",
+	"start_url": "localhost:3000",
+	"description": "Issue tamper-proof digital certificates, achievements, badges and other credentials on the blockchain with maximum security and integrity.",
+	"icons": [{
+		"src": "https://i.ibb.co/VJt6k4G/Group-234.png",
+		"sizes": "192x192",
+		"type": "image/png"
+	}]
+}
