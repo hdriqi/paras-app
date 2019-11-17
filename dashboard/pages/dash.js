@@ -9,6 +9,7 @@ import Layout from '../components/layout'
 import Meta from '../components/meta'
 import Nav from '../components/nav'
 import Sidebar from '../components/sidebar'
+import LoggedIn from '../components/loggedIn'
 
 import { saveAuthData } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
@@ -43,7 +44,12 @@ const Dashboard = () => {
   const authData = useSelector(state => state.auth.authData)
   const profile = useSelector(state => state.profile)
 
-  const [showProfileSidebar, setShowProfileSidebar] = useState(true)
+  const [showProfileSidebar, setShowProfileSidebar] = useState(false)
+
+  const logout = async () => {
+    await blockstackAPI.session.signUserOut()
+    dispatch(saveAuthData(null))
+  }
 
   const submit = async (e) => {
     e.preventDefault()
@@ -72,12 +78,12 @@ const Dashboard = () => {
   
       dispatch(saveProfileData(newProfile))
       setSubmitState('fulfilled')
-      setTimeout(() => {
-        setSubmitState('')
-      }, 1000)
     } catch (err) {
       setSubmitState('rejected')
     }
+    setTimeout(() => {
+      setSubmitState('')
+    }, 1000)
   }
 
   useEffect(() => {
@@ -288,6 +294,7 @@ const Dashboard = () => {
       </Head>
 
       <Meta />
+      <LoggedIn />
 
       <Nav toggleProfileSidebar={toggleProfileSidebar} />
 
@@ -309,6 +316,7 @@ const Dashboard = () => {
         submitState={submitState}
         showProfileSidebar={showProfileSidebar}
         toggleProfileSidebar={toggleProfileSidebar}
+        logout={logout}
       />
 
       <Frame className="w-screen" style={{

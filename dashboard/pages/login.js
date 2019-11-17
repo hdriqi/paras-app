@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -8,41 +8,41 @@ import { saveAuthData } from '../actions/auth'
 import { blockstackAPI } from '../api'
 
 import Meta from '../components/meta'
+import Layout from '../components/Layout'
 import Login from '../components/login'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const [loginState, setLoginState] = useState('')
 	
 	useEffect(() => {
-    console.log('hmm')
-    router.replace('/dash')
-    router.push('/dash')
-
-		// const checkAuthData = async () => {
-    //   if(blockstackAPI.session.isUserSignedIn()) {
-    //     const authData = blockstackAPI.session.loadUserData()
-    //     dispatch(saveAuthData(authData))
-    //     router.push('/dash')
-    //   }
-		// 	else if(blockstackAPI.session.isSignInPending()) {
-    //     const authData = await blockstackAPI.session.handlePendingSignIn()
-    //     dispatch(saveAuthData(authData))
-    //     router.push('/dash')
-		// 	}
-		// }
-		// checkAuthData()
+		const checkAuthData = async () => {
+      if(blockstackAPI.session.isUserSignedIn()) {
+        setLoginState('pending')
+        const authData = blockstackAPI.session.loadUserData()
+        dispatch(saveAuthData(authData))
+        router.push('/dash')
+      }
+			else if(blockstackAPI.session.isSignInPending()) {
+        setLoginState('pending')
+        const authData = await blockstackAPI.session.handlePendingSignIn()
+        dispatch(saveAuthData(authData))
+        router.push('/dash')
+			}
+		}
+		checkAuthData()
   }, [])
   
   return (
-    <div>
+    <Layout>
       <Head>
-        <title>Login | Degree</title>
+        <title>Login | Paras</title>
       </Head>
       <Meta />
 
-      <Login />
-    </div>
+      <Login loginState={loginState} />
+    </Layout>
   )
 }
 
