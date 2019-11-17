@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import Frame from 'react-frame-component'
@@ -14,7 +13,6 @@ import Sidebar from '../components/sidebar'
 import { saveAuthData } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
 import { blockstackAPI } from '../api'
-import stringify from 'fast-json-stable-stringify'
 import anchorme from 'anchorme'
 import handlebars from 'handlebars'
 
@@ -40,6 +38,7 @@ const Dashboard = () => {
   const [themeList, setThemeList] = useState([])
   const [theme, setTheme] = useState('')
   const [template, setTemplate] = useState('')
+  const [submitState, setSubmitState] = useState('')
 
   const authData = useSelector(state => state.auth.authData)
   const profile = useSelector(state => state.profile)
@@ -49,26 +48,36 @@ const Dashboard = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    const newProfile = {
-      name: name,
-      description: description,
-      avatarUrl: avatarUrl,
-      accountList: accountList,
-      theme: theme
-    }
-    if(avatarFile) {
-      const buff = await readFileAsBuffer(avatarFile)
-      const newAvatarUrl = await blockstackAPI.session.putFile('avatar.png', buff, {
+    setSubmitState('pending')
+
+    try {
+      const newProfile = {
+        name: name,
+        description: description,
+        avatarUrl: avatarUrl,
+        accountList: accountList,
+        theme: theme
+      }
+      if(avatarFile) {
+        const buff = await readFileAsBuffer(avatarFile)
+        const newAvatarUrl = await blockstackAPI.session.putFile('avatar.png', buff, {
+          encrypt: false
+        })
+        newProfile.avatarUrl = newAvatarUrl
+      }
+  
+      await blockstackAPI.session.putFile('profile.json', JSON.stringify(newProfile), {
         encrypt: false
       })
-      newProfile.avatarUrl = newAvatarUrl
+  
+      dispatch(saveProfileData(newProfile))
+      setSubmitState('fulfilled')
+      setTimeout(() => {
+        setSubmitState('')
+      }, 1000)
+    } catch (err) {
+      setSubmitState('rejected')
     }
-
-    await blockstackAPI.session.putFile('profile.json', JSON.stringify(newProfile), {
-      encrypt: false
-    })
-
-    dispatch(saveProfileData(newProfile))
   }
 
   useEffect(() => {
@@ -297,6 +306,7 @@ const Dashboard = () => {
         setTheme={setTheme}
         themeList={themeList}
         submit={submit}
+        submitState={submitState}
         showProfileSidebar={showProfileSidebar}
         toggleProfileSidebar={toggleProfileSidebar}
       />

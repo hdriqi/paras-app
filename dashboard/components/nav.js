@@ -10,7 +10,7 @@ const Nav = ({ toggleProfileSidebar }) => {
   }
 
   return (
-    <nav className="h-10 border-bottom">
+    <nav className="h-10 border-solid border-b border-gray-300">
       <div className="h-full w-full max-w-6xl relative mx-auto px-4">
         <ul className="h-full flex items-center justify-between">
           <li>

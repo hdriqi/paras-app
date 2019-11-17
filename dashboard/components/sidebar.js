@@ -14,6 +14,7 @@ const Sidebar = ({
 	theme, setTheme,
 	themeList, setThemeList,
 	submit,
+	submitState,
 	showProfileSidebar,
 	toggleProfileSidebar
 }) => {
@@ -109,6 +110,50 @@ const Sidebar = ({
 
 	return (
 		<React.Fragment>
+			<style jsx>
+				{
+					`
+					.lds-ring-container {
+						display: flex;
+					}
+					.lds-ring {
+						margin-left: auto;
+						display: inline-block;
+						width: 1.125rem;
+						height: 1.125rem;
+					}
+					.lds-ring div {
+						box-sizing: border-box;
+						display: block;
+						position: absolute;
+						width: 1rem;
+						height: 1rem;
+						margin: 2px;
+						border: 2px solid #4299e1;
+						border-radius: 50%;
+						animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+						border-color: #4299e1 transparent transparent transparent;
+					}
+					.lds-ring div:nth-child(1) {
+						animation-delay: -0.45s;
+					}
+					.lds-ring div:nth-child(2) {
+						animation-delay: -0.3s;
+					}
+					.lds-ring div:nth-child(3) {
+						animation-delay: -0.15s;
+					}
+					@keyframes lds-ring {
+						0% {
+							transform: rotate(0deg);
+						}
+						100% {
+							transform: rotate(360deg);
+						}
+					}					
+					`
+				}
+			</style>
 			<div className="fixed top-0 right-0 bottom-0 w-10/12 md:w-4/12 lg:w-3/12 bg-white shadow-xl" style={{
 				transform: `translate3d(${showProfileSidebar ? 0 : `100%`}, 0, 0)`,
 				transition: `all .3s`
@@ -122,7 +167,7 @@ const Sidebar = ({
 							top: `16px`
 						}} >
 							<svg width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M16.0002 18.8285L7.41436 27.4142L4.58594 24.5858L13.1717 16L4.58594 7.41424L7.41436 4.58582L16.0002 13.1716L24.5859 4.58582L27.4144 7.41424L18.8286 16L27.4144 24.5858L24.5859 27.4142L16.0002 18.8285V18.8285Z" fill="white"/>
+								<path fillRule="evenodd" clipRule="evenodd" d="M16.0002 18.8285L7.41436 27.4142L4.58594 24.5858L13.1717 16L4.58594 7.41424L7.41436 4.58582L16.0002 13.1716L24.5859 4.58582L27.4144 7.41424L18.8286 16L27.4144 24.5858L24.5859 27.4142L16.0002 18.8285V18.8285Z" fill="white"/>
 							</svg>
 						</div>
 					)
@@ -132,11 +177,11 @@ const Sidebar = ({
 						transform: `translate3d(${!showNestedSidebar ? 0 : `-100%`}, 0, 0)`,
 						transition: `all .3s`
 					}}>
-						<div className="flex items-center">
+						<div className="flex items-center py-2">
 							<p className="text-2xl text-gray-900 font-semibold">Edit Your Site</p>
 						</div>
 						<div className="py-2 max-h-full overflow-y-scroll">
-							<div onClick={() => setShowNestedSidebar('profile')} className="cursor-pointer h-12 flex items-center justify-between border-solid border-b border-t border-gray-300">
+							<div onClick={() => setShowNestedSidebar('profile')} className="cursor-pointer h-12 flex items-center justify-between border-solid border-b border-gray-300">
 								<p className="text-lg text-gray-800 w-1/2 font-medium">Profile </p>
 								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path fill="#a0aec0" fillRule="evenodd" clipRule="evenodd" d="M9.58586 8.00001L4.29297 2.70712L5.70718 1.29291L12.4143 8.00001L5.70718 14.7071L4.29297 13.2929L9.58586 8.00001Z"/>
@@ -160,17 +205,31 @@ const Sidebar = ({
 						transform: `translate3d(${showNestedSidebar ? 0 : `100%`}, 0, 0)`,
 						transition: `all .3s`
 					}}>
-						<div className="flex items-center py-2 max-h-full overflow-y-scroll border-solid border-b border-gray-300">
+						<div className="flex items-center max-h-full overflow-y-scroll border-solid border-b border-gray-300 py-2">
 							<div className="w-1/3" onClick={() => back()}>
 								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
+									<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
 								</svg>
 							</div>
 							<div className="w-1/3 text-center" >
-								<p className="text-xl text-gray-800 font-semibold capitalize">{showNestedSidebar}</p>
+								<p className="text-lg text-gray-800 font-semibold capitalize">{showNestedSidebar}</p>
 							</div>
 							<div className="w-1/3 text-right" onClick={(e) => submit(e)}>
-								<p className="text-lg text-blue-500 font-medium capitalize">Save</p>
+								{ submitState === 'pending' && (
+									<div className="lds-ring-container">
+										<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+									</div>
+								)}
+								{
+									submitState === 'fulfilled' && (
+										<p className="text-lg text-blue-500 font-medium capitalize">Saved</p>
+									)
+								}
+								{
+									submitState === '' && (
+										<p className="text-lg text-blue-500 font-medium capitalize">Save</p>
+									)
+								}
 							</div>
 						</div>
 						{
@@ -234,7 +293,7 @@ const Sidebar = ({
 									{
 										themeList.map(theme => {
 											return (
-												<div className="mb-4">
+												<div className="mb-4" key={theme.name}>
 													{/* onclick change theme */}
 													<div onClick={() => setTheme(theme)}>
 														<label>{theme.name}</label>
