@@ -1,42 +1,37 @@
 import * as blockstack from 'blockstack'
+import { configure, Model } from 'radiks'
 import axios from 'axios'
 import uuidv4 from 'uuid/v4'
 import NodeRSA from 'node-rsa'
 import stringify from 'fast-json-stable-stringify'
 import sha256 from 'js-sha256'
 
-class BlockstackAPI {
-	constructor() {
-		this.appConfig = new blockstack.AppConfig(['email', 'store_write', 'publish_data'], 'http://localhost:4000', '/login')
-		this.default = blockstack
-		this.session = new blockstack.UserSession({
-			appConfig: this.appConfig
-		})
+class Identifier extends Model {
+	static className = 'Identifier'
+	static schema = { 
+		name: {
+			type: String,
+			decrypted: true
+		},
+		blockstackId: {
+			type: String,
+			decrypted: true
+		},
 	}
 }
 
-const _signCredential = async (message, privateKey) => {
-	const msg = stringify(message)
-	const hashedMsg = sha256(msg)
-
-	const key = new NodeRSA(privateKey)
-	const signedMsg = key.sign(hashedMsg, 'hex', 'utf8')
-	const splitSignedMsg = signedMsg.length/2
-	const leftSignedMsg = signedMsg.substring(0, splitSignedMsg)
-	const rightSignedMsg = signedMsg.substring(splitSignedMsg)
-	
-	return {
-		left: {
-			hash: leftSignedMsg
-		},
-		right: {
-			hash: rightSignedMsg
-		}
+class BlockstackAPI {
+	constructor() {
+		this.default = blockstack
+		this.appConfig = new blockstack.AppConfig(['email', 'store_write', 'publish_data'], 'http://localhost:4000', '/login')
+		this.session = new blockstack.UserSession({
+			appConfig: this.appConfig
+		})
+		this.radiks = configure({
+			apiServer: 'http://localhost:4000',
+			userSession: this.session
+		})
 	}
-
-	// const publicKey = new NodeRSA(currentOrg.publicKey)
-	// const verify = publicKey.verify(hashedMsg, leftSignedMsg + rightSignedMsg, 'utf8', 'hex')
-	// console.log(verify)
 }
 
 class CredentialAPI {
@@ -61,3 +56,4 @@ class CredentialAPI {
 
 export const blockstackAPI = new BlockstackAPI()
 export const credentialAPI = new CredentialAPI()
+export const IdentifierAPI = Identifier

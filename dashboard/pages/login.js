@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+
 import { withRedux } from '../lib/redux'
 import { saveAuthData } from '../actions/auth'
 import { blockstackAPI } from '../api'
+import { User } from 'radiks'
 
 import Meta from '../components/meta'
 import Layout from '../components/Layout'
@@ -21,12 +23,14 @@ const LoginPage = () => {
       if(blockstackAPI.session.isUserSignedIn()) {
         setLoginState('pending')
         const authData = blockstackAPI.session.loadUserData()
+        await User.createWithCurrentUser()
         dispatch(saveAuthData(authData))
         router.push('/dash')
       }
 			else if(blockstackAPI.session.isSignInPending()) {
         setLoginState('pending')
         const authData = await blockstackAPI.session.handlePendingSignIn()
+        await User.createWithCurrentUser()
         dispatch(saveAuthData(authData))
         router.push('/dash')
 			}

@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const { setup } = require('radiks-server')
 
 const port = parseInt(process.env.PORT, 10) || 4000
 const env = process.env.NODE_ENV
@@ -9,11 +10,19 @@ const dashboardApp = next({
   dev
 })
 
+const app = express();
+
+setup().then(RadiksController => {
+  app.use('/radiks', RadiksController);
+});
+
 const dashboardHandle = dashboardApp.getRequestHandler()
 
 const main = async () => {
   try {
+    
     await dashboardApp.prepare()
+    const radiksApp = await setup()
 
     const server = express()
 
@@ -27,6 +36,8 @@ const main = async () => {
     })
 
     // Default catch-all handler to allow Next.js to handle all other routes
+    server.use('/radiks', radiksApp)
+
     server.all('*', (req, res) => dashboardHandle(req, res))
 
     server.listen(port, err => {

@@ -757,62 +757,67 @@ const setThemeData = theme => {
 /*!**********************!*\
   !*** ./api/index.js ***!
   \**********************/
-/*! exports provided: blockstackAPI, credentialAPI */
+/*! exports provided: blockstackAPI, credentialAPI, IdentifierAPI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "blockstackAPI", function() { return blockstackAPI; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "credentialAPI", function() { return credentialAPI; });
-/* harmony import */ var blockstack__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! blockstack */ "blockstack");
-/* harmony import */ var blockstack__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(blockstack__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
-/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var node_rsa__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! node-rsa */ "node-rsa");
-/* harmony import */ var node_rsa__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(node_rsa__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fast-json-stable-stringify */ "fast-json-stable-stringify");
-/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! js-sha256 */ "js-sha256");
-/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IdentifierAPI", function() { return IdentifierAPI; });
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "../node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
+/* harmony import */ var blockstack__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! blockstack */ "blockstack");
+/* harmony import */ var blockstack__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(blockstack__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var radiks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! radiks */ "radiks");
+/* harmony import */ var radiks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(radiks__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
+/* harmony import */ var uuid_v4__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(uuid_v4__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var node_rsa__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! node-rsa */ "node-rsa");
+/* harmony import */ var node_rsa__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(node_rsa__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! fast-json-stable-stringify */ "fast-json-stable-stringify");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! js-sha256 */ "js-sha256");
+/* harmony import */ var js_sha256__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(js_sha256__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
 
 
+
+
+
+class Identifier extends radiks__WEBPACK_IMPORTED_MODULE_2__["Model"] {}
+
+Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(Identifier, "className", 'Identifier');
+
+Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(Identifier, "schema", {
+  name: {
+    type: String,
+    decrypted: true
+  },
+  blockstackId: {
+    type: String,
+    decrypted: true
+  }
+});
 
 class BlockstackAPI {
   constructor() {
-    this.appConfig = new blockstack__WEBPACK_IMPORTED_MODULE_0__["AppConfig"](['email', 'store_write', 'publish_data'], 'http://localhost:4000', '/login');
-    this.default = blockstack__WEBPACK_IMPORTED_MODULE_0__;
-    this.session = new blockstack__WEBPACK_IMPORTED_MODULE_0__["UserSession"]({
+    this.default = blockstack__WEBPACK_IMPORTED_MODULE_1__;
+    this.appConfig = new blockstack__WEBPACK_IMPORTED_MODULE_1__["AppConfig"](['email', 'store_write', 'publish_data'], 'http://localhost:4000', '/login');
+    this.session = new blockstack__WEBPACK_IMPORTED_MODULE_1__["UserSession"]({
       appConfig: this.appConfig
+    });
+    this.radiks = Object(radiks__WEBPACK_IMPORTED_MODULE_2__["configure"])({
+      apiServer: 'http://localhost:4000',
+      userSession: this.session
     });
   }
 
 }
-
-const _signCredential = async (message, privateKey) => {
-  const msg = fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_4___default()(message);
-  const hashedMsg = js_sha256__WEBPACK_IMPORTED_MODULE_5___default()(msg);
-  const key = new node_rsa__WEBPACK_IMPORTED_MODULE_3___default.a(privateKey);
-  const signedMsg = key.sign(hashedMsg, 'hex', 'utf8');
-  const splitSignedMsg = signedMsg.length / 2;
-  const leftSignedMsg = signedMsg.substring(0, splitSignedMsg);
-  const rightSignedMsg = signedMsg.substring(splitSignedMsg);
-  return {
-    left: {
-      hash: leftSignedMsg
-    },
-    right: {
-      hash: rightSignedMsg
-    }
-  }; // const publicKey = new NodeRSA(currentOrg.publicKey)
-  // const verify = publicKey.verify(hashedMsg, leftSignedMsg + rightSignedMsg, 'utf8', 'hex')
-  // console.log(verify)
-};
 
 class CredentialAPI {
   async create(credential, privateKey) {
@@ -820,11 +825,11 @@ class CredentialAPI {
       const signature = await _signCredential(credential, privateKey);
       const input = {
         version: 'degree/v1',
-        uid: uuid_v4__WEBPACK_IMPORTED_MODULE_2___default()(),
+        uid: uuid_v4__WEBPACK_IMPORTED_MODULE_4___default()(),
         credential: credential,
         signature: signature
       };
-      const res = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('http://localhost:8080/v1/certificates', input);
+      const res = await axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('http://localhost:8080/v1/certificates', input);
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -835,6 +840,7 @@ class CredentialAPI {
 
 const blockstackAPI = new BlockstackAPI();
 const credentialAPI = new CredentialAPI();
+const IdentifierAPI = Identifier;
 
 /***/ }),
 
@@ -1873,6 +1879,7 @@ const Dashboard = () => {
 
   Object(react__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(() => {
     const checkAuthData = async () => {
+      // await blockstackAPI.session.deleteFile('profile.json')
       if (_api__WEBPACK_IMPORTED_MODULE_17__["blockstackAPI"].session.isUserSignedIn()) {
         if (!authData) {
           const getAuthData = await _api__WEBPACK_IMPORTED_MODULE_17__["blockstackAPI"].session.loadUserData();
@@ -1888,11 +1895,28 @@ const Dashboard = () => {
             const parsedProfile = JSON.parse(getProfile);
             dispatch(Object(_actions_profile__WEBPACK_IMPORTED_MODULE_16__["saveProfileData"])(parsedProfile));
           } else {
-            // create new user profile
-            const avatarExist = authData.profile.image.find(img => img.name === 'avatar') || {}; // set default data
+            const getAuthData = await _api__WEBPACK_IMPORTED_MODULE_17__["blockstackAPI"].session.loadUserData(); // register new subdomain
 
-            let name = authData.profile.name || '';
-            let description = authData.profile.description || '';
+            let userIdentifier = getAuthData.username.split('.')[0];
+            const idExist = await _api__WEBPACK_IMPORTED_MODULE_17__["IdentifierAPI"].fetchList({
+              name: userIdentifier
+            });
+
+            if (idExist.length > 0) {
+              userIdentifier = `${userIdentifier}${Math.floor(Math.random() * (99 - 1 + 1)) + 1}`;
+            }
+
+            const newData = {
+              name: userIdentifier,
+              blockstackId: getAuthData.username
+            };
+            const newId = new _api__WEBPACK_IMPORTED_MODULE_17__["IdentifierAPI"](newData);
+            await newId.save(); // create new user profile
+
+            const avatarExist = getAuthData.profile.image.find(img => img.name === 'avatar') || {}; // set default data
+
+            let name = getAuthData.profile.name || '';
+            let description = getAuthData.profile.description || '';
             let avatarUrl = avatarExist.contentUrl || '';
             let theme = {};
             const newProfile = {
@@ -1907,14 +1931,6 @@ const Dashboard = () => {
             });
             dispatch(Object(_actions_profile__WEBPACK_IMPORTED_MODULE_16__["saveProfileData"])(newProfile));
           }
-        }
-
-        const choosenTheme = await _api__WEBPACK_IMPORTED_MODULE_17__["blockstackAPI"].session.getFile('theme.json', {
-          decrypt: false
-        });
-
-        if (choosenTheme) {
-          setTheme(JSON.parse(choosenTheme));
         }
       } else {
         router.replace('/login');
@@ -2059,7 +2075,7 @@ const Dashboard = () => {
     }
 
     if (theme) {
-      const compiled = handlebars__WEBPACK_IMPORTED_MODULE_19___default.a.compile(theme.html)(currentData);
+      const compiled = handlebars__WEBPACK_IMPORTED_MODULE_19___default.a.compile(theme.html || '')(currentData);
       setTemplate(compiled);
     }
   }, [theme, name, description, avatarUrl, accountList]);
@@ -2529,6 +2545,17 @@ module.exports = require("next/router");
 /***/ (function(module, exports) {
 
 module.exports = require("node-rsa");
+
+/***/ }),
+
+/***/ "radiks":
+/*!*************************!*\
+  !*** external "radiks" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("radiks");
 
 /***/ }),
 

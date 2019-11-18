@@ -13,7 +13,7 @@ import LoggedIn from '../components/loggedIn'
 
 import { saveAuthData } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
-import { blockstackAPI } from '../api'
+import { blockstackAPI, IdentifierAPI } from '../api'
 import anchorme from 'anchorme'
 import handlebars from 'handlebars'
 
@@ -88,6 +88,7 @@ const Dashboard = () => {
 
   useEffect(() => {
 		const checkAuthData = async () => {
+      // await blockstackAPI.session.deleteFile('profile.json')
       if(blockstackAPI.session.isUserSignedIn()) {
         if(!authData) {
           const getAuthData = await blockstackAPI.session.loadUserData()
@@ -104,12 +105,28 @@ const Dashboard = () => {
             dispatch(saveProfileData(parsedProfile))
           }
           else {
+            const getAuthData = await blockstackAPI.session.loadUserData()
+            // register new subdomain
+            let userIdentifier = getAuthData.username.split('.')[0]
+            const idExist = await IdentifierAPI.fetchList({
+              name: userIdentifier
+            })
+            if(idExist.length > 0) {
+              userIdentifier = `${userIdentifier}${Math.floor(Math.random() * (99 - 1 + 1)) + 1}`
+            }
+            const newData = {
+              name: userIdentifier,
+              blockstackId: getAuthData.username
+            }
+            const newId = new IdentifierAPI(newData)
+            await newId.save()
+
             // create new user profile
-            const avatarExist = authData.profile.image.find(img => img.name === 'avatar') || {}
+            const avatarExist = getAuthData.profile.image.find(img => img.name === 'avatar') || {}
             
             // set default data
-            let name = authData.profile.name || ''
-            let description = authData.profile.description || ''
+            let name = getAuthData.profile.name || ''
+            let description = getAuthData.profile.description || ''
             let avatarUrl = avatarExist.contentUrl || ''
             let theme = {
 
@@ -128,13 +145,6 @@ const Dashboard = () => {
 
             dispatch(saveProfileData(newProfile))
           }
-        }
-
-        const choosenTheme = await blockstackAPI.session.getFile('theme.json', {
-          decrypt: false
-        })
-        if(choosenTheme) {
-          setTheme(JSON.parse(choosenTheme))
         }
       }
       else {
@@ -277,7 +287,7 @@ const Dashboard = () => {
     }
   
     if(theme) {
-      const compiled = handlebars.compile(theme.html)(currentData)
+      const compiled = handlebars.compile(theme.html || '')(currentData)
       setTemplate(compiled)
     }
   }, [theme, name, description, avatarUrl, accountList])
