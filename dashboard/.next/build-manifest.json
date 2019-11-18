@@ -15,10 +15,6 @@
     "/dash": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
-    ],
-    "/login": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
     ]
   }
 }
