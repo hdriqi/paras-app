@@ -97,12 +97,12 @@ const Onboarding = ({
 		// if(idExist.length > 0) {
 		// 	userIdentifier = `${userIdentifier}${Math.floor(Math.random() * (99 - 1 + 1)) + 1}`
 		// }
-		// const newData = {
-		// 	name: userIdentifier,
-		// 	blockstackId: getAuthData.username
-		// }
-		// const newId = new IdentifierAPI(newData)
-		// await newId.save()
+		const newData = {
+			name: userIdentifier,
+			blockstackId: getAuthData.username
+		}
+		const newId = new IdentifierAPI(newData)
+		await newId.save()
 
 		// // create new user profile
 		// const avatarExist = getAuthData.profile.image.find(img => img.name === 'avatar') || {}
@@ -129,7 +129,13 @@ const Onboarding = ({
 		// })
 
 		// dispatch(saveProfileData(newProfile))
-  }
+	}
+	
+	const submitOnboarding = (e) => {
+		e.preventDefault()
+
+		submit(e, true)
+	}
 
 	const back = () => {
 		const newProfile = {
@@ -166,6 +172,12 @@ const Onboarding = ({
 		}
 	}, [identifier])
 
+	useEffect(() => {
+		if(submitState === 'fulfilled') {
+			setShowOnboarding(false)
+		}
+	}, [submitState])
+
 	return (
 		<React.Fragment>
 			<style jsx>
@@ -175,7 +187,7 @@ const Onboarding = ({
 						display: flex;
 					}
 					.lds-ring {
-						margin-left: auto;
+						margin: auto;
 						display: inline-block;
 						width: 1.125rem;
 						height: 1.125rem;
@@ -187,10 +199,10 @@ const Onboarding = ({
 						width: 1rem;
 						height: 1rem;
 						margin: 2px;
-						border: 2px solid #4299e1;
+						border: 2px solid white;
 						border-radius: 50%;
 						animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-						border-color: #4299e1 transparent transparent transparent;
+						border-color: white transparent transparent transparent;
 					}
 					.lds-ring div:nth-child(1) {
 						animation-delay: -0.45s;
@@ -213,36 +225,50 @@ const Onboarding = ({
 				}
 			</style>
 			<div className="fixed bg-white inset-0 z-30">
-				<div className="max-w-xs md:max-w-md p-4 pt-16 m-auto w-full">
-					<div className="mx-8">
+				<div className="max-w-xs md:max-w-md p-4 pt-16 mt-16 m-auto w-full">
+					<div className="mx-2 md:mx-8">
 						{
 							onboardingState === 'identifier' && (
-								<form onSubmit={(e) => checkAndSetIdentifier(e)}  >
+								<div>
 									<div className="mb-4">
-										<div className="mb-1 px-3 py-1 flex border-solid border rounded-sm border-gray-300 justify-between">
-											<input placeholder="username" className="flex-grow focus:outline-none" type="text" value={identifier} onChange={(e) => setIdentifer(e.target.value)} />
-											<label className="text-gray-600">.paras.id</label>
-										</div>
-										<p className="text-xs italic text-gray-600">Minimal 4 characters & Maximum 32 characters</p>
+										<p className="text-lg text-gray-800 font-semibold">Let's create your personal site!</p>
 									</div>
-									<button disabled={!identifierValid} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" style={{
-										opacity: identifierValid ? `100%` : `30%`
-									}}>
-										{identifierAvailability ? 'Next' : 'Already Taken'}
-									</button>
-								</form>
+									<p className="mb-2 text-lg text-gray-900 font-semibold">Set your site address</p>
+									<form onSubmit={(e) => checkAndSetIdentifier(e)}  >
+										<div className="mb-4">
+											<div className="mb-1 px-3 py-1 flex border-solid border rounded-sm border-gray-300 justify-between">
+												<input placeholder="username" className="flex-grow focus:outline-none w-full" type="text" value={identifier} onChange={(e) => setIdentifer(e.target.value)} />
+												<label className="text-gray-600">.paras.id</label>
+											</div>
+											<p className="text-xs italic text-gray-600">Minimal 4 characters & Maximum 32 characters</p>
+										</div>
+										<button disabled={!identifierValid} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" style={{
+											opacity: identifierValid ? `100%` : `30%`
+										}}>
+											{identifierAvailability ? 'Next' : 'Already Taken'}
+										</button>
+									</form>
+								</div>
 							)
 						}
 						{
 							onboardingState === 'name' && (
 								<div>
-									<div onClick={() => setOnboardingState('identifier')}>Back</div>
+									<div className="mb-4">
+										<div onClick={() => setOnboardingState('identifier')} className="inline-flex items-center cursor-pointer">
+											<svg className="mr-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
+											</svg>
+											<p className="text-lg text-gray-800 font-semibold">Back</p>
+										</div>
+									</div>
+									<p className="mb-2 text-lg text-gray-900 font-semibold">Tell us your name</p>
 									<form onSubmit={(e) => {
 										e.preventDefault()
 
 										setOnboardingState('description')
 									}} >
-										<div className="mb-4">
+										<div className="mb-8">
 											<div className="px-3 py-1 flex flex-col border-solid border rounded-sm border-gray-300">
 												<label className="text-xs font-light text-gray-600">Name</label>
 												<input placeholder="Your name" className="focus:outline-none" type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -258,7 +284,15 @@ const Onboarding = ({
 						{
 							onboardingState === 'description' && (
 								<div>
-									<div onClick={() => setOnboardingState('name')}>Back</div>
+									<div className="mb-4">
+										<div onClick={() => setOnboardingState('name')} className="inline-flex items-center cursor-pointer">
+											<svg className="mr-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
+											</svg>
+											<p className="text-lg text-gray-800 font-semibold">Back</p>
+										</div>
+									</div>
+									<p className="mb-2 text-lg text-gray-900 font-semibold">Tell the world about yourself</p>
 									<form onSubmit={(e) => {
 										e.preventDefault()
 
@@ -280,7 +314,15 @@ const Onboarding = ({
 						{
 							onboardingState === 'avatar' && (
 								<div>
-									<div onClick={() => setOnboardingState('description')}>Back</div>
+									<div className="mb-4">
+										<div onClick={() => setOnboardingState('description')} className="inline-flex items-center cursor-pointer">
+											<svg className="mr-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
+											</svg>
+											<p className="text-lg text-gray-800 font-semibold">Back</p>
+										</div>
+									</div>
+									<p className="mb-2 text-lg text-gray-900 font-semibold">Select image that represent yourself</p>
 									<form onSubmit={(e) => {
 										e.preventDefault()
 
@@ -288,7 +330,6 @@ const Onboarding = ({
 									}} >
 										<div className="mb-4">
 											<div className="relative">
-												<label>Avatar</label>
 												<div className="border-solid border rounded-sm border-gray-300" style={{
 													height: `200px`,
 													width: `100%`,
@@ -319,12 +360,15 @@ const Onboarding = ({
 						{
 							onboardingState === 'theme' && (
 								<div>
-									<div className="flex mb-4">
-										<div className="mr-4" onClick={() => setOnboardingState('avatar')}>Back</div>
-										<div>
-											<p>Choose your theme</p>
+									<div className="mb-4">
+										<div onClick={() => setOnboardingState('avatar')} className="inline-flex items-center cursor-pointer">
+											<svg className="mr-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
+											</svg>
+											<p className="text-lg text-gray-800 font-semibold">Back</p>
 										</div>
 									</div>
+									<p className="mb-2 text-lg text-gray-900 font-semibold">Select your theme</p>
 									<form onSubmit={(e) => {
 										e.preventDefault()
 
@@ -338,7 +382,7 @@ const Onboarding = ({
 															minWidth: `200px`
 														}}>
 															{/* onclick change theme */}
-															<div onClick={() => setTheme(theme)}>
+															<div className="cursor-pointer" onClick={() => setTheme(theme)}>
 																<label>{theme.name}</label>
 																<div className="relative border-solid border rounded-sm border-gray-300" style={{
 																	height: `200px`,
@@ -361,8 +405,32 @@ const Onboarding = ({
 												})
 											}
 										</div>
-										<button type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
-											{identifierAvailability ? 'Next' : 'Already Taken'}
+										<button onClick={(e) => submitOnboarding(e)} disabled={!theme} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm"  style={{
+											opacity: theme ? `100%` : `30%`
+										}}>
+											{ submitState === 'pending' && (
+												<div className="inline-flex">
+													<p className="text-sm mr-2">Saving</p>
+													<div className="lds-ring-container">
+														<div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+													</div>
+												</div>
+											)}
+											{
+												submitState === 'fulfilled' && (
+													<p className="text-sm">Website successfully created</p>
+												)
+											}
+											{
+												submitState === '' && (
+													<p className="text-sm">Create my website</p>
+												)
+											}
+											{
+												submitState === 'rejected' && (
+													<p className="text-sm">Failed</p>
+												)
+											}
 										</button>
 									</form>
 								</div>

@@ -14,7 +14,7 @@ import Onboarding from '../components/onboarding'
 
 import { saveAuthData } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
-import { blockstackAPI } from '../api'
+import { blockstackAPI, IdentifierAPI } from '../api'
 import anchorme from 'anchorme'
 import handlebars from 'handlebars'
 
@@ -47,19 +47,28 @@ const Dashboard = () => {
   const profile = useSelector(state => state.profile)
 
   const [showProfileSidebar, setShowProfileSidebar] = useState(false)
-  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(true)
 
   const logout = async () => {
     await blockstackAPI.session.signUserOut()
     dispatch(saveAuthData(null))
   }
 
-  const submit = async (e) => {
+  const submit = async (e, onboarding) => {
     e.preventDefault()
 
     setSubmitState('pending')
 
     try {
+      if(onboarding) {
+        const newData = {
+          name: name,
+          blockstackId: authData.profile.username
+        }
+        const newId = new IdentifierAPI(newData)
+        await newId.save()
+      }
+
       const newProfile = {
         name: name,
         description: description,
@@ -82,6 +91,7 @@ const Dashboard = () => {
       dispatch(saveProfileData(newProfile))
       setSubmitState('fulfilled')
     } catch (err) {
+      console.log(err)
       setSubmitState('rejected')
     }
     setTimeout(() => {
@@ -98,19 +108,20 @@ const Dashboard = () => {
         }
 
         if(Object.keys(profile).length === 0) {
-          const getProfile = await blockstackAPI.session.getFile('profile.json', {
-            decrypt: false
+          const idExist = await IdentifierAPI.fetchList({
+            name: identifier
           })
-
-          if(getProfile) {
-            const parsedProfile = JSON.parse(getProfile)
-            dispatch(saveProfileData(parsedProfile))
-          }
-          else {
-            setShowOnboarding(true)
-            // register new subdomain
-            // show onboarding modal
-            // identifier checker -> identifier submit -> upload image or use default + full name -> description ->  -> theme
+      
+          if(idExist.length > 0) {
+            const getProfile = await blockstackAPI.session.getFile('profile.json', {
+              decrypt: false
+            })
+  
+            if(getProfile) {
+              setShowOnboarding(false)
+              const parsedProfile = JSON.parse(getProfile)
+              dispatch(saveProfileData(parsedProfile))
+            }
           }
         }
       }
