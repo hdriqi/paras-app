@@ -10,10 +10,11 @@ import Meta from '../components/meta'
 import Nav from '../components/nav'
 import Sidebar from '../components/sidebar'
 import LoggedIn from '../components/loggedIn'
+import Onboarding from '../components/onboarding'
 
 import { saveAuthData } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
-import { blockstackAPI, IdentifierAPI } from '../api'
+import { blockstackAPI } from '../api'
 import anchorme from 'anchorme'
 import handlebars from 'handlebars'
 
@@ -38,6 +39,7 @@ const Dashboard = () => {
   const [accountList, setAccountList] = useState([])
   const [themeList, setThemeList] = useState([])
   const [theme, setTheme] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [template, setTemplate] = useState('')
   const [submitState, setSubmitState] = useState('')
 
@@ -45,6 +47,7 @@ const Dashboard = () => {
   const profile = useSelector(state => state.profile)
 
   const [showProfileSidebar, setShowProfileSidebar] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(false)
 
   const logout = async () => {
     await blockstackAPI.session.signUserOut()
@@ -88,7 +91,6 @@ const Dashboard = () => {
 
   useEffect(() => {
 		const checkAuthData = async () => {
-      // await blockstackAPI.session.deleteFile('profile.json')
       if(blockstackAPI.session.isUserSignedIn()) {
         if(!authData) {
           const getAuthData = await blockstackAPI.session.loadUserData()
@@ -105,45 +107,10 @@ const Dashboard = () => {
             dispatch(saveProfileData(parsedProfile))
           }
           else {
-            const getAuthData = await blockstackAPI.session.loadUserData()
+            setShowOnboarding(true)
             // register new subdomain
-            let userIdentifier = getAuthData.username.split('.')[0]
-            const idExist = await IdentifierAPI.fetchList({
-              name: userIdentifier
-            })
-            if(idExist.length > 0) {
-              userIdentifier = `${userIdentifier}${Math.floor(Math.random() * (99 - 1 + 1)) + 1}`
-            }
-            const newData = {
-              name: userIdentifier,
-              blockstackId: getAuthData.username
-            }
-            const newId = new IdentifierAPI(newData)
-            await newId.save()
-
-            // create new user profile
-            const avatarExist = getAuthData.profile.image.find(img => img.name === 'avatar') || {}
-            
-            // set default data
-            let name = getAuthData.profile.name || ''
-            let description = getAuthData.profile.description || ''
-            let avatarUrl = avatarExist.contentUrl || ''
-            let theme = {
-
-            }
-            
-            const newProfile = {
-              name: name,
-              description: description,
-              avatarUrl: avatarUrl,
-              theme: theme,
-              accountList: [],
-            }
-            await blockstackAPI.session.putFile('profile.json', JSON.stringify(newProfile), {
-              encrypt: false
-            })
-
-            dispatch(saveProfileData(newProfile))
+            // show onboarding modal
+            // identifier checker -> identifier submit -> upload image or use default + full name -> description ->  -> theme
           }
         }
       }
@@ -159,6 +126,7 @@ const Dashboard = () => {
         html: `
         <style>
           @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+          
           body {
             margin: 0;
           }
@@ -307,6 +275,32 @@ const Dashboard = () => {
       <LoggedIn />
 
       <Nav toggleProfileSidebar={toggleProfileSidebar} />
+
+      {
+        showOnboarding && (
+          <Onboarding
+            identifier={identifier}
+            setIdentifer={setIdentifier}
+            name={name}
+            setName={setName} 
+            description={description}
+            setDescription={setDescription} 
+            accountList={accountList}
+            setAccountList={setAccountList}
+            avatarUrl={avatarUrl}
+            setAvatarUrl={setAvatarUrl}
+            avatarFile={avatarFile}
+            setAvatarFile={setAvatarFile}  
+            theme={theme}
+            setTheme={setTheme}
+            themeList={themeList}
+            submit={submit}
+            submitState={submitState}
+            showOnboarding={showOnboarding}
+            setShowOnboarding={setShowOnboarding}
+          />
+        )
+      }
 
       <Sidebar 
         name={name}

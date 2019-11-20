@@ -1,7 +1,7 @@
 {
-	"name": "Degree | Digital Credentials on Blockchain",
-	"start_url": "localhost:3000",
-	"description": "Issue tamper-proof digital certificates, achievements, badges and other credentials on the blockchain with maximum security and integrity.",
+	"name": "Paras | Decentralized Zero-Configuration Personal Website",
+	"start_url": "https://paras.id",
+	"description": "Zero-configuration personal site. Create your website in a minute. no headache. ",
 	"icons": [{
 		"src": "https://i.ibb.co/VJt6k4G/Group-234.png",
 		"sizes": "192x192",

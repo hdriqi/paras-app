@@ -10,7 +10,7 @@ import { blockstackAPI } from '../api'
 import { User } from 'radiks'
 
 import Meta from '../components/meta'
-import Layout from '../components/Layout'
+import Layout from '../components/layout'
 import Login from '../components/login'
 
 const LoginPage = () => {
