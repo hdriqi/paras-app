@@ -60,15 +60,6 @@ const Dashboard = () => {
     setSubmitState('pending')
 
     try {
-      if(onboarding) {
-        const newData = {
-          name: name,
-          blockstackId: authData.profile.username
-        }
-        const newId = new IdentifierAPI(newData)
-        await newId.save()
-      }
-
       const newProfile = {
         name: name,
         description: description,
@@ -83,15 +74,29 @@ const Dashboard = () => {
         })
         newProfile.avatarUrl = newAvatarUrl
       }
-  
-      await blockstackAPI.session.putFile('profile.json', JSON.stringify(newProfile), {
-        encrypt: false
-      })
+
+      if(onboarding) {
+        const newData = {
+          identifier: identifier,
+          blockstackId: authData.username,
+          profile: newProfile
+        }
+        const newId = new IdentifierAPI(newData)
+        await newId.save()
+      }
+      else {
+        const newId = await IdentifierAPI.findOne({
+          identifier: identifier
+        })
+        newId.update({
+          profile: newProfile
+        })
+        await newId.save()
+      }
   
       dispatch(saveProfileData(newProfile))
       setSubmitState('fulfilled')
     } catch (err) {
-      console.log(err)
       setSubmitState('rejected')
     }
     setTimeout(() => {
@@ -107,22 +112,13 @@ const Dashboard = () => {
           dispatch(saveAuthData(getAuthData))
         }
 
-        if(Object.keys(profile).length === 0) {
-          const idExist = await IdentifierAPI.fetchList({
-            name: identifier
-          })
-      
-          if(idExist.length > 0) {
-            const getProfile = await blockstackAPI.session.getFile('profile.json', {
-              decrypt: false
-            })
-  
-            if(getProfile) {
-              setShowOnboarding(false)
-              const parsedProfile = JSON.parse(getProfile)
-              dispatch(saveProfileData(parsedProfile))
-            }
-          }
+        const id = await IdentifierAPI.findOne({
+          identifier: identifier
+        })
+    
+        if(id) {
+          setShowOnboarding(false)
+          dispatch(saveProfileData(id.attrs.profile))
         }
       }
       else {
@@ -225,6 +221,8 @@ const Dashboard = () => {
       }])
     }
     fetchThemeList()
+
+
   }, [])
 
   useEffect(() => {

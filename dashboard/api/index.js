@@ -9,7 +9,7 @@ import sha256 from 'js-sha256'
 class Identifier extends Model {
 	static className = 'Identifier'
 	static schema = { 
-		name: {
+		identifier: {
 			type: String,
 			decrypted: true
 		},
@@ -17,6 +17,9 @@ class Identifier extends Model {
 			type: String,
 			decrypted: true
 		},
+		profile: {
+			decrypted: true
+		}
 	}
 }
 

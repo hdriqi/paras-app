@@ -57,7 +57,7 @@ const Onboarding = ({
 		e.preventDefault()
 
 		const idExist = await IdentifierAPI.fetchList({
-			name: identifier
+			identifier: identifier
 		})
 
 		if(idExist.length > 0) {

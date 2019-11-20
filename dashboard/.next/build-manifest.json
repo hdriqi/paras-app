@@ -12,11 +12,7 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/dash": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
-    "/login": [
+    "/next/dist/pages/_error": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

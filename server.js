@@ -1,6 +1,7 @@
 const express = require('express')
 const next = require('next')
-const { setup } = require('radiks-server')
+const { setup, getDB } = require('radiks-server')
+const handlebars = require('handlebars')
 
 const port = parseInt(process.env.PORT, 10) || 4000
 const env = process.env.NODE_ENV
@@ -20,7 +21,7 @@ const dashboardHandle = dashboardApp.getRequestHandler()
 
 const main = async () => {
   try {
-    
+    const mongo = await getDB(`mongodb://localhost:27017/radiks-server`)
     await dashboardApp.prepare()
     const radiksApp = await setup()
 
@@ -33,6 +34,19 @@ const main = async () => {
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT'
       });
       next()
+    })
+
+    server.use('/paras/:identifier', async (req, res) => {
+      const user = await mongo.collection('radiks-server-data').findOne({
+        identifier: req.params.identifier
+      })
+      if(!user) {
+        return res.send('This address is available, go get it!')
+      }
+      const template = user.profile.theme.html
+      const compiled = handlebars.compile(template || '')(user.profile)
+
+      res.send(compiled)
     })
 
     // Default catch-all handler to allow Next.js to handle all other routes
