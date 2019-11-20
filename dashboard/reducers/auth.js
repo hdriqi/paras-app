@@ -1,4 +1,4 @@
-import { SAVE_AUTH_DATA, SAVE_USER_SESSION } from '../actions/auth'
+import { SAVE_AUTH_DATA, SAVE_USER_SESSION, SAVE_USER_ID } from '../actions/auth'
 
 const initialState = {}
 
@@ -13,6 +13,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userSession: action.userSession
+      }
+    case SAVE_USER_ID:
+      return {
+        ...state,
+        identifier: action.identifier
       }
     default:
       return state

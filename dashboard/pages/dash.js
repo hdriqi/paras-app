@@ -12,7 +12,7 @@ import Sidebar from '../components/sidebar'
 import LoggedIn from '../components/loggedIn'
 import Onboarding from '../components/onboarding'
 
-import { saveAuthData } from '../actions/auth'
+import { saveAuthData, saveUserId } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
 import { blockstackAPI, IdentifierAPI } from '../api'
 import anchorme from 'anchorme'
@@ -119,6 +119,7 @@ const Dashboard = () => {
         if(id) {
           setShowOnboarding(false)
           dispatch(saveProfileData(id.attrs.profile))
+          dispatch(saveUserId(id.attrs.identifier))
         }
       }
       else {

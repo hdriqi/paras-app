@@ -12,14 +12,9 @@ import {
   WhatsappIcon,
 } from 'react-share'
 
-let identifier = ''
-
 const Nav = ({ toggleProfileSidebar }) => {
   const [showSocialShare, setSocialShare] = useState(false)
-  const authData = useSelector(state => state.auth.authData)
-  if(authData) {
-    identifier = authData.username.split('.')[0]
-  }
+  const identifier = useSelector(state => state.auth.identifier)
 
   return (
     <nav className="h-10 border-solid border-b border-gray-300">
