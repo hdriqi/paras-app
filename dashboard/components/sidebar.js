@@ -345,7 +345,7 @@ const Sidebar = ({
 															width: `100%`,
 															backgroundSize: `cover`,
 															backgroundPosition: `center`,
-															backgroundImage: `url(${avatarUrl})`
+															backgroundImage: `url(${theme.thumbnail})`
 														}}>
 															{ isSelectedTheme(theme.name) && (
 																<div className="absolute inset-0 flex items-center justify-center" style={{

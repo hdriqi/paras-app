@@ -14,7 +14,7 @@ import Onboarding from '../components/onboarding'
 
 import { saveAuthData, saveUserId } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
-import { blockstackAPI, IdentifierAPI } from '../api'
+import { blockstackAPI, IdentifierAPI, themeAPI } from '../api'
 import anchorme from 'anchorme'
 import handlebars from 'handlebars'
 
@@ -128,102 +128,11 @@ const Dashboard = () => {
 		}
     checkAuthData()
     
-    const fetchThemeList = () => {
-      setThemeList([{
-        name: 'Esox',
-        html: `
-        <style>
-          @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
-          
-          body {
-            margin: 0;
-          }
-          .container {
-            min-width: 100vw;
-            min-height: 100vh;
-            font-family: "Open Sans", sans-serif;
-            color: #282828;
-            display: flex;
-            background: #f8f8f8;
-          }
-          .content {
-            display: flex;
-            max-width: 768px;
-            margin: auto;
-            width: 100%;
-          }
-          .content-img {
-            padding: 0 16px;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-          }
-          .content-text {
-            padding: 0 16px;
-            padding-left: 32px;
-            justify-content: center;
-            display: flex;
-            flex-direction: column;
-          }
-          p.name {
-            font-size: 36px;
-            font-weight: 600;
-            margin: 0;
-            margin-bottom: 16px;
-          }
-          p.description {
-            font-size: 16px;
-            font-weight: 400;
-            margin: 0;
-            margin-bottom: 32px;
-            white-space: pre-wrap;
-            line-height: 1.5;
-          }
-          .avatar {
-            border: solid 3px #282828;
-            border-radius: 50%;
-          }
-          a {
-            color: blue;
-            text-decoration: none;
-          }
-          .social-list {
-            display: flex;
-          }
-          .social {
-            padding-right: 8px;
-          }
-        </style>
-        <div class="container">
-          <div class="content">
-            <div class="content-img">
-              <img class="avatar" height="200" width="200" src={{avatarUrl}} />
-            </div>
-            <div class="content-text">
-              <p class="name">{{name}}</p>
-              <p class="description">{{{description}}}</p>
-              <div class="social-list">
-                {{#each accountList}}
-                  <a class="social" href="https://{{service}}.com/{{identifier}}" target="_blank">
-                    {{service}}
-                  </a>
-                {{/each}}
-              </div>
-            </div>
-          </div>
-        </div>
-        `
-      }, {
-        name: 'Test 2',
-        html: `<html><body>{{name}} 2</body></html>`
-      }, {
-        name: 'Test 3',
-        html: `<html><body>{{name}} 3</body></html>`
-      }])
+    const fetchThemeList = async () => {
+      const response = await themeAPI.fetch()
+      setThemeList(response.data.data)
     }
     fetchThemeList()
-
-
   }, [])
 
   useEffect(() => {
@@ -265,7 +174,9 @@ const Dashboard = () => {
     }
   
     if(theme) {
-      const compiled = handlebars.compile(theme.html || '')(currentData)
+      const path = 'index'
+      const page = theme.templatePage.find(page => page.path === path)
+      const compiled = handlebars.compile(page.template || '')(currentData)
       setTemplate(compiled)
     }
   }, [theme, name, description, avatarUrl, accountList])

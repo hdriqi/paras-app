@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>{{ name }}</title>
+	<meta name="description" content={{ description }}>
+	<style>
+		@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+		
+		body {
+			margin: 0;
+		}
+		.container {
+			min-width: 100vw;
+			min-height: 100vh;
+			font-family: "Open Sans", sans-serif;
+			color: #282828;
+			display: flex;
+			background: #f8f8f8;
+		}
+		.content {
+			display: flex;
+			max-width: 768px;
+			margin: auto;
+			width: 100%;
+		}
+		.content-img {
+			padding: 0 16px;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+		}
+		.content-text {
+			padding: 0 16px;
+			padding-left: 32px;
+			justify-content: center;
+			display: flex;
+			flex-direction: column;
+		}
+		p.name {
+			font-size: 36px;
+			font-weight: 600;
+			margin: 0;
+			margin-bottom: 16px;
+		}
+		p.description {
+			font-size: 16px;
+			font-weight: 400;
+			margin: 0;
+			margin-bottom: 32px;
+			white-space: pre-wrap;
+			line-height: 1.5;
+		}
+		.avatar {
+			border: solid 3px #282828;
+			border-radius: 50%;
+		}
+		a {
+			color: blue;
+			text-decoration: none;
+		}
+		.social-list {
+			display: flex;
+		}
+		.social {
+			padding-right: 8px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="content">
+			<div class="content-img">
+				<img class="avatar" height="200" width="200" src={{avatarUrl}} />
+			</div>
+			<div class="content-text">
+				<p class="name">{{name}} 2</p>
+				<p class="description">{{{description}}}</p>
+				<div class="social-list">
+					{{#each accountList}}
+						<a class="social" href="https://{{service}}.com/{{identifier}}" target="_blank">
+							{{service}}
+						</a>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

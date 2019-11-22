@@ -1,5 +1,6 @@
 import * as blockstack from 'blockstack'
 import { configure, Model } from 'radiks'
+import axios from 'axios'
 
 class Identifier extends Model {
 	static className = 'Identifier'
@@ -32,5 +33,12 @@ class BlockstackAPI {
 	}
 }
 
+class ThemeAPI {
+	async fetch() {
+		return await axios.get('/api/themes')
+	}	
+}
+
 export const blockstackAPI = new BlockstackAPI()
+export const themeAPI = new ThemeAPI()
 export const IdentifierAPI = Identifier
