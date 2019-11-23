@@ -1,4 +1,4 @@
-import * as blockstack from 'blockstack'
+import { AppConfig, UserSession } from 'blockstack'
 import { configure, Model } from 'radiks'
 import axios from 'axios'
 
@@ -21,9 +21,8 @@ class Identifier extends Model {
 
 class BlockstackAPI {
 	constructor() {
-		this.default = blockstack
-		this.appConfig = new blockstack.AppConfig(['email', 'store_write', 'publish_data'], process.env.APP_DOMAIN, '/login')
-		this.session = new blockstack.UserSession({
+		this.appConfig = new AppConfig(['email', 'store_write', 'publish_data'], process.env.APP_DOMAIN, '/login')
+		this.session = new UserSession({
 			appConfig: this.appConfig
 		})
 		this.radiks = configure({
