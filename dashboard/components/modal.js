@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router'
-
 const Modal = ({ closeModal, children }) => {
 	const close = (e) => {
 		e.persist()

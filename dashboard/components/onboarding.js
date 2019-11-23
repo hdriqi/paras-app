@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import stringify from 'fast-json-stable-stringify'
 import { blockstackAPI, IdentifierAPI } from '../api'
-
-import Modal from './modal'
-
-import { saveProfileData } from '../actions/profile'
 
 const Onboarding = ({ 
 	style,
@@ -23,8 +17,6 @@ const Onboarding = ({
 	setShowOnboarding,
 	logout
 }) => {
-	const dispatch = useDispatch()
-	const profile = useSelector(state => state.profile)
 	const [onboardingState, setOnboardingState] = useState('identifier')
 	const [identifierAvailability, setIdentifierAvailability] = useState(true)
 	const [identifierValid, setIdenfierValid] = useState(true)
@@ -39,7 +31,7 @@ const Onboarding = ({
 				
 				// set default avatar
 				const avatarExist = getAuthData.profile.image && getAuthData.profile.image.find(img => img.name === 'avatar')
-				const avatarUrl = avatarExist ? avatarExist.contentUrl : `https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.pn`
+				const avatarUrl = avatarExist ? avatarExist.contentUrl : `https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png`
 				setAvatarUrl(avatarUrl)
 
 				// set default name
@@ -87,71 +79,12 @@ const Onboarding = ({
       setAvatarUrl(imgUrl)
       setAvatarFile(files[0])
 		}
-		
-		// const getAuthData = await blockstackAPI.session.loadUserData()
-		// let userIdentifier = getAuthData.username.split('.')[0]
-		// const idExist = await IdentifierAPI.fetchList({
-		// 	name: userIdentifier
-		// })
-		// if(idExist.length > 0) {
-		// 	userIdentifier = `${userIdentifier}${Math.floor(Math.random() * (99 - 1 + 1)) + 1}`
-		// }
-		const newData = {
-			name: userIdentifier,
-			blockstackId: getAuthData.username
-		}
-		const newId = new IdentifierAPI(newData)
-		await newId.save()
-
-		// // create new user profile
-		// const avatarExist = getAuthData.profile.image.find(img => img.name === 'avatar') || {}
-		
-		// // set default data
-		// let identifier = userIdentifier
-		// let name = getAuthData.profile.name || userIdentifier
-		// let description = getAuthData.profile.description || ''
-		// let avatarUrl = avatarExist.contentUrl || ''
-		// let theme = {
-
-		// }
-		
-		// const newProfile = {
-		// 	identifier: identifier,
-		// 	name: name,
-		// 	description: description,
-		// 	avatarUrl: avatarUrl,
-		// 	theme: theme,
-		// 	accountList: [],
-		// }
-		// await blockstackAPI.session.putFile('profile.json', JSON.stringify(newProfile), {
-		// 	encrypt: false
-		// })
-
-		// dispatch(saveProfileData(newProfile))
 	}
 	
 	const submitOnboarding = (e) => {
 		e.preventDefault()
 
 		submit(e, true)
-	}
-
-	const back = () => {
-		const newProfile = {
-			name: name,
-			description: description,
-			avatarUrl: avatarUrl,
-			accountList: accountList,
-			theme: theme
-		}
-		// if data is not changed, allow user to navigate to main sidebar
-		if(stringify(profile) === stringify(newProfile)) {
-			setShowNestedSidebar(false)
-		}
-		// if data is changed, prompt confirmation window
-		else {
-			setShowConfirmModal(true)
-		}
 	}
 
 	const isSelectedTheme = (name) => {

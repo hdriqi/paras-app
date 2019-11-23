@@ -11,12 +11,6 @@ const Home = () => {
 	const [timeElapsed, setTimeElapsed] = useState(0)
 
 	useEffect(() => {
-		if(typeof window !== 'undefined') {
-			new SmoothScroll('a[href*="#"]')
-		}
-	}, [])
-
-	useEffect(() => {
 		setTimeout(() => {
 			setTimeElapsed(timeElapsed+1)
 		}, 1000)
