@@ -1,4 +1,12 @@
-require('dotenv').config()
+if(process.env.NODE_ENV === 'production') {
+	require('dotenv').config({
+		path: './.build.env'
+	})
+}
+else {
+	require('dotenv').config({})
+}
+
 const withCSS = require('@zeit/next-css')
 
 module.exports = withCSS({})

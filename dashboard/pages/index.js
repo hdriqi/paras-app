@@ -65,7 +65,7 @@ const Home = () => {
 						<div>
 							<div className="max-w-2xl m-auto flex flex-wrap items-center md:flex-row-reverse pb-16 px-4">
 								<div className="w-full md:w-2/5 pb-4">
-									<img src="/beauty.png" className="m-auto h-64"/>
+									<img src="/beauty.jpg" className="m-auto h-64"/>
 								</div>
 								<div className="w-full md:w-3/5">
 									<p className="text-lg text-gray-900 font-semibold mb-2">Beauty by Default</p>
@@ -76,7 +76,7 @@ const Home = () => {
 							</div>
 							<div className="max-w-2xl m-auto flex flex-wrap items-center pb-16 px-4">
 								<div className="w-full md:w-2/5 pb-4">
-									<img src="/fast.png" className="m-auto h-64"/>
+									<img src="/fast.jpg" className="m-auto h-64"/>
 								</div>
 								<div className="w-full md:w-3/5">
 									<p className="text-lg text-gray-900 font-semibold mb-2">Fast at Everything</p>
@@ -87,7 +87,7 @@ const Home = () => {
 							</div>
 							<div className="max-w-2xl m-auto flex flex-wrap items-center md:flex-row-reverse pb-16 px-4">
 								<div className="w-full md:w-2/5 pb-4">
-									<img src="/secure.png" className="m-auto h-64"/>
+									<img src="/secure.jpg" className="m-auto h-64"/>
 								</div>
 								<div className="w-full md:w-3/5">
 									<p className="text-lg text-gray-900 font-semibold mb-2">Decentralized Data Ownership</p>

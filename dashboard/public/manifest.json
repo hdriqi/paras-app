@@ -3,7 +3,7 @@
 	"start_url": "https://paras.id",
 	"description": "Create your own personal website in a minute. Zero Config. Zero Headache.",
 	"icons": [{
-		"src": "https://i.ibb.co/VJt6k4G/Group-234.png",
+		"src": "https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png",
 		"sizes": "192x192",
 		"type": "image/png"
 	}]

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const SAVE_PROFILE_DATA = 'SAVE_PROFILE_DATA';\nexport const saveProfileData = profile => {\n  return {\n    type: SAVE_PROFILE_DATA,\n    profile: profile\n  };\n};","map":null,"metadata":{},"sourceType":"module"}

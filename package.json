@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon server.js",
-    "build": "next build dashboard",
+    "build": "cross-env NODE_ENV=production next build dashboard",
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "anchorme": "^1.1.2",
     "axios": "^0.19.0",
     "blockstack": "^19.3.0",
+    "cross-env": "^6.0.3",
     "directory-tree": "^2.2.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

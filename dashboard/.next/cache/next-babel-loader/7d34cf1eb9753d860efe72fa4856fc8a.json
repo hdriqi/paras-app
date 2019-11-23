@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var SET_THEME_DATA = 'SET_THEME_DATA';\nexport var setThemeData = function setThemeData(theme) {\n  return {\n    type: SET_THEME_DATA,\n    theme: theme\n  };\n};","map":null,"metadata":{},"sourceType":"module"}
