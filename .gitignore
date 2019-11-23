@@ -10,7 +10,7 @@
 
 # next.js
 /.next/
-/dashboard/.next/
+/dashboard/.next/*
 /out/
 
 # production

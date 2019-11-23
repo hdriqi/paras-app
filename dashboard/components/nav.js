@@ -6,10 +6,12 @@ import {
   TwitterShareButton,
   TelegramShareButton,
   WhatsappShareButton,
+  RedditShareButton,
   FacebookIcon,
   TwitterIcon,
   TelegramIcon,
   WhatsappIcon,
+  RedditIcon,
 } from 'react-share'
 
 const Nav = ({ toggleProfileSidebar }) => {
@@ -48,6 +50,9 @@ const Nav = ({ toggleProfileSidebar }) => {
                     <TwitterShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
+                    <RedditShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                      <RedditIcon size={32} round />
+                    </RedditShareButton>
                     <TelegramShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
                       <TelegramIcon size={32} round />
                     </TelegramShareButton>
