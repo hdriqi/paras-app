@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{BHYH:function(n,w,o){(window.__NEXT_P=window.__NEXT_P||[]).push(["/available",function(){return o("P8Kh")}])},P8Kh:function(n,w){}},[["BHYH",0]]]);

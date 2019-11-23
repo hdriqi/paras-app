@@ -3,7 +3,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { withRedux } from '../lib/redux'
-import Meta from '../components/meta'
 import Layout from '../components/layout'
 import LandingNav from '../components/landingNav'
 
@@ -20,9 +19,7 @@ const Home = () => {
     <div>
       <Head>
         <title>Paras | Decentralized Personal Website</title>
-        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Meta />
 			
 			<Layout>
 				<LandingNav />

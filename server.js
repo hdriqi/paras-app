@@ -60,7 +60,8 @@ const main = async () => {
         identifier: req.subdomains[0]
       })
       if(!user) {
-        return res.send('This address is available, go get it!')
+        return dashboardApp.render(req, res, '/available')
+        // return res.send('This address is available, go get it!')
       }
       const path = 'index'
       const page = user.profile.theme.templatePage.find(page => page.path === path)

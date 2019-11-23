@@ -4,6 +4,7 @@ const Layout = ({ children }) => (
   <div>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel='icon' href={`${process.env.APP_DOMAIN}/favicon.ico`} />
       <meta charSet="utf-8" />
 			<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
     </Head>
@@ -12,6 +13,7 @@ const Layout = ({ children }) => (
         `
         @import url('/inter.css');
         html { font-family: 'Inter', sans-serif; }
+        body { margin: 0; padding: 0; }
         input, textarea { font-family: 'Inter', sans-serif; }
         `
       }

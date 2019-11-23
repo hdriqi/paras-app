@@ -6,7 +6,6 @@ import Frame from 'react-frame-component'
 
 import { withRedux } from '../lib/redux'
 import Layout from '../components/layout'
-import Meta from '../components/meta'
 import Nav from '../components/nav'
 import Sidebar from '../components/sidebar'
 import LoggedIn from '../components/loggedIn'
@@ -198,7 +197,6 @@ const Dashboard = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Meta />
       <LoggedIn />
       {
         loadingState && (

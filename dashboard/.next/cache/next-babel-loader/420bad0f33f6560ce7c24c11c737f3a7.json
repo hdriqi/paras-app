@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var SAVE_PROFILE_DATA = 'SAVE_PROFILE_DATA';\nexport var saveProfileData = function saveProfileData(profile) {\n  return {\n    type: SAVE_PROFILE_DATA,\n    profile: profile\n  };\n};","map":null,"metadata":{},"sourceType":"module"}

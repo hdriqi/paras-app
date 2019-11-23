@@ -17,7 +17,7 @@ const Login = ({ loginState }) => {
 	}
 	
 	return (
-    <div className="w-screen h-screen p-2">
+    <div className="w-screen h-screen p-4">
 			<div className="flex w-full h-full items-center justify-center">
 				<div className="login text-center">
 					<div className="mb-16">

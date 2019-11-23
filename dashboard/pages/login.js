@@ -8,7 +8,6 @@ import { saveAuthData } from '../actions/auth'
 import { blockstackAPI } from '../api'
 import { User } from 'radiks'
 
-import Meta from '../components/meta'
 import Layout from '../components/layout'
 import Login from '../components/login'
 import LandingNav from '../components/landingNav'
@@ -43,7 +42,6 @@ const LoginPage = () => {
       <Head>
         <title>Login | Paras</title>
       </Head>
-      <Meta />
 
       <LandingNav />
       <Login loginState={loginState} />
