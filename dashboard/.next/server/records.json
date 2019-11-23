@@ -30,16 +30,22 @@
       "static/J3skUCjJFEvs8sYhkwtkS/pages/_error.js": 8,
       "static/J3skUCjJFEvs8sYhkwtkS/pages/dash.js": 9,
       "static/J3skUCjJFEvs8sYhkwtkS/pages/index.js": 10,
-      "static/J3skUCjJFEvs8sYhkwtkS/pages/login.js": 11
+      "static/J3skUCjJFEvs8sYhkwtkS/pages/login.js": 11,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/_app.js": 0,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/_document.js": 1,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/_error.js": 2,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/dash.js": 3,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/index.js": 4,
+      "static/kBs_59ekhm_51KBCGOwk2/pages/login.js": 5
     },
     "bySource": {},
     "usedIds": [
-      10,
-      11,
-      6,
-      7,
-      8,
-      9
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
     ]
   }
 }
