@@ -1,4 +1,5 @@
 const express = require('express')
+const subdomain = require('express-subdomain')
 const next = require('next')
 const { setup, getDB } = require('radiks-server')
 const handlebars = require('handlebars')
@@ -50,6 +51,23 @@ const main = async () => {
     const radiksApp = await setup()
 
     const server = express()
+
+    server.use(subdomain('*', async (req, res, next) => {
+      if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
+        return next()
+      }
+      const user = await mongo.collection('radiks-server-data').findOne({
+        identifier: req.subdomains[0]
+      })
+      if(!user) {
+        return res.send('This address is available, go get it!')
+      }
+      const path = 'index'
+      const page = user.profile.theme.templatePage.find(page => page.path === path)
+      const compiled = handlebars.compile(page.template || '')(user.profile)
+
+      res.send(compiled)
+    }))
 
     server.use('/static/themes', express.static(path.join(__dirname, 'themes')))
     server.use('/manifest.json', (req, res, next) => {
