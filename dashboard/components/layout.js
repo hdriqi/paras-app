@@ -13,6 +13,7 @@ const Layout = ({ children }) => (
         `
         @import url('https://rsms.me/inter/inter.css');
         html { font-family: 'Inter', sans-serif; }
+        input, textarea { font-family: 'Inter', sans-serif; }
         `
       }
     </style>

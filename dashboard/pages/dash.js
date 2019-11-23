@@ -11,6 +11,7 @@ import Nav from '../components/nav'
 import Sidebar from '../components/sidebar'
 import LoggedIn from '../components/loggedIn'
 import Onboarding from '../components/onboarding'
+import Loading from '../components/loading'
 
 import { saveAuthData, saveUserId } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const [identifier, setIdentifier] = useState('')
   const [template, setTemplate] = useState('')
   const [submitState, setSubmitState] = useState('')
+  const [loadingState, setLoadingState] = useState(true)
 
   const authData = useSelector(state => state.auth.authData)
   const profile = useSelector(state => state.profile)
@@ -121,6 +123,9 @@ const Dashboard = () => {
           dispatch(saveProfileData(id.attrs.profile))
           dispatch(saveUserId(id.attrs.identifier))
         }
+        setTimeout(() => {
+          setLoadingState(false)
+        }, 500)
       }
       else {
         router.replace('/login')
@@ -194,6 +199,11 @@ const Dashboard = () => {
 
       <Meta />
       <LoggedIn />
+      {
+        loadingState && (
+          <Loading />
+        )
+      }
 
       <Nav toggleProfileSidebar={toggleProfileSidebar} />
 
