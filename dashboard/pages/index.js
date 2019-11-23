@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { withRedux } from '../lib/redux'
 import Layout from '../components/layout'
 import LandingNav from '../components/landingNav'
 
@@ -121,4 +120,4 @@ const Home = () => {
   )
 }
 
-export default withRedux(Home)
+export default Home

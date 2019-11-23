@@ -1,8 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 
-import { withRedux } from '../lib/redux'
-
 import Layout from '../components/layout'
 
 const AvailablePage = () => {
@@ -39,4 +37,4 @@ const AvailablePage = () => {
   )
 }
 
-export default withRedux(AvailablePage)
+export default AvailablePage
