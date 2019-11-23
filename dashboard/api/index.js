@@ -27,7 +27,7 @@ class BlockstackAPI {
 			appConfig: this.appConfig
 		})
 		this.radiks = configure({
-			apiServer: 'http://localhost:4000',
+			apiServer: process.env.APP_DOMAIN,
 			userSession: this.session
 		})
 	}
