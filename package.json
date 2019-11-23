@@ -27,6 +27,7 @@
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "smooth-scroll": "^16.1.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
@@ -38,7 +39,9 @@
     "tailwindcss": "^1.1.3"
   },
   "nodemonConfig": {
-    "ignore": ["dashboard/*"],
+    "ignore": [
+      "dashboard/*"
+    ],
     "delay": "2500"
   }
 }

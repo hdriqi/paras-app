@@ -24,7 +24,7 @@ const Login = ({ loginState }) => {
 						<p className="text-3xl text-gray-900 font-semibold">Paras</p>
 						<p className="text-lg text-gray-600 font-medium">Get your own personal website in a minute</p>
 					</div>
-	<button className="bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1" onClick={() => loginWithBlockstack()}>{loginText()}</button>
+					<button className="bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1" onClick={() => loginWithBlockstack()}>{loginText()}</button>
 				</div>
 			</div>
 		</div>

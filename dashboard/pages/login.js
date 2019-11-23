@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-
 import { withRedux } from '../lib/redux'
 import { saveAuthData } from '../actions/auth'
 import { blockstackAPI } from '../api'
@@ -12,6 +11,7 @@ import { User } from 'radiks'
 import Meta from '../components/meta'
 import Layout from '../components/layout'
 import Login from '../components/login'
+import LandingNav from '../components/landingNav'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
@@ -45,6 +45,7 @@ const LoginPage = () => {
       </Head>
       <Meta />
 
+      <LandingNav />
       <Login loginState={loginState} />
     </Layout>
   )

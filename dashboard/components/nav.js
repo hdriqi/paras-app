@@ -17,8 +17,8 @@ const Nav = ({ toggleProfileSidebar }) => {
   const identifier = useSelector(state => state.auth.identifier)
 
   return (
-    <nav className="h-10 border-solid border-b border-gray-300">
-      <div className="h-full w-full max-w-6xl relative mx-auto px-4">
+    <nav className="border-solid border-b border-gray-300 ">
+      <div className="h-full w-full max-w-6xl relative mx-auto py-2 px-4">
         <ul className="h-full flex items-center justify-between">
           <li>
             <div className="flex relative" onClick={() => setSocialShare(!showSocialShare)} >
@@ -61,11 +61,11 @@ const Nav = ({ toggleProfileSidebar }) => {
           </li>
           <li>
             <a onClick={() => toggleProfileSidebar()} className=" cursor-pointer" >
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect y="9" width="20" height="2" fill="#1a202c"/>
-              <rect width="16.6667" height="2" fill="#1a202c"/>
-              <rect y="18.1177" width="13.3333" height="2" fill="#1a202c"/>
-              </svg>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.3623 27.481L25.6459 4.49962" stroke="black" strokeWidth="2.5"/>
+              <path d="M1 22.9814C5.51844 17.5966 12.5702 9.19265 12.5702 9.19265" stroke="black" strokeWidth="2.5"/>
+              <path d="M19.438 22.7878L31.0082 8.99904" stroke="black" strokeWidth="2.5"/>
+            </svg>
             </a>
           </li>
         </ul>
