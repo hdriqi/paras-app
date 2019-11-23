@@ -1,6 +1,6 @@
 if(process.env.NODE_ENV === 'production') {
 	require('dotenv').config({
-		path: './.build.env'
+		path: './.env-build'
 	})
 }
 else {
