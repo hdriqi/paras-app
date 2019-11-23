@@ -36,7 +36,19 @@
       "static/kBs_59ekhm_51KBCGOwk2/pages/_error.js": 2,
       "static/kBs_59ekhm_51KBCGOwk2/pages/dash.js": 3,
       "static/kBs_59ekhm_51KBCGOwk2/pages/index.js": 4,
-      "static/kBs_59ekhm_51KBCGOwk2/pages/login.js": 5
+      "static/kBs_59ekhm_51KBCGOwk2/pages/login.js": 5,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/_app.js": 6,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/_document.js": 7,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/_error.js": 8,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/dash.js": 9,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/index.js": 10,
+      "static/kCWhJC7JznBIUEC4B3Kct/pages/login.js": 11,
+      "static/zHWaoSb864itnO91y8epr/pages/_app.js": 0,
+      "static/zHWaoSb864itnO91y8epr/pages/_document.js": 1,
+      "static/zHWaoSb864itnO91y8epr/pages/_error.js": 2,
+      "static/zHWaoSb864itnO91y8epr/pages/dash.js": 3,
+      "static/zHWaoSb864itnO91y8epr/pages/index.js": 4,
+      "static/zHWaoSb864itnO91y8epr/pages/login.js": 5
     },
     "bySource": {},
     "usedIds": [

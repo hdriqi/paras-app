@@ -85,6 +85,7 @@ const Dashboard = () => {
         }
         const newId = new IdentifierAPI(newData)
         await newId.save()
+        dispatch(saveUserId(identifier))
       }
       else {
         const newId = await IdentifierAPI.findOne({
