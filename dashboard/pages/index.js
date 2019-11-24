@@ -18,6 +18,7 @@ const Home = () => {
     <div>
       <Head>
         <title>Paras | Decentralized Personal Website</title>
+				<meta name="description" content="Create your own personal website in a minute. Zero config. Zero fee. Zero headache."/>
       </Head>
 			
 			<Layout>

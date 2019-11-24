@@ -194,7 +194,6 @@ const Dashboard = () => {
     <Layout>
       <Head>
         <title>Dashboard | Paras</title>
-        <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <LoggedIn />

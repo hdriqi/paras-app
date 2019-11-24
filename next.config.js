@@ -1,11 +1,6 @@
-let withBundleAnalyzer = null
-
 if(process.env.NODE_ENV === 'production') {
 	require('dotenv').config({
 		path: './.env-build'
-	})
-	withBundleAnalyzer = require('@next/bundle-analyzer')({
-		enabled: process.env.ANALYZE === 'true',
 	})
 }
 else {
@@ -19,7 +14,4 @@ module.exports = {
 	env: {
 		APP_DOMAIN: process.env.APP_DOMAIN
 	}
-}
-if(process.env.NODE_ENV === 'production') {
-	module.exports = withBundleAnalyzer({})
 }
