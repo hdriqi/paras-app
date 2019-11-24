@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+  <link rel="shortcut icon" href="//evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png" type="image/x-icon">
+
+  <title>"{{ name }}"</title>
+	<meta name="description" content="{{ description }}">
+</head>
+<body>
+  <div style="margin: 0 1.5rem">
+    <div class="main">
+			<div class="flex align-center h-100">
+				<div class="margin-auto avatar-container">
+          <div class="margin-auto" style="
+            height: 200px;
+            width: 200px;
+            background-image: url({{avatarUrl}});
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+          ">
+          </div>
+					<div class="mt-3 text-center" style="max-width: 600px;">
+						<h4>{{description}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+    <div class="footer text-center">
+			<div class="margin-auto mw-small">
+				<div class="flex mt-2">
+          {{#each accountList}}
+            <a  href="https://{{service}}.com/{{identifier}}" target="_blank" class="social">
+              <i class="icofont-{{service}}"></i>
+            </a>
+            <div class="flex-child w-third">
+              <h5><a target="_blank" href="https://{{service}}.com/{{identifier}}">{{service}}</a></h5>
+            </div>
+          {{/each}}
+				</div>
+				<div class="mt-2 mb-3">
+					<h5>(c) {{name}};</h5>
+				</div>
+			</div>
+		</div>
+  </div>
+</body>
+<style>
+  a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}body{background-color:#000;color:#bdbdbd;font-family:'Nanum Gothic Coding',monospace;font-size:16px}h3{font-size:1.5rem}h4{font-size:1.125rem}h5{font-size:.875rem;line-height:1.48;letter-spacing:-.2px}a{font-weight:700;color:#bdbdbd;text-decoration:none;transition:all .5s}a:hover{color:#fff}a:hover:after{content:'_';animation-play-state:running}a:after{content:'';animation:pulse 1.25s infinite;animation-play-state:paused}@keyframes pulse{0%{color:#fff}40%{color:#fff}50%{color:#01020e}100%{color:#01020e}}.h-100{height:100%}.text-center{text-align:center}.flex{display:flex;flex-wrap:wrap}.flex.no-wrap{flex-wrap:nowrap}.flex-child{flex:1 1 auto;width:100%}.flex.align-center{align-items:center}.margin-auto{margin:auto}.mw-small{max-width:320px}.mw-medium{max-width:640px}.navigation{height:4rem;position:fixed;width:100%}.main{height:100vh}.main .avatar-container{position:relative;bottom:50px}.main .avatar{width:150px}.footer{position:absolute;bottom:0;left:0;right:0}.mt-1{margin-top:.5rem}.mb-1{margin-bottom:.5rem}.mt-2{margin-top:1rem}.mb-2{margin-bottom:1rem}.mt-3{margin-top:1.5rem}.mb-3{margin-bottom:1.5rem}.blog-list-text{padding:0 1.5rem}.blog-list-text-desc{max-height:60px;overflow:hidden}.blog-list-image{background-repeat:no-repeat;background-size:cover;background-position:center;flex-shrink:0;flex-grow:0;width:150px;height:150px}.w1{width:1rem}.w2{width:2rem}.w3{width:4rem}.w4{width:8rem}.w5{width:16rem}.w-10{width:10%}.w-20{width:20%}.w-25{width:25%}.w-30{width:30%}.w-33{width:33%}.w-34{width:34%}.w-40{width:40%}.w-50{width:50%}.w-60{width:60%}.w-70{width:70%}.w-75{width:75%}.w-80{width:80%}.w-90{width:90%}.w-100{width:100%}.w-third{width:calc(100% / 3)}.w-two-thirds{width:calc(100% / 1.5)}.w-auto{width:auto}@media only screen and (min-width:30em){.w1-ns{width:1rem}.w2-ns{width:2rem}.w3-ns{width:4rem}.w4-ns{width:8rem}.w5-ns{width:16rem}.w-10-ns{width:10%}.w-20-ns{width:20%}.w-25-ns{width:25%}.w-30-ns{width:30%}.w-33-ns{width:33%}.w-34-ns{width:34%}.w-40-ns{width:40%}.w-50-ns{width:50%}.w-60-ns{width:60%}.w-70-ns{width:70%}.w-75-ns{width:75%}.w-80-ns{width:80%}.w-90-ns{width:90%}.w-100-ns{width:100%}.w-third-ns{width:calc(100% / 3)}.w-two-thirds-ns{width:calc(100% / 1.5)}.w-auto-ns{width:auto}}@media only screen and (min-width:30em) and (max-width:60em){.w1-m{width:1rem}.w2-m{width:2rem}.w3-m{width:4rem}.w4-m{width:8rem}.w5-m{width:16rem}.w-10-m{width:10%}.w-20-m{width:20%}.w-25-m{width:25%}.w-30-m{width:30%}.w-33-m{width:33%}.w-34-m{width:34%}.w-40-m{width:40%}.w-50-m{width:50%}.w-60-m{width:60%}.w-70-m{width:70%}.w-75-m{width:75%}.w-80-m{width:80%}.w-90-m{width:90%}.w-100-m{width:100%}.w-third-m{width:calc(100% / 3)}.w-two-thirds-m{width:calc(100% / 1.5)}.w-auto-m{width:auto}}@media only screen and (min-width:60em){.w1-l{width:1rem}.w2-l{width:2rem}.w3-l{width:4rem}.w4-l{width:8rem}.w5-l{width:16rem}.w-10-l{width:10%}.w-20-l{width:20%}.w-25-l{width:25%}.w-30-l{width:30%}.w-33-l{width:33%}.w-34-l{width:34%}.w-40-l{width:40%}.w-50-l{width:50%}.w-60-l{width:60%}.w-70-l{width:70%}.w-75-l{width:75%}.w-80-l{width:80%}.w-90-l{width:90%}.w-100-l{width:100%}.w-third-l{width:calc(100% / 3)}.w-two-thirds-l{width:calc(100% / 1.5)}.w-auto-l{width:auto}}
+</style>
+</html>

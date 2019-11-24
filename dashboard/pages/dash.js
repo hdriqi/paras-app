@@ -253,7 +253,7 @@ const Dashboard = () => {
       />
 
       <Frame className="w-screen" style={{
-        height: `calc(100vh - 2.5rem)`
+        height: `calc(100vh - 49px)`
       }}>
         <div dangerouslySetInnerHTML={{
           __html: template
