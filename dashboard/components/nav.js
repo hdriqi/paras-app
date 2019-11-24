@@ -17,6 +17,7 @@ import {
 const Nav = ({ toggleProfileSidebar }) => {
   const [showSocialShare, setSocialShare] = useState(false)
   const identifier = useSelector(state => state.auth.identifier)
+  const shareMsg = `Check out my personal website by Paras!`
 
   return (
     <nav className="border-solid border-b border-gray-300 ">
@@ -44,19 +45,19 @@ const Nav = ({ toggleProfileSidebar }) => {
                         </svg>
                       </a>
                     </div>
-                    <FacebookShareButton className="mb-2" quote={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                    <FacebookShareButton className="mb-2" quote={shareMsg} url={`https://${identifier}.paras.id`}>
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
-                    <TwitterShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                    <TwitterShareButton className="mb-2" title={shareMsg} url={`https://${identifier}.paras.id`}>
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
-                    <RedditShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                    <RedditShareButton className="mb-2" title={shareMsg} url={`https://${identifier}.paras.id`}>
                       <RedditIcon size={32} round />
                     </RedditShareButton>
-                    <TelegramShareButton className="mb-2" title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                    <TelegramShareButton className="mb-2" title={shareMsg} url={`https://${identifier}.paras.id`}>
                       <TelegramIcon size={32} round />
                     </TelegramShareButton>
-                    <WhatsappShareButton title={`Check out my personal website!`} url={`https://${identifier}.paras.id`}>
+                    <WhatsappShareButton title={shareMsg} url={`https://${identifier}.paras.id`}>
                       <WhatsappIcon size={32} round />
                     </WhatsappShareButton>
                   </div>
