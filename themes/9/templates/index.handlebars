@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="//evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png"
+    type="image/x-icon">
+  <title>{{ name }}</title>
+  <meta name="description" content={{ description }}>
+  <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+</head>
+
+<body>
+  <div class="header">
+    <div class="headerText">
+      <div class="headerText1">Welcome to My Profile</div>
+    </div>
+    <div class="header-button">
+      About me
+      <a href="#scroll-about-me"></a>
+    </div>
+  </div>
+  <div class="mainPage">
+    <div class="wrapper">
+      <div id="scroll-about-me" class="pageWrapper page1">
+        <div class="about-flower">
+          <img src="https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/1.png" style="width: 100%">
+          <div class="triangle">
+            <i class="icon 	ion-arrow-right-b"></i>
+          </div>
+        </div>
+        <div class="pageAbout  " style="">
+          <div class="page-title">
+            About me
+          </div>
+          <div class="about ">
+            <div class="about-image-wrapper" style="">
+              <img src="{{avatarUrl}}" style="width: 100%">
+            </div>
+            <div class="about-text ">
+              <div class="about-name">
+                {{name}}
+              </div>
+              <div class="about-bio">
+                {{description}}
+              </div>
+              <div class="social">
+                {{#each accountList}}
+                <a href="https://{{service}}.com/{{identifier}}" target="_blank">
+                  <i class="icofont-{{service}}"></i>
+                </a>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<style>
+  html {
+    background: #fafafa;
+    font-size: 10px;
+    margin: 0;
+    font-family: Nunito, sans-serif;
+    padding: 0
+  }
+
+  body {
+    padding: 0;
+    position: relative;
+    margin: 0
+  }
+
+  .mainPage {
+    background: #fafafa;
+    position: relative;
+    z-index: 3;
+    overflow: hidden
+  }
+
+  .wrapper {
+    margin: 0 auto;
+    max-width: initial;
+    position: relative
+  }
+
+  .pageWrapper {
+    margin: 0;
+    padding-top: 0
+  }
+
+  * {
+    box-sizing: border-box;
+    text-shadow: transparent 0 0 0, rgba(0, 0, 0, .68) 0 0 0
+  }
+
+  a {
+    text-decoration: none;
+    color: #333
+  }
+
+  .header {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    flex-direction: column;
+    overflow: hidden
+  }
+
+  .header::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: url(https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/backflow1.png) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+  }
+
+  .header::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background: url(https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/backflow2.png) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
+  }
+
+  .headerText1 {
+    color: #595461;
+    font-size: 10rem;
+    font-weight: 700;
+    font-family: 'Great Vibes', cursive;
+    font-size: calc(75px + (110 - 75) * (100vw - 400px)/ (1300 - 400));
+    letter-spacing: -1px;
+    transform: skewY(-8deg)
+  }
+
+  .headerText {
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    width: 60%;
+    text-align: center;
+    margin: 0 auto
+  }
+
+  .headerText2 {
+    font-family: Nunito, sans-serif;
+    color: #fff;
+    font-size: 1.8rem;
+    margin-top: 3rem;
+    letter-spacing: -1px
+  }
+
+  .header-button a {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+  }
+
+  .header-button {
+    font-size: 1.3rem;
+    width: 15rem;
+    padding: 1rem 2rem;
+    background: #ffb4a2;
+    font-weight: 900;
+    border-radius: 21px;
+    margin: 0 auto;
+    color: #f5f5f5;
+    margin-top: 4rem;
+    box-shadow: 2px 5px 51px -6px #e49db2;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+    font-family: 'Nunito sans', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center
+  }
+
+  .pageAbout {
+    max-width: initial;
+    width: 50%;
+    background: #fff;
+    padding: 7rem;
+    margin: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden
+  }
+
+  #scroll-about-me {
+    display: flex
+  }
+
+  .page-title {
+    position: relative;
+    z-index: 5
+  }
+
+  .page2 {
+    display: flex;
+    flex-direction: row-reverse
+  }
+
+  .page2 .about-flower,
+  .page2 .triangle2 {
+    background: #d1e3ee
+  }
+
+  .page-title::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: url(https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/title.png) no-repeat bottom center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: contain;
+    opacity: .2
+  }
+
+  .about-flower {
+    background: #f7e9e9;
+    width: 50%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+
+  .triangle {
+    background: #f7e9e9;
+    top: 50%;
+    right: 0;
+    transform: rotate(45deg) translateY(-50%);
+    border-radius: 20px;
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    z-index: 3
+  }
+
+  .triangle .icon {
+    color: #fff;
+    font-size: 3rem;
+    transform: rotate(-45deg);
+    display: block;
+    right: 21px;
+    top: 6px;
+    position: absolute
+  }
+
+  .triangle2 {
+    background: #fbf1ee;
+    top: 50%;
+    left: 0;
+    transform: rotate(-45deg) translateY(-50%);
+    border-radius: 20px;
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    z-index: 3
+  }
+
+  .triangle2 .icon {
+    color: #fff;
+    font-size: 3rem;
+    transform: rotate(227deg);
+    display: block;
+    left: 21px;
+    top: 1px;
+    position: absolute
+  }
+
+  .page-title {
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-style: italic;
+    font-weight: 700;
+    color: #595461;
+    font-size: 5rem;
+    line-height: 12rem;
+    overflow: hidden
+  }
+
+  .about-image-wrapper {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+    position: relative;
+    border-radius: 50%
+  }
+
+  .about-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative;
+    z-index: 1
+  }
+
+  .about-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    letter-spacing: 0;
+    color: #333;
+    margin-bottom: 1rem;
+    margin-top: 5rem
+  }
+
+  .about-bio {
+    font-size: 1.6rem;
+    color: #485665
+  }
+
+  .social a {
+    margin-left: 1rem;
+    width: 4rem;
+    border-radius: 50%;
+    height: 4rem;
+    background: #ffb4a2;
+    display: flex;
+    box-shadow: 3px 2px 3px rgba(67, 58, 139, .29);
+    align-items: center;
+    justify-content: center;
+    background-image: -ms-linear-gradient(to left, #e49db2 18%, #b398a9 100%);
+    background-image: -moz-linear-gradient(to left, #e49db2 18%, #b398a9 100%);
+    background-image: -o-linear-gradient(to left, #e49db2 18%, #b398a9 100%);
+    background-image: #ffb4a2;
+    background-image: -webkit-linear-gradient(to left, #e49db2 18%, #b398a9 100%);
+    background-image: #ffb4a2
+  }
+
+  .social a>i {
+    color: #fff;
+    font-size: 2rem
+  }
+
+  .social {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4rem
+  }
+
+  .flower1 {
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    top: 10rem;
+    overflow: hidden
+  }
+
+  .flower1 img {
+    width: 100%;
+    box-shadow: 3px 2px 2px -5px rgba(40, 40, 40, .2), 3px 4px 4px -5px rgba(40, 40, 40, .2), 3px 8px 8px -5px rgba(40, 40, 40, .2), 3px 16px 16px -5px rgba(40, 40, 40, .2), 3px 32px 32px -5px rgba(40, 40, 40, .2)
+  }
+
+  .flower2 {
+    margin: 0 0 0 auto !important
+  }
+
+  .portfolio-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    padding: 0 2rem
+  }
+
+  .portfolio {
+    max-width: 768px;
+    margin: 0 auto
+  }
+
+  @media screen and (max-width:768px) {
+    .headerText {
+      width: 90%
+    }
+
+    .pageAbout {
+      padding: 5rem 3rem
+    }
+
+    .about-image-wrapper {
+      width: 80%
+    }
+
+    .wrapper {
+      overflow: hidden
+    }
+
+    .page1,
+    .page2 {
+      flex-direction: column
+    }
+
+    .page1>div,
+    .page2>div {
+      width: 100% !important
+    }
+
+    .pageAbout {
+      left: 0
+    }
+  }
+
+  @media screen and (max-width:450px) {
+    .headerText {
+      width: 90%
+    }
+
+    .flower1 {
+      transform: scale(1.2)
+    }
+
+    .pageAbout {
+      left: 0
+    }
+  }
+</style>
+
+</html>

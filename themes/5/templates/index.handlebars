@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Teko:600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700" rel="stylesheet">
+
+  <link rel="shortcut icon" href="//evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png"
+    type="image/x-icon">
+  <title>{{ name }}</title>
+  <meta name="description" content={{ description }}>
+  <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css">
+</head>
+
+<body>
+  <div id="scroll-home" class="landing-page">
+    <div class="wrapper">
+      <div style="text-align: center;" class="section">
+        Hello there ! I am <br>
+        <span style="color: white">{{ name }}</span>
+      </div>
+      <div class="section">
+        <div class="arrow arrow-1"></div>
+        <div class="arrow arrow-2"></div>
+      </div>
+    </div>
+  </div>
+  <div id="scroll-about" class="about wrapper-page">
+    <div class="wrapper">
+      <div class="section">
+        <div class="number-section">
+          <div class="number-section-number">01</div>
+          <div class="number-section-text">ABOUT ME</div>
+        </div>
+        <div class="about-content">
+          <div class="about-content-image">
+            <img src="{{avatarUrl}}" alt="">
+          </div>
+          <div class="about-content-text">
+            {{description}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-wrapper">
+    <div class="footer-social">
+      <div class="modal-menu-social modal-menu-social-footer">
+        {{#each accountList}}
+        <div>
+          <i class="icofont-{{service}}"></i>
+          <a href="https://{{service}}.com/{{identifier}}" target="_blank"></a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+</body>
+<style>
+  html {
+    background: #fff;
+    font-family: Montserrat, sans-serif;
+    font-size: 10px;
+    margin: 0;
+    padding: 0
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    position: relative
+  }
+
+  * {
+    box-sizing: border-box;
+    text-shadow: transparent 0 0 0, rgba(0, 0, 0, .68) 0 0 0
+  }
+
+  a {
+    text-decoration: none;
+    color: #333
+  }
+
+  .wrapper {
+    max-width: 1000px;
+    margin: 0 auto
+  }
+
+  .section {
+    width: 100%
+  }
+
+  .landing-page .wrapper {
+    width: 100vw;
+    padding: 0 3vw
+  }
+
+  .landing-page {
+    font-size: 8.5rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: -.45rem;
+    background: #ffc815;
+    width: 100%;
+    height: 100vh;
+    line-height: 1.1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+
+  .landing-page-text-type {
+    font-weight: 500;
+    color: #fff;
+    text-shadow: none
+  }
+
+  .modal-menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #161616;
+    z-index: 999999;
+    transform: translate3d(0, -100%, 0);
+    transition-delay: initial;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: transform .5s
+  }
+
+  .modal-menu-social {
+    display: flex;
+    margin-top: 5rem;
+    transform: translate3d(0, -3rem, 0);
+    opacity: 0;
+    transition: transform 1s ease, opacity .5s ease
+  }
+
+  .modal-menu-social>div:hover {
+    color: rgba(245, 245, 245, 1)
+  }
+
+  .modal-menu-social>div {
+    font-size: 2.75rem;
+    color: rgba(245, 245, 245, .2);
+    width: 6rem;
+    height: 6rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-radius .2s ease-in-out, background .4s ease-in-out, color .4s ease-in-out
+  }
+
+  .modal-menu-social a {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+  }
+
+  .arrow {
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 95%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0)
+  }
+
+  .arrow-1 {
+    -webkit-animation: arrow-movement 2s ease-in-out infinite;
+    animation: arrow-movement 2s ease-in-out infinite
+  }
+
+  .arrow-2 {
+    -webkit-animation: arrow-movement 2s 1s ease-in-out infinite;
+    animation: arrow-movement 2s 1s ease-in-out infinite
+  }
+
+  .arrow:after,
+  .arrow:before {
+    background: #333;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px
+  }
+
+  .arrow:before {
+    -webkit-transform: rotate(45deg) translateX(-23%);
+    transform: rotate(45deg) translateX(-23%);
+    -webkit-transform-origin: top left;
+    transform-origin: top left
+  }
+
+  .arrow:after {
+    -webkit-transform: rotate(-45deg) translateX(23%);
+    transform: rotate(-45deg) translateX(23%);
+    -webkit-transform-origin: top right;
+    transform-origin: top right
+  }
+
+  @-webkit-keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 90%
+    }
+
+    70% {
+      opacity: 1
+    }
+
+    100% {
+      opacity: 0
+    }
+  }
+
+  @keyframes arrow-movement {
+    0% {
+      opacity: 0;
+      top: 90%
+    }
+
+    70% {
+      opacity: 1
+    }
+
+    100% {
+      opacity: 0
+    }
+  }
+
+  .wrapper-page {
+    width: 100%;
+    position: relative;
+    padding-top: 14rem;
+    z-index: 2;
+    padding-bottom: 19rem
+  }
+
+  .number-section {
+    width: 100%;
+    height: 25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-weight: 700;
+    font-size: 12rem;
+    color: #e6e6e6;
+    margin-bottom: 4.8rem;
+    font-family: Teko, sans-serif
+  }
+
+  .number-section-number {
+    font-weight: 700;
+    font-size: 19rem;
+    color: #e6e6f0;
+    font-family: Teko, sans-serif
+  }
+
+  .number-section-text {
+    font-weight: 700;
+    color: #333;
+    font-size: 2.9rem;
+    position: absolute;
+    left: 50%;
+    font-family: Montserrat, sans-serif;
+    top: 45%;
+    transform: translate3d(-50%, -50%, 0)
+  }
+
+  .about-content-image {
+    width: 28rem
+  }
+
+  .about-content-image img {
+    border-radius: 50%;
+    width: 100%
+  }
+
+  .about-content-text {
+    font-family: 'Libre Baskerville', serif;
+    color: #333;
+    line-height: 4.5rem;
+    font-size: 2.4rem;
+    letter-spacing: -1px;
+    width: 55%;
+    display: flex;
+    align-items: center
+  }
+
+  .about-content {
+    display: flex;
+    justify-content: space-around;
+    align-self: center
+  }
+
+  .footer-wrapper {
+    width: 100%
+  }
+
+  .footer-social {
+    height: 13rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: #27303b
+  }
+
+  .modal-menu-social-footer {
+    display: flex;
+    margin-top: 0;
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    padding-right: 5rem;
+    transition: transform 1s ease, opacity .5s ease
+  }
+
+  .modal-menu-social>div {
+    color: rgba(245, 245, 245, .5)
+  }
+
+  .footer-text {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+  }
+
+  .footer-text>div:first-child {
+    font-family: 'Libre Baskerville', serif;
+    color: #fff;
+    font-size: 10rem;
+    font-weight: 700;
+    letter-spacing: -.2rem
+  }
+
+  .footer-text>div:last-child {
+    font-size: 2.2rem;
+    color: #333;
+    padding-top: .5rem;
+    max-width: 42rem;
+    line-height: 3.2rem;
+    font-family: Teko, sans-serif
+  }
+
+  .wrapper {
+    padding: 0 3rem
+  }
+
+  .about-content-image {
+    margin-bottom: 5rem
+  }
+
+  @media screen and (max-width:1110px) {
+    html {
+      font-size: 9px
+    }
+  }
+
+  @media screen and (max-width:768px) {
+    .about-content {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center
+    }
+
+    .modal-menu-social-footer {
+      padding-right: 2rem
+    }
+
+    .about-content-text {
+      width: 100%
+    }
+  }
+
+  @media screen and (max-width:480px) {
+    html {
+      font-size: 8px
+    }
+
+    .footer-text>div:first-child {
+      font-size: 8rem
+    }
+
+    .landing-page {
+      font-size: 6rem
+    }
+
+    .modal-menu-social-footer {
+      padding-right: 0
+    }
+  }
+
+  @media screen and (max-width:320px) {
+    .footer-text>div:first-child {
+      font-size: 6rem
+    }
+  }
+</style>
+
+</html>
