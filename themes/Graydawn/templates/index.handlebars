@@ -12,6 +12,7 @@
   <meta property="og:title" content="{{ name }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="og:image" content="{{avatarUrl}}">
+  <meta property="og:url" content="{{url}}">
 </head>
 <body>
   <div style="margin: 0 1.5rem">
@@ -37,12 +38,9 @@
 			<div class="margin-auto mw-small">
 				<div class="flex mt-2">
           {{#each accountList}}
-            <a  href="https://{{service}}.com/{{identifier}}" target="_blank" class="social">
-              <i class="icofont-{{service}}"></i>
-            </a>
             <div class="flex-child w-third">
-              <h5><a target="_blank" href="https://{{service}}.com/{{identifier}}">{{service}}</a></h5>
-            </div>
+              <h5><a target="_blank" href="https://{{service}}.com/{{identifier}}">/{{service}}</a></h5>
+            </div>  
           {{/each}}
 				</div>
 				<div class="mt-2 mb-3">

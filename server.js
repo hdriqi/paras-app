@@ -65,7 +65,10 @@ const main = async () => {
       }
       const path = 'index'
       const page = user.profile.theme.templatePage.find(page => page.path === path)
-      const compiled = handlebars.compile(page.template || '')(user.profile)
+      const compiled = handlebars.compile(page.template || '')({
+        ...user.profile,
+        ...{ url: `https://${user.identifier}.paras.id` }
+      })
 
       res.send(compiled)
     }))

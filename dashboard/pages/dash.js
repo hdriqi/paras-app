@@ -45,6 +45,7 @@ const Dashboard = () => {
   const [loadingState, setLoadingState] = useState(true)
 
   const authData = useSelector(state => state.auth.authData)
+  const parasUrl = useSelector(state => state.auth.identifier) 
   const profile = useSelector(state => state.profile)
 
   const [showProfileSidebar, setShowProfileSidebar] = useState(false)
@@ -165,7 +166,7 @@ const Dashboard = () => {
       name: name,
       description: description,
       avatarUrl: avatarUrl,
-      accountList: accountList
+      accountList: accountList,
     }))
     if(currentData.description) {
       currentData.description = anchorme(currentData.description, {
@@ -181,7 +182,11 @@ const Dashboard = () => {
     if(theme) {
       const path = 'index'
       const page = theme.templatePage.find(page => page.path === path)
-      const compiled = handlebars.compile(page.template || '')(currentData)
+      const data = {
+        ...currentData,
+        ...{ url: parasUrl && `https://${parasUrl}.paras.id` }
+      }
+      const compiled = handlebars.compile(page.template || '')(data)
       setTemplate(compiled)
     }
   }, [theme, name, description, avatarUrl, accountList])
