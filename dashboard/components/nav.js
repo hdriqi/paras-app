@@ -65,13 +65,14 @@ const Nav = ({ toggleProfileSidebar }) => {
               }
             </div>
           </li>
-          <li>
-            <a onClick={() => toggleProfileSidebar()} className=" cursor-pointer" >
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6.3623 27.481L25.6459 4.49962" stroke="black" strokeWidth="2.5"/>
-              <path d="M1 22.9814C5.51844 17.5966 12.5702 9.19265 12.5702 9.19265" stroke="black" strokeWidth="2.5"/>
-              <path d="M19.438 22.7878L31.0082 8.99904" stroke="black" strokeWidth="2.5"/>
-            </svg>
+          <li >
+            <a onClick={() => toggleProfileSidebar()} className="text-center cursor-pointer" >
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.3623 27.481L25.6459 4.49962" stroke="black" strokeWidth="2.5"/>
+                <path d="M1 22.9814C5.51844 17.5966 12.5702 9.19265 12.5702 9.19265" stroke="black" strokeWidth="2.5"/>
+                <path d="M19.438 22.7878L31.0082 8.99904" stroke="black" strokeWidth="2.5"/>
+              </svg>
+              <p className="text-sm font-medium">MENU</p>
             </a>
           </li>
         </ul>
