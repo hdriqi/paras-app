@@ -124,7 +124,7 @@ const Dashboard = () => {
   
       setTimeout(() => {
         setLoadingState(false)
-      }, 500)
+      }, 1000)
     }
     
     getInitialData()
