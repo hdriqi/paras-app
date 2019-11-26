@@ -9,7 +9,7 @@ class Identifier extends Model {
 			type: String,
 			decrypted: true
 		},
-		blockstackId: {
+		identityAddress: {
 			type: String,
 			decrypted: true
 		},

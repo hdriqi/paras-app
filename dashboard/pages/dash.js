@@ -80,7 +80,7 @@ const Dashboard = () => {
       if(onboarding) {
         const newData = {
           identifier: identifier,
-          blockstackId: authData.username,
+          identityAddress: authData.identityAddress,
           profile: newProfile
         }
         const newId = new IdentifierAPI(newData)
@@ -108,25 +108,36 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    const getInitialData = async () => {
+      let id = null
+      if(authData && authData.identityAddress) {
+        id = await IdentifierAPI.findOne({
+          identityAddress: authData.identityAddress
+        })
+      }
+      
+      if(id) {
+        setShowOnboarding(false)
+        dispatch(saveProfileData(id.attrs.profile))
+        dispatch(saveUserId(id.attrs.identifier))
+      }
+  
+      setTimeout(() => {
+        setLoadingState(false)
+      }, 500)
+    }
+    
+    getInitialData()
+  }, [authData])
+
+  useEffect(() => {
 		const checkAuthData = async () => {
       if(blockstackAPI.session.isUserSignedIn()) {
+        let getAuthData = null
         if(!authData) {
-          const getAuthData = await blockstackAPI.session.loadUserData()
+          getAuthData = await blockstackAPI.session.loadUserData()
           dispatch(saveAuthData(getAuthData))
         }
-
-        const id = await IdentifierAPI.findOne({
-          identifier: identifier
-        })
-    
-        if(id) {
-          setShowOnboarding(false)
-          dispatch(saveProfileData(id.attrs.profile))
-          dispatch(saveUserId(id.attrs.identifier))
-        }
-        setTimeout(() => {
-          setLoadingState(false)
-        }, 500)
       }
       else {
         router.replace('/login')

@@ -22,16 +22,30 @@ const LoginPage = () => {
       if(blockstackAPI.session.isUserSignedIn()) {
         setLoginState('pending')
         const authData = blockstackAPI.session.loadUserData()
-        await User.createWithCurrentUser()
-        dispatch(saveAuthData(authData))
-        router.push('/dash')
+        if(authData.username) {
+          await User.createWithCurrentUser()
+          dispatch(saveAuthData(authData))
+          router.push('/dash') 
+        }
+        else {
+          alert('Please setup your username on https://browser.blockstack.org/profiles')
+          await blockstackAPI.session.signUserOut()
+          setLoginState('')
+        }
       }
 			else if(blockstackAPI.session.isSignInPending()) {
         setLoginState('pending')
         const authData = await blockstackAPI.session.handlePendingSignIn()
-        await User.createWithCurrentUser()
-        dispatch(saveAuthData(authData))
-        router.push('/dash')
+        if(authData.username) {
+          await User.createWithCurrentUser()
+          dispatch(saveAuthData(authData))
+          router.push('/dash') 
+        }
+        else {
+          alert('Please setup your username on https://browser.blockstack.org/profiles')
+          await blockstackAPI.session.signUserOut()
+          setLoginState('')
+        }
 			}
 		}
 		checkAuthData()
