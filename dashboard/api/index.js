@@ -21,7 +21,7 @@ class Identifier extends Model {
 
 class BlockstackAPI {
 	constructor() {
-		this.appConfig = new AppConfig(['email', 'store_write', 'publish_data'], process.env.APP_DOMAIN, '/login')
+		this.appConfig = new AppConfig(['store_write', 'publish_data'], process.env.APP_DOMAIN, '/login')
 		this.session = new UserSession({
 			appConfig: this.appConfig
 		})
