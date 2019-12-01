@@ -19,6 +19,10 @@ const Home = () => {
       <Head>
         <title>Paras | Decentralized Personal Website</title>
 				<meta name="description" content="Create your own personal website in a minute. Zero config. Zero fee. Zero headache."/>
+				<meta property="og:title" content="Paras | Decentralized Personal Website" />
+				<meta property="og:description" content="Create your own personal website in a minute. Zero config. Zero fee. Zero headache." />
+				<meta property="og:image" content="https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-thumbnail.png" />
+				<meta property="og:url" content="https://paras.id" />
       </Head>
 			
 			<Layout>
