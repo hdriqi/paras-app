@@ -6,7 +6,7 @@ const Layout = ({ children }) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel='icon' href={`${process.env.APP_DOMAIN}/favicon.ico`} />
       <meta charSet="utf-8" />
-			<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
+			<link href="/tailwind.min.css" rel="stylesheet"></link>
     </Head>
     <style jsx global>
       {

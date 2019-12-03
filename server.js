@@ -52,6 +52,11 @@ const main = async () => {
 
     const server = express()
 
+    // server.use((req, res, next) => {
+    //   res.header(`can't-be-evil`, true)
+    //   next()
+    // })
+
     server.use(subdomain('*', async (req, res, next) => {
       if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
         return next()

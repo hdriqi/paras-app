@@ -56,10 +56,6 @@ const Dashboard = () => {
     dispatch(saveAuthData(null))
   }
 
-  useEffect(() => {
-    console.log(identifier)
-  }, [identifier])
-
   const submit = async (e, onboarding) => {
     e.preventDefault()
 
@@ -121,7 +117,6 @@ const Dashboard = () => {
       }
       
       if(id) {
-        console.log(id)
         setShowOnboarding(false)
         dispatch(saveProfileData(id.attrs.profile))
         dispatch(saveUserId(id.attrs.identifier))
