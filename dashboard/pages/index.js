@@ -9,9 +9,13 @@ const Home = () => {
 	const [timeElapsed, setTimeElapsed] = useState(0)
 
 	useEffect(() => {
-		setTimeout(() => {
+		let timeout = setTimeout(() => {
 			setTimeElapsed(timeElapsed+1)
 		}, 1000)
+
+		return () => {
+			clearTimeout(timeout)
+		}
 	}, [timeElapsed])
 
   return (
