@@ -172,7 +172,7 @@ const Onboarding = ({
 												<input placeholder="username" className="flex-grow focus:outline-none w-full" type="text" value={identifier} onChange={(e) => setIdentifer(e.target.value)} />
 												<label className="text-gray-600">.paras.id</label>
 											</div>
-											<p className="text-xs italic text-gray-600">Minimal 4 characters & Maximum 32 characters</p>
+											<p className="text-xs italic text-gray-600">Alphanumeric with min. 4 chars & max. 32 chars</p>
 										</div>
 										<button disabled={!identifierValid} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" style={{
 											opacity: identifierValid ? `100%` : `30%`
