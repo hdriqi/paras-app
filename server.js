@@ -57,10 +57,12 @@ const main = async () => {
     //   next()
     // })
 
-    server.use(subdomain('*', async (req, res, next) => {
+    const subRouter = express.Router()
+    subRouter.get('/', async (req, res, next) => {
       if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
         return next()
       }
+
       const user = await mongo.collection('radiks-server-data').findOne({
         identifier: req.subdomains[0]
       })
@@ -76,7 +78,9 @@ const main = async () => {
       })
 
       res.send(compiled)
-    }))
+    })
+
+    server.use(subdomain('*', subRouter))
 
     server.use('/static/themes', express.static(path.join(__dirname, 'themes')))
     server.use('/manifest.json', (req, res, next) => {
