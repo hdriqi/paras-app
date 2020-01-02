@@ -54,9 +54,7 @@ const main = async () => {
 
     const subRouter = express.Router()
     subRouter.get('/', async (req, res, next) => {
-      // opt-in can't be evil
       if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
-        res.header(`can't-be-evil`, true)
         return next()
       }
 
