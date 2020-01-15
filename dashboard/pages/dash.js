@@ -164,7 +164,7 @@ const Dashboard = () => {
       setAccountList(cloneAccountList)
     }
     if(profile.avatarUrl) {
-      setAvatarUrl(profile.avatarUrl)
+      setAvatarUrl(`${process.env.APP_DOMAIN}/proxy?url=profile.avatarUrl`)
     }
     if(profile.theme) {
       const cloneTheme = JSON.parse(JSON.stringify(profile.theme))

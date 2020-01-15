@@ -276,7 +276,7 @@ const Sidebar = ({
 												width: `100%`,
 												backgroundSize: `cover`,
 												backgroundPosition: `center`,
-												backgroundImage: `url(${process.env.APP_DOMAIN}/proxy?url=${avatarUrl})`
+												backgroundImage: `url(${avatarUrl})`
 											}}>
 												<div className="h-full w-full flex items-center justify-center" style={{
 													backgroundColor: `rgba(0,0,0,0.5)`

@@ -31,7 +31,7 @@ const Onboarding = ({
 				
 				// set default avatar
 				const avatarExist = getAuthData.profile.image && getAuthData.profile.image.find(img => img.name === 'avatar')
-				const avatarUrl = avatarExist ? avatarExist.contentUrl : `https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png`
+				const avatarUrl = avatarExist ? avatarExist.contentUrl : `${process.env.APP_DOMAIN}/proxy?url=https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png`
 				setAvatarUrl(avatarUrl)
 
 				// set default name
