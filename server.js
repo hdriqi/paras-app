@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const subdomain = require('express-subdomain')
 const next = require('next')
 const { setup, getDB } = require('radiks-server')
@@ -6,6 +7,7 @@ const handlebars = require('handlebars')
 const fs = require('fs')
 const path = require('path')
 const dirTree = require("directory-tree")
+const axios = require('axios')
 
 const port = parseInt(process.env.PORT, 10) || 4000
 const env = process.env.NODE_ENV
@@ -15,11 +17,11 @@ const dashboardApp = next({
   dev
 })
 
-const app = express();
+const app = express()
 
 setup().then(RadiksController => {
-  app.use('/radiks', RadiksController);
-});
+  app.use('/radiks', RadiksController)
+})
 
 const dashboardHandle = dashboardApp.getRequestHandler()
 
@@ -51,6 +53,8 @@ const main = async () => {
     const radiksApp = await setup()
 
     const server = express()
+    server.use(bodyParser.urlencoded({ extended: false }))
+    server.use(bodyParser.json())
 
     const subRouter = express.Router()
     subRouter.get('/', async (req, res, next) => {
@@ -83,8 +87,19 @@ const main = async () => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding',
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE, PUT'
-      });
+      })
       next()
+    })
+
+    server.get('/proxy', async (req, res) => {
+      const url = req.query.url
+      const proxyRes = await axios({
+        method: 'get',
+        url: url,
+        responseType:'stream'
+      })
+      res.setHeader('Content-type', proxyRes.headers['content-type'])
+      proxyRes.data.pipe(res)
     })
 
     server.use('/paras/:identifier', async (req, res) => {
