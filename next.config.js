@@ -8,7 +8,9 @@ else {
 }
 
 const withCSS = require('@zeit/next-css')
-
+const withTM = require('next-transpile-modules')(['themes'])
+ 
+module.exports = withTM()
 module.exports = withCSS({})
 module.exports = {
 	env: {

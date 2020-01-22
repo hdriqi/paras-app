@@ -48,9 +48,12 @@ const main = async () => {
       })
     }
 
-    const mongo = await getDB(`mongodb://localhost:27017/radiks-server`)
+
+    const mongo = await getDB(`mongodb://mongo:27017/radiks-server`)
     await dashboardApp.prepare()
-    const radiksApp = await setup()
+    const radiksApp = await setup({
+      mongoDBUrl: 'mongodb://mongo:27017/radiks-server'
+    })
 
     const server = express()
     server.use(bodyParser.urlencoded({ extended: false }))
@@ -81,7 +84,11 @@ const main = async () => {
 
     server.use(subdomain('*', subRouter))
 
-    server.use('/static/themes', express.static(path.join(__dirname, 'themes')))
+    server.use('/static/themes', (req, res, next) => {
+      console.log(req.url)
+      next()
+    }, express.static(path.join(__dirname, 'dashboard', 'themes')))
+
     server.use('/manifest.json', (req, res, next) => {
       res.set({
         'Access-Control-Allow-Origin': '*',
@@ -102,19 +109,19 @@ const main = async () => {
       proxyRes.data.pipe(res)
     })
 
-    server.use('/paras/:identifier', async (req, res) => {
-      const user = await mongo.collection('radiks-server-data').findOne({
-        identifier: req.params.identifier
-      })
-      if(!user) {
-        return res.send('This address is available, go get it!')
-      }
-      const path = 'index'
-      const page = user.profile.theme.templatePage.find(page => page.path === path)
-      const compiled = handlebars.compile(page.template || '')(user.profile)
+    // server.use('/paras/:identifier', async (req, res) => {
+    //   const user = await mongo.collection('radiks-server-data').findOne({
+    //     identifier: req.params.identifier
+    //   })
+    //   if(!user) {
+    //     return res.send('This address is available, go get it!')
+    //   }
+    //   const path = 'index'
+    //   const page = user.profile.theme.templatePage.find(page => page.path === path)
+    //   const compiled = handlebars.compile(page.template || '')(user.profile)
 
-      res.send(compiled)
-    })
+    //   res.send(compiled)
+    // })
 
     server.get('/api/themes', async (req, res) => {
       res.json({

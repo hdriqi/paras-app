@@ -10,6 +10,7 @@
   "dependencies": {
     "@next/bundle-analyzer": "^9.1.4",
     "@zeit/next-css": "^1.0.1",
+    "acorn": "^7.1.0",
     "anchorme": "^1.1.2",
     "axios": "^0.19.0",
     "blockstack": "^19.3.0",
@@ -22,6 +23,7 @@
     "fast-json-stable-stringify": "^2.0.0",
     "handlebars": "^4.5.3",
     "next": "9.1.2",
+    "next-transpile-modules": "^3.0.1",
     "radiks": "^0.2.1",
     "radiks-server": "^0.2.3",
     "react": "16.11.0",

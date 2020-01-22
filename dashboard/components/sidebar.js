@@ -233,7 +233,7 @@ const Sidebar = ({
 						transform: `translate3d(${showNestedSidebar ? 0 : `100%`}, 0, 0)`,
 						transition: `all .3s`
 					}}>
-						<div className="flex items-center max-h-full overflow-y-scroll border-solid border-b border-gray-300 py-2">
+						<div className="flex items-center max-h-full border-solid border-b border-gray-300 py-2">
 							<div className="w-1/3">
 								<svg className="cursor-pointer" onClick={() => back()} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path fillRule="evenodd" clipRule="evenodd" d="M11.707 13.2929L10.2928 14.7071L3.58569 8.00001L10.2928 1.29291L11.707 2.70712L6.41412 8.00001L11.707 13.2929Z" fill="black"/>
