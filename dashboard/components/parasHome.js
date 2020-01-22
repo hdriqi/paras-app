@@ -6,7 +6,7 @@ import ParasLink from './parasLink'
 
 const Home = ({data, preview, setPreviewPath}) => {
   // check user theme
-  const Theme = dynamic(() => import(`../themes/graydawn`))
+  const Theme = dynamic(() => import(`../themes/helmmace`))
 
   return (
 	  <div>

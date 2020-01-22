@@ -16,11 +16,13 @@
     "blockstack": "^19.3.0",
     "body-parser": "^1.19.0",
     "cross-env": "^6.0.3",
+    "css-loader": "^3.4.2",
     "directory-tree": "^2.2.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-subdomain": "^1.0.5",
     "fast-json-stable-stringify": "^2.0.0",
+    "file-loader": "^5.0.2",
     "handlebars": "^4.5.3",
     "next": "9.1.2",
     "next-transpile-modules": "^3.0.1",
@@ -35,6 +37,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "smooth-scroll": "^16.1.0",
+    "url-loader": "^3.0.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

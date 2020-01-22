@@ -206,7 +206,7 @@ const Dashboard = () => {
 		setShowProfileSidebar(!showProfileSidebar)
 	}
 
-	const ThemeHead = dynamic(() => import(`../themes/graydawn/head`))
+	const ThemeHead = dynamic(() => import(`../themes/powerbreeze/head`))
 
 	const Preview = () => {
 		switch (previewPath) {
