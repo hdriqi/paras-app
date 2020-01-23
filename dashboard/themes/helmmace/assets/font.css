@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), url(/static/themes/helmmace/assets/fonts/Lato-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Lato Italic'), url(/static/themes/helmmace/assets/fonts/Lato-Italic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Lato Bold'), url(/static/themes/helmmace/assets/fonts/Lato-Bold.ttf) format('truetype');
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}

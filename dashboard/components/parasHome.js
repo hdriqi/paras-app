@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react'
 import dynamic from 'next/dynamic'
 
 import ParasLink from './parasLink'
 
-const Home = ({data, preview, setPreviewPath}) => {
+const Home = React.memo(({data, preview, setPreviewPath}) => {
   // check user theme
-  const Theme = dynamic(() => import(`../themes/helmmace`))
+  if(!data.profile.theme) {
+    data.profile.theme = 'powerbreeze'
+  }
+  if(!data.profile.accountList) {
+    data.profile.accountList = []
+  }
+  const Theme = dynamic(() => import(`../themes/${data.profile.theme}`))
 
   return (
 	  <div>
@@ -17,6 +22,6 @@ const Home = ({data, preview, setPreviewPath}) => {
        })} data={data} />
 	  </div>
   )
-}
+})
 
 export default Home

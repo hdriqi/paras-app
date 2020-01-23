@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react'
 import dynamic from 'next/dynamic'
 
 import ParasLink from './parasLink'
 
 const Blog = ({data, preview, setPreviewPath}) => {
-  const router = useRouter()
-
-  const Theme = dynamic(() => import(`../themes/graydawn/blog`))
+  if(!data.profile.theme) {
+    data.profile.theme = 'powerbreeze'
+  }
+  const Theme = dynamic(() => import(`../themes/${data.profile.theme}/blog`))
 
   return (
 	  <div>

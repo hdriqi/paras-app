@@ -31,6 +31,39 @@ const readFileAsBuffer = (file) => {
 	})
 }
 
+const PreviewHead = React.memo(({ theme }) => {
+	const ThemeHead = dynamic(() => import(`../themes/${theme || 'powerbreeze'}/head`))
+	return (
+		<ThemeHead />
+	)
+})
+
+const Preview = React.memo(({ previewPath, setPreviewPath, previewData }) => {
+	// const ThemeHead = dynamic(() => import(`../themes/${previewData.profile.theme || 'powerbreeze'}/head`))
+
+	switch (previewPath) {
+		case '/': 
+			return (
+				<React.Fragment>
+					<PreviewHead theme={previewData.profile.theme} />
+					<ParasHome preview={true} setPreviewPath={setPreviewPath} data={previewData} />
+				</React.Fragment>
+			)
+		case '/blog': 
+			return (
+				<React.Fragment>
+					<ParasBlog preview={true} setPreviewPath={setPreviewPath} data={previewData} />
+				</React.Fragment>
+			)
+		default: 
+			return (
+				<React.Fragment>
+					<ParasHome preview={true} setPreviewPath={setPreviewPath} data={previewData} />
+				</React.Fragment>
+			)
+	}
+})
+
 const Dashboard = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
@@ -45,7 +78,10 @@ const Dashboard = () => {
 	const [submitState, setSubmitState] = useState('')
 	const [loadingState, setLoadingState] = useState(true)
 	const [previewPath, setPreviewPath] = useState('/')
-	const [previewData, setPreviewData] = useState({})
+	const [previewData, setPreviewData] = useState({
+		profile: {},
+		posts: []
+	})
 
 	const authData = useSelector(state => state.auth.authData)
 	const parasUrl = useSelector(state => state.auth.identifier) 
@@ -170,14 +206,19 @@ const Dashboard = () => {
 			setAccountList(cloneAccountList)
 		}
 		if(profile.avatarUrl) {
-			if(!profile.avatarUrl.includes('paras.id')) {
+			if(!profile.avatarUrl.includes(process.env.APP_DOMAIN)) {
 				profile.avatarUrl = `${process.env.APP_DOMAIN}/proxy?url=${profile.avatarUrl}`
 			}
 			setAvatarUrl(profile.avatarUrl)
 		}
 		if(profile.theme) {
 			const cloneTheme = JSON.parse(JSON.stringify(profile.theme))
-			setTheme(cloneTheme)
+			if(themeList.indexOf(cloneTheme) === -1) {
+				setTheme('powerbreeze')
+			}
+			else {
+				setTheme(cloneTheme)
+			}
 		}
 	}, [profile])
 
@@ -187,7 +228,7 @@ const Dashboard = () => {
 			description: description,
 			avatarUrl: avatarUrl,
 			accountList: accountList,
-			theme: theme.name && theme.name.toLowerCase()
+			theme: theme
 		}))
 		if(currentData.description) {
 			currentData.description = anchorme(currentData.description, {
@@ -199,25 +240,25 @@ const Dashboard = () => {
 				]
 			})
 		}
-		setPreviewData(currentData)
+
+		setPreviewData({
+			profile: currentData
+		})
 	}, [theme, name, description, avatarUrl, accountList])
 
 	const toggleProfileSidebar = () => {
 		setShowProfileSidebar(!showProfileSidebar)
 	}
 
-	const ThemeHead = dynamic(() => import(`../themes/powerbreeze/head`))
-
-	const Preview = () => {
-		switch (previewPath) {
-			case '/': 
-				return <ParasHome preview={true} setPreviewPath={setPreviewPath} data={previewData} />
-			case '/blog': 
-				return <ParasBlog preview={true} setPreviewPath={setPreviewPath} data={previewData} />
-			default: 
-				return <ParasHome preview={true} setPreviewPath={setPreviewPath}/>
-		}
+	let ThemeHead = () => {
+		return (
+			<div></div>
+		)
 	}
+
+	useEffect(() => {
+		ThemeHead = dynamic(() => import(`../themes/${previewData.profile.theme || 'powerbreeze'}/head`))
+	}, [previewData])
 
 	return (
 		<Layout>
@@ -281,10 +322,12 @@ const Dashboard = () => {
 				logout={logout}
 			/>
 
-			<Frame className="w-screen" head={<ThemeHead />} style={{
+			<Frame className="w-screen" style={{
 				height: `calc(100vh - 70px)`
 			}}>
-				<Preview />
+				{/* <ThemeHead /> */}
+				<Preview previewPath={previewPath} setPreviewPath={setPreviewPath} previewData={previewData} />
+				{/* <ParasHome preview={true} setPreviewPath={setPreviewPath} data={previewData} /> */}
 			</Frame>
 		</Layout>
 	)

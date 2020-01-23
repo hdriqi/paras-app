@@ -27,28 +27,9 @@ const dashboardHandle = dashboardApp.getRequestHandler()
 
 const main = async () => {
   try {
-    const themes = dirTree('./themes')
-    const themeList = themes.children.filter(c => c.type === 'directory')
+    const themes = dirTree('./dashboard/themes')
+    const templates = themes.children.filter(c => c.type === 'directory').map(file => file.name)
     
-    const templates = []
-    for await (const [idx, theme] of themeList.entries()) {
-      const thumbnail = theme.children.find(c => c.name.split('.')[0] === 'thumbnail')
-      const templateIdx = theme.children.findIndex(c => c.name === 'templates')
-      const templatePage = theme.children[templateIdx].children.map(template => {
-        return {
-          path: template.name.split('.')[0],
-          type: template.name.split('.')[1],
-          template: fs.readFileSync(`./${template.path}`, 'utf8')
-        }
-      })
-      templates.push({
-        name: theme.name,
-        thumbnail: `/static/${thumbnail.path}`,
-        templatePage: templatePage
-      })
-    }
-
-
     const mongo = await getDB(`mongodb://mongo:27017/radiks-server`)
     await dashboardApp.prepare()
     const radiksApp = await setup({
@@ -58,6 +39,10 @@ const main = async () => {
     const server = express()
     server.use(bodyParser.urlencoded({ extended: false }))
     server.use(bodyParser.json())
+    server.use((req, res, next) => {
+      res.set(`can't-be-evil`, true)
+      next()
+    })
 
     const subRouter = express.Router()
     subRouter.get('/', async (req, res, next) => {
@@ -68,26 +53,22 @@ const main = async () => {
       const user = await mongo.collection('radiks-server-data').findOne({
         identifier: req.subdomains[0]
       })
-      if(!user) {
-        return dashboardApp.render(req, res, '/available')
-        // return res.send('This address is available, go get it!')
+      return dashboardApp.render(req, res, `/paras/albariqi/`)
+    })
+    subRouter.get('/blog', async (req, res, next) => {
+      if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
+        return next()
       }
-      const path = 'index'
-      const page = user.profile.theme.templatePage.find(page => page.path === path)
-      const compiled = handlebars.compile(page.template || '')({
-        ...user.profile,
-        ...{ url: `https://${user.identifier}.paras.id` }
-      })
 
-      res.send(compiled)
+      const user = await mongo.collection('radiks-server-data').findOne({
+        identifier: req.subdomains[0]
+      })
+      return dashboardApp.render(req, res, `/paras/albariqi/blog`)
     })
 
     server.use(subdomain('*', subRouter))
 
-    server.use('/static/themes', (req, res, next) => {
-      console.log(req.url)
-      next()
-    }, express.static(path.join(__dirname, 'dashboard', 'themes')))
+    server.use('/static/themes', express.static(path.join(__dirname, 'dashboard', 'themes')))
 
     server.use('/manifest.json', (req, res, next) => {
       res.set({
@@ -127,6 +108,16 @@ const main = async () => {
       res.json({
         status: 'success',
         data: templates
+      })
+    })
+
+    server.get('/api/users/:username', async (req, res) => {
+      const user = await mongo.collection('radiks-server-data').findOne({
+        identifier: req.params.username
+      })
+      res.json({
+        status: 'success',
+        data: user
       })
     })
 

@@ -31,8 +31,9 @@ const Onboarding = ({
 				
 				// set default avatar
 				const avatarExist = getAuthData.profile.image && getAuthData.profile.image.find(img => img.name === 'avatar')
-				const avatarUrl = avatarExist ? avatarExist.contentUrl : `${process.env.APP_DOMAIN}/proxy?url=https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png`
-				setAvatarUrl(avatarUrl)
+				const avatarUrl = avatarExist ? avatarExist.contentUrl : `https://evius-industri-public.s3-ap-southeast-1.amazonaws.com/paras-rounded.png`
+				const proxyAvatarUrl = `${process.env.APP_DOMAIN}/proxy?url=${avatarUrl}`
+				setAvatarUrl(proxyAvatarUrl)
 
 				// set default name
 				setName(getAuthData.profile.name || userIdentifier)
@@ -88,7 +89,7 @@ const Onboarding = ({
 	}
 
 	const isSelectedTheme = (name) => {
-		if(theme.name === name) {
+		if(theme === name) {
 			return true
 		}
 		return false
@@ -310,20 +311,20 @@ const Onboarding = ({
 											{
 												themeList.map(theme => {
 													return (
-														<div className="mr-4" key={theme.name} style={{
+														<div className="mr-4" key={theme} style={{
 															minWidth: `200px`
 														}}>
 															{/* onclick change theme */}
 															<div className="cursor-pointer" onClick={() => setTheme(theme)}>
-																<label>{theme.name}</label>
+																<label>{theme}</label>
 																<div className="relative border-solid border rounded-sm border-gray-300" style={{
 																	height: `200px`,
 																	width: `100%`,
 																	backgroundSize: `cover`,
 																	backgroundPosition: `center`,
-																	backgroundImage: `url(${theme.thumbnail})`
+																	// backgroundImage: `url(${theme.thumbnail})`
 																}}>
-																	{ isSelectedTheme(theme.name) && (
+																	{ isSelectedTheme(theme) && (
 																		<div className="absolute inset-0 flex items-center justify-center" style={{
 																			backgroundColor: `rgba(0,0,0,0.3)`,
 																		}}>

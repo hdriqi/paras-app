@@ -4,7 +4,7 @@ import Link from 'next/link'
 let globalSetPreviewPath = () => {}
 
 const ParasRealLink = ({ path, children }) => {
-  return <Link href={path}>{children}</Link>
+  return <Link href={path}><a>{children}</a></Link>
 }
 
 const ParasPreviewLink = ({ path, children }) => {

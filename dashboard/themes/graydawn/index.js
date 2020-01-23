@@ -2,37 +2,41 @@ import React from 'react'
 
 const Home = ({ParasLink, data}) => {
   return (
-	  <div className="py-8 px-4">
-      <nav className="flex max-w-md m-auto">
+	  <div className="max-w-3xl m-auto py-8 px-4">
+      {/* <nav className="flex max-w-md m-auto">
         <div className="w-1/2 text-center">
           <ParasLink path="/">Home</ParasLink>
         </div>
         <div className="w-1/2 text-center">
           <ParasLink path="/blog">Blog</ParasLink>
         </div>
-      </nav>
+      </nav> */}
       <div className="m-auto">
         <div className="mt-16 m-auto">
           <div className="m-auto" style={{
             height: `160px`,
             width: `160px`,
-            backgroundImage: `url(${data.avatarUrl})`,
+            backgroundImage: `url(${data.profile.avatarUrl})`,
             backgroundSize: `cover`,
             backgroundPosition: `center`,
             borderRadius: `50%`
           }}>
           </div>
           <div className="mt-8 text-center mw-4">
-            <h2>{data.name}</h2>
-            <h4 className="mt-1">{data.description}</h4>
+            <h2 className="text-3xl text-gray-900 font-bold">{data.profile.name}</h2>
+            <h4 className="text-lg mt-1 text-gray-700">{data.profile.description}</h4>
           </div>
         </div>
         <div className="flex flex-wrap mt-32 max-w-sm m-auto">
           {
-            data.accountList.map((account, idx) => {
+            data.profile.accountList.map((account, idx) => {
               return (
                 <div key={idx} className="flex-1 w-1/3 text-center">
-                  <h5><a target="_blank" href={account.url}>/{account.service}</a></h5>
+                  <h5 className="text-base">
+                    <a className="font-bold text-gray-600 hover:text-gray-900" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
+                      /{account.service}
+                    </a>
+                  </h5>
                 </div>
               )
             })

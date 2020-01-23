@@ -102,7 +102,7 @@ const Sidebar = ({
 	}
 
 	const isSelectedTheme = (name) => {
-		if(theme.name === name) {
+		if(theme === name) {
 			return true
 		}
 		return false
@@ -336,18 +336,18 @@ const Sidebar = ({
 									{
 										themeList.map(theme => {
 											return (
-												<div className="mb-4" key={theme.name}>
+												<div className="mb-4" key={theme}>
 													{/* onclick change theme */}
 													<div onClick={() => setTheme(theme)}>
-														<label>{theme.name}</label>
+														<label className="capitalize">{theme}</label>
 														<div className="relative border-solid border rounded-sm border-gray-300" style={{
 															height: `200px`,
 															width: `100%`,
 															backgroundSize: `cover`,
 															backgroundPosition: `center`,
-															backgroundImage: `url(${theme.thumbnail})`
+															backgroundImage: `url(/static/themes/${theme}/thumbnail.png)`
 														}}>
-															{ isSelectedTheme(theme.name) && (
+															{ isSelectedTheme(theme) && (
 																<div className="absolute inset-0 flex items-center justify-center" style={{
 																	backgroundColor: `rgba(0,0,0,0.3)`,
 																}}>
