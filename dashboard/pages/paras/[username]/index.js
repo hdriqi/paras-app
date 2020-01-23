@@ -39,9 +39,7 @@ Home.getInitialProps = async ({ req, query }) => {
   const origin = protocol + '//' + host
   const response = await axios.get(`${process.env.APP_DOMAIN}/api/users/${username}`)
   const data = response.data.data
-  if(!data.profile.avatarUrl.includes(origin)) {
-    data.profile.avatarUrl = `${origin}/proxy?url=${data.profile.avatarUrl}`
-  }
+  data.profile.avatarUrl = `${origin}/proxy?url=${data.profile.avatarUrl}`
   return {
     data: data
   }
