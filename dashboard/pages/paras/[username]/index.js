@@ -6,24 +6,7 @@ import ParasHead from '../../../components/parasHead'
 
 import axios from 'axios'
 
-const Home = ({ data, query }) => {
-  // console.log(data)
-  // const [d, setD] = useState({})
-  // const router = useRouter()
-  // const { username } = router.query
-
-  // fetch user data, render with parasHome component
-  // useEffect(() => {
-  //   const main = async () => {
-  //     const response = await axios.get(`/api/users/${username}`)
-  //     if(response.data.data) {
-  //       setD(response.data.data.profile)
-  //     }
-  //   }
-
-  //   main()
-  // }, [])
-
+const Home = ({ data }) => {
   return (
     <div>
       <ParasHead data={data} />
@@ -49,11 +32,18 @@ const Home = ({ data, query }) => {
   )
 }
 
-Home.getInitialProps = async (context) => {
-  const { username } = context.query
+Home.getInitialProps = async ({ req, query }) => {
+  const { username } = query
+  var host = (req ? req.headers.host : window.location.host)
+  var protocol = /^localhost(:\d+)?$/.test(host) ? 'http:' : 'https:'
+  const origin = protocol + '//' + host
   const response = await axios.get(`${process.env.APP_DOMAIN}/api/users/${username}`)
+  const data = response.data.data
+  if(!data.profile.avatarUrl.includes(origin)) {
+    data.profile.avatarUrl = `${origin}/proxy?url=${data.profile.avatarUrl}`
+  }
   return {
-    data: response.data.data
+    data: data
   }
 }
 
