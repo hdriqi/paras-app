@@ -23,6 +23,7 @@ module.exports = withCSS({
 		return config
 	},
 	env: {
-		APP_DOMAIN: process.env.APP_DOMAIN
+		APP_DOMAIN: process.env.APP_DOMAIN,
+		DB_URL: process.env.DB_URL
 	}
 })
