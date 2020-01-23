@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'PT Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Serif Regular'), url(/static/themes/chestbrand/assets/fonts/PTSerif-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: italic;
+  font-weight: 400;
+  src: local('PT Serif Italic'), url(/static/themes/chestbrand/assets/fonts/PTSerif-Italic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'PT Serif';
+  font-style: bold;
+  font-weight: 600;
+  src: local('PT Serif Bold'), url(/static/themes/chestbrand/assets/fonts/PTSerif-Bold.ttf) format('truetype');
+}
+
+.heading {
+  font-family: 'PT Serif', serif;
+}

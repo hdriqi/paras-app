@@ -18,6 +18,7 @@ import ParasBlog from '../components/parasBlog'
 import { saveAuthData, saveUserId } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
 import { blockstackAPI, IdentifierAPI, themeAPI } from '../api'
+import { User } from 'radiks'
 import anchorme from 'anchorme'
 
 const readFileAsBuffer = (file) => {
@@ -123,6 +124,7 @@ const Dashboard = () => {
 					profile: newProfile
 				}
 				const newId = new IdentifierAPI(newData)
+				await User.createWithCurrentUser()
 				await newId.save()
 				dispatch(saveUserId(identifier))
 			}
@@ -133,7 +135,8 @@ const Dashboard = () => {
 				newId.update({
 					profile: newProfile
 				})
-				await newId.save()
+				await User.createWithCurrentUser()
+				await newId.save()	
 			}
 	
 			dispatch(saveProfileData(newProfile))
@@ -322,12 +325,10 @@ const Dashboard = () => {
 				logout={logout}
 			/>
 
-			<Frame className="w-screen" style={{
+			<Frame sandbox="allow-scripts allow-same-origin allow-forms"  className="w-screen" style={{
 				height: `calc(100vh - 70px)`
 			}}>
-				{/* <ThemeHead /> */}
 				<Preview previewPath={previewPath} setPreviewPath={setPreviewPath} previewData={previewData} />
-				{/* <ParasHome preview={true} setPreviewPath={setPreviewPath} data={previewData} /> */}
 			</Frame>
 		</Layout>
 	)

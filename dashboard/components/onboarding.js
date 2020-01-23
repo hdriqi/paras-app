@@ -81,12 +81,6 @@ const Onboarding = ({
       setAvatarFile(files[0])
 		}
 	}
-	
-	const submitOnboarding = (e) => {
-		e.preventDefault()
-
-		submit(e, true)
-	}
 
 	const isSelectedTheme = (name) => {
 		if(theme === name) {
@@ -158,7 +152,7 @@ const Onboarding = ({
 				}
 			</style>
 			<div className="fixed bg-white inset-0 z-30">
-				<div className="max-w-xs md:max-w-md p-4 pt-16 mt-16 m-auto w-full">
+				<div className="max-w-sm md:max-w-lg p-4 mt-16 m-auto w-full">
 					<div className="mx-2 md:mx-8">
 						{
 							onboardingState === 'identifier' && (
@@ -167,7 +161,7 @@ const Onboarding = ({
 										<p className="text-lg text-gray-800 font-semibold">Let's create your personal site!</p>
 									</div>
 									<p className="mb-2 text-lg text-gray-900 font-semibold">Set your site address</p>
-									<form onSubmit={(e) => checkAndSetIdentifier(e)}  >
+									<form>
 										<div className="mb-4">
 											<div className="mb-1 px-3 py-1 flex border-solid border rounded-sm border-gray-300 justify-between">
 												<input placeholder="username" className="flex-grow focus:outline-none w-full" type="text" value={identifier} onChange={(e) => setIdentifer(e.target.value)} />
@@ -175,7 +169,7 @@ const Onboarding = ({
 											</div>
 											<p className="text-xs italic text-gray-600">Alphanumeric with min. 4 chars & max. 32 chars</p>
 										</div>
-										<button disabled={!identifierValid} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" style={{
+										<button onClick={(e) => checkAndSetIdentifier(e)}  disabled={!identifierValid} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" style={{
 											opacity: identifierValid ? `100%` : `30%`
 										}}>
 											{identifierAvailability ? 'Next' : 'Already Taken'}
@@ -196,18 +190,18 @@ const Onboarding = ({
 										</div>
 									</div>
 									<p className="mb-2 text-lg text-gray-900 font-semibold">Tell us your name</p>
-									<form onSubmit={(e) => {
-										e.preventDefault()
-
-										setOnboardingState('description')
-									}} >
+									<form>
 										<div className="mb-8">
 											<div className="px-3 py-1 flex flex-col border-solid border rounded-sm border-gray-300">
 												<label className="text-xs font-light text-gray-600">Name</label>
 												<input placeholder="Your name" className="focus:outline-none" type="text" value={name} onChange={(e) => setName(e.target.value)} />
 											</div>
 										</div>
-										<button type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
+										<button onClick={(e) => {
+											e.preventDefault()
+
+											setOnboardingState('description')
+										}} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
 											Next
 										</button>
 									</form>
@@ -226,18 +220,18 @@ const Onboarding = ({
 										</div>
 									</div>
 									<p className="mb-2 text-lg text-gray-900 font-semibold">Tell the world about yourself</p>
-									<form onSubmit={(e) => {
-										e.preventDefault()
-
-										setOnboardingState('avatar')
-									}} >
+									<form>
 										<div className="mb-4">
 											<div className="px-3 py-1 flex flex-col border-solid border rounded-sm border-gray-300">
 												<label className="text-xs font-light text-gray-600">Description</label>
 												<textarea placeholder="Tell the world about yourself" rows={8} className="focus:outline-none resize-none" value={description} onChange={(e) => setDescription(e.target.value)} />
 											</div>
 										</div>
-										<button type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
+										<button onClick={(e) => {
+											e.preventDefault()
+
+											setOnboardingState('avatar')
+										}} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
 											Next
 										</button>
 									</form>
@@ -256,11 +250,7 @@ const Onboarding = ({
 										</div>
 									</div>
 									<p className="mb-2 text-lg text-gray-900 font-semibold">Select image that represent yourself</p>
-									<form onSubmit={(e) => {
-										e.preventDefault()
-
-										setOnboardingState('theme')
-									}} >
+									<form>
 										<div className="mb-4">
 											<div className="relative">
 												<div className="border-solid border rounded-sm border-gray-300" style={{
@@ -283,7 +273,11 @@ const Onboarding = ({
 												</div>
 											</div>
 										</div>
-										<button type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
+										<button onClick={(e) => {
+											e.preventDefault()
+
+											setOnboardingState('theme')
+										}} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm">
 											Next
 										</button>
 									</form>
@@ -302,27 +296,23 @@ const Onboarding = ({
 										</div>
 									</div>
 									<p className="mb-2 text-lg text-gray-900 font-semibold">Select your theme</p>
-									<form onSubmit={(e) => {
-										e.preventDefault()
-
-										setOnboardingState('done')
-									}} >
+									<form>
 										<div className="flex flex-no-wrap mb-4 overflow-x-scroll">
 											{
 												themeList.map(theme => {
 													return (
 														<div className="mr-4" key={theme} style={{
-															minWidth: `200px`
+															minWidth: `220px`
 														}}>
 															{/* onclick change theme */}
 															<div className="cursor-pointer" onClick={() => setTheme(theme)}>
-																<label>{theme}</label>
+																<label className="capitalize">{theme}</label>
 																<div className="relative border-solid border rounded-sm border-gray-300" style={{
 																	height: `200px`,
 																	width: `100%`,
 																	backgroundSize: `cover`,
 																	backgroundPosition: `center`,
-																	// backgroundImage: `url(${theme.thumbnail})`
+																	backgroundImage: `url(/static/themes/${theme}/thumbnail.png)`
 																}}>
 																	{ isSelectedTheme(theme) && (
 																		<div className="absolute inset-0 flex items-center justify-center" style={{
@@ -338,7 +328,11 @@ const Onboarding = ({
 												})
 											}
 										</div>
-										<button onClick={(e) => submitOnboarding(e)} disabled={!theme} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm"  style={{
+										<button onClick={async (e) => {
+											e.preventDefault()
+
+											submit(e, true)
+										}} disabled={!theme} type="submit" className="w-full bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm"  style={{
 											opacity: theme ? `100%` : `30%`
 										}}>
 											{ submitState === 'pending' && (

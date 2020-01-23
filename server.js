@@ -3,8 +3,6 @@ const bodyParser = require('body-parser')
 const subdomain = require('express-subdomain')
 const next = require('next')
 const { setup, getDB } = require('radiks-server')
-const handlebars = require('handlebars')
-const fs = require('fs')
 const path = require('path')
 const dirTree = require("directory-tree")
 const axios = require('axios')
@@ -40,6 +38,7 @@ const main = async () => {
     server.use(bodyParser.urlencoded({ extended: false }))
     server.use(bodyParser.json())
     server.use((req, res, next) => {
+      
       res.set(`can't-be-evil`, true)
       next()
     })
