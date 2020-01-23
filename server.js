@@ -30,10 +30,10 @@ const main = async () => {
     const themes = dirTree('./dashboard/themes')
     const templates = themes.children.filter(c => c.type === 'directory').map(file => file.name)
     
-    const mongo = await getDB(`mongodb://mongo:27017/radiks-server`)
+    const mongo = await getDB(`${process.env.DB_URL}/radiks-server`)
     await dashboardApp.prepare()
     const radiksApp = await setup({
-      mongoDBUrl: 'mongodb://mongo:27017/radiks-server'
+      mongoDBUrl: `${process.env.DB_URL}/radiks-server`
     })
 
     const server = express()
@@ -53,17 +53,11 @@ const main = async () => {
       const user = await mongo.collection('radiks-server-data').findOne({
         identifier: req.subdomains[0]
       })
-      return dashboardApp.render(req, res, `/paras/albariqi/`)
-    })
-    subRouter.get('/blog', async (req, res, next) => {
-      if(req.subdomains.length === 0 || req.subdomains[0] === 'www') {
-        return next()
+      if(!user) {
+        return dashboardApp.render(req, res, `/available`)  
       }
 
-      const user = await mongo.collection('radiks-server-data').findOne({
-        identifier: req.subdomains[0]
-      })
-      return dashboardApp.render(req, res, `/paras/albariqi/blog`)
+      return dashboardApp.render(req, res, `/paras/${req.subdomains[0]}`)
     })
 
     server.use(subdomain('*', subRouter))
