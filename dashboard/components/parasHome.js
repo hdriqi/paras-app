@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 import ParasLink from './parasLink'
 
 const Home = React.memo(({data, preview, setPreviewPath}) => {
   // check user theme
-  if(data.profile.avatarUrl) {
+  useEffect(() => {
     const currentOrigin = window.location.origin
     if(data.profile.avatarUrl.includes(currentOrigin)) {
       data.profile.avatarUrl = `${currentOrigin}/proxy?url=${data.profile.avatarUrl}`
     }
-  }
+  }, [])
+
   if(!data.profile.theme) {
     data.profile.theme = 'powerbreeze'
   }
