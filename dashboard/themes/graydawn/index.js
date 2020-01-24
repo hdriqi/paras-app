@@ -33,7 +33,7 @@ const Home = ({ParasLink, data}) => {
               return (
                 <div key={idx} className="flex-1 w-1/3 text-center">
                   <h5 className="text-base">
-                    <a className="font-bold text-gray-600 hover:text-gray-900" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
+                    <a className="font-bold" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
                       /{account.service}
                     </a>
                   </h5>
@@ -43,6 +43,26 @@ const Home = ({ParasLink, data}) => {
           }
         </div>
       </div>
+      <style>
+        {
+        ` body {
+            background: white;
+            font-family: Nanum Gothic Coding;
+          }
+          a {
+            cursor: pointer;
+            font-weight: 600;
+            color: ${data.profile.themeColor || '#111111'};
+            opacity: 0.8;
+          }
+          
+          a:hover {
+            font-weight: 600;
+            color: ${data.profile.themeColor || '#111111'};
+          }
+        `
+        }
+      </style>
 	  </div>
   )
 }

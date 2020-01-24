@@ -22,11 +22,3 @@
 .heading {
   font-family: 'PT Serif', serif;
 }
-
-a {
-  border-bottom: dotted 2px gray;
-}
-
-a:hover {
-  border-bottom: dotted 2px black;
-}

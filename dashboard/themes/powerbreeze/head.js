@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Head = () => {
+const Head = ({ themeColor }) => {
   return (
 	  <React.Fragment>
       <link href={`/tailwind.min.css`} rel="stylesheet"></link>

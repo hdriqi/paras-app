@@ -29,6 +29,7 @@
     "radiks": "^0.2.1",
     "radiks-server": "^0.2.3",
     "react": "16.11.0",
+    "react-color": "^2.18.0",
     "react-dom": "16.11.0",
     "react-frame-component": "^4.1.1",
     "react-html-parser": "^2.0.2",

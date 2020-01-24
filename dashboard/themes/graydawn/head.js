@@ -18,25 +18,6 @@ const Head = () => {
           `
         }
       </style>
-      <style>
-        {
-        ` body {
-            background: white;
-            font-family: Nanum Gothic Coding;
-          }
-          a {
-            cursor: pointer;
-            font-weight: 600;
-            color: #718096;
-          }
-          
-          a:hover {
-            font-weight: 600;
-            color: black;
-          }
-        `
-        }
-      </style>
     </React.Fragment>
   )
 }

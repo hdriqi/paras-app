@@ -22,27 +22,3 @@
 body {
   font-family: 'Lato', sans-serif;
 }
-
-a::after {
-  transition: all .2s;
-}
-
-a:not(.social) {
-  position: relative;
-}
-
-a:not(.social)::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 20%;
-  left: 0;
-  bottom: 0;
-  background: black;
-  opacity: 0.1;
-  z-index: -1;
-}
-
-a:not(.social):hover::after {
-  opacity: 0.3;
-}

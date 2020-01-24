@@ -40,8 +40,6 @@ const PreviewHead = React.memo(({ theme }) => {
 })
 
 const Preview = React.memo(({ previewPath, setPreviewPath, previewData }) => {
-	// const ThemeHead = dynamic(() => import(`../themes/${previewData.profile.theme || 'powerbreeze'}/head`))
-
 	switch (previewPath) {
 		case '/': 
 			return (
@@ -75,6 +73,7 @@ const Dashboard = () => {
 	const [accountList, setAccountList] = useState([])
 	const [themeList, setThemeList] = useState([])
 	const [theme, setTheme] = useState('')
+	const [themeColor, setThemeColor] = useState('')
 	const [identifier, setIdentifier] = useState('')
 	const [submitState, setSubmitState] = useState('')
 	const [loadingState, setLoadingState] = useState(true)
@@ -115,7 +114,8 @@ const Dashboard = () => {
 				}),
 				avatarUrl: avatarUrl,
 				accountList: accountList,
-				theme: theme
+				theme: theme,
+				themeColor: themeColor || `#111111`
 			}
 			if(avatarFile) {
 				const buff = await readFileAsBuffer(avatarFile)
@@ -222,6 +222,9 @@ const Dashboard = () => {
 			}
 			setAvatarUrl(profile.avatarUrl)
 		}
+		if(profile.themeColor) {
+			setThemeColor(profile.themeColor || '#111111')
+		}
 		if(profile.theme) {
 			const cloneTheme = JSON.parse(JSON.stringify(profile.theme))
 			if(themeList.indexOf(cloneTheme) === -1) {
@@ -239,7 +242,8 @@ const Dashboard = () => {
 			description: description,
 			avatarUrl: avatarUrl,
 			accountList: accountList,
-			theme: theme
+			theme: theme,
+			themeColor: themeColor
 		}))
 		if(currentData.description) {
 			currentData.descriptionHtml = anchorme(currentData.description, {
@@ -255,7 +259,7 @@ const Dashboard = () => {
 		setPreviewData({
 			profile: currentData
 		})
-	}, [theme, name, description, avatarUrl, accountList])
+	}, [theme, themeColor, name, description, avatarUrl, accountList])
 
 	const toggleProfileSidebar = () => {
 		setShowProfileSidebar(!showProfileSidebar)
@@ -325,6 +329,8 @@ const Dashboard = () => {
 				setAvatarFile={setAvatarFile}  
 				theme={theme}
 				setTheme={setTheme}
+				themeColor={themeColor}
+				setThemeColor={setThemeColor}
 				themeList={themeList}
 				submit={submit}
 				submitState={submitState}

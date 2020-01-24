@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import stringify from 'fast-json-stable-stringify'
+import { CirclePicker  } from 'react-color'
 
 import Modal from './modal'
 
 import { saveProfileData } from '../actions/profile'
+
+const paletteColors = [
+	`#0074D9`,
+	'#7FDBFF',
+	'#39CCCC',
+	'#3D9970',
+	'#2ECC40',
+	'#01FF70',
+	'#FFDC00',
+	'#FF851B',
+	'#FF4136',
+	'#85144b',
+	'#F012BE',
+	'#B10DC9',
+	'#111111',
+	'#AAAAAA',
+	'#DDDDDD'
+]
 
 const Sidebar = ({ 
 	style,
@@ -14,6 +33,7 @@ const Sidebar = ({
 	avatarFile, setAvatarFile, 
 	accountList, setAccountList, 
 	theme, setTheme,
+	themeColor, setThemeColor,
 	themeList, setThemeList,
 	submit,
 	submitState,
@@ -333,13 +353,26 @@ const Sidebar = ({
 						{
 							showNestedSidebar === 'theme' && (
 								<div className="overflow-y-scroll max-h-full py-2 max-h-full overflow-y-scroll">
+									<div className="mb-4">
+										<p className="font-bold">Theme Color</p>
+										<div className="mt-2">
+											<CirclePicker
+												width={`100%`}
+												color={ themeColor }
+												onChangeComplete={ (color) => setThemeColor(color.hex) }
+												colors={paletteColors}
+												circleSize={26}
+												circleSpacing={13}
+											/>
+										</div>
+									</div>
 									{
 										themeList.map(theme => {
 											return (
 												<div className="mb-4" key={theme}>
 													{/* onclick change theme */}
 													<div onClick={() => setTheme(theme)}>
-														<label className="capitalize">{theme}</label>
+														<label className="capitalize font-semibold">{theme}</label>
 														<div className="relative border-solid border rounded-sm border-gray-300" style={{
 															height: `200px`,
 															width: `100%`,
