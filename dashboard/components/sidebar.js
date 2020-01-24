@@ -71,10 +71,15 @@ const Sidebar = ({
 			description: description,
 			avatarUrl: avatarUrl,
 			accountList: accountList,
-			theme: theme
+			theme: theme,
+			themeColor: themeColor
 		}
 		// if data is not changed, allow user to navigate to main sidebar
-		if(stringify(profile) === stringify(newProfile)) {
+		// strip profile
+		const curProfile = JSON.parse(JSON.stringify(profile))
+		delete curProfile.descriptionHtml
+		
+		if(stringify(curProfile) === stringify(newProfile)) {
 			setShowNestedSidebar(false)
 		}
 		// if data is changed, prompt confirmation window

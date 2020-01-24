@@ -4,7 +4,6 @@ import React from 'react'
 // author evius industri
 
 const Home = ({ParasLink, data}) => {
-  console.log(data.profile)
   return (
 	  <div className="flex items-center min-h-screen w-full">
       {/* <nav className="flex max-w-3xl m-auto p-4">
