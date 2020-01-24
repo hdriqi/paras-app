@@ -14,7 +14,7 @@ const Home = ({ParasLink, data}) => {
           <ParasLink path="/blog">Blog</ParasLink>
         </div>
       </nav> */}
-      <div className="flex items-center max-w-3xl m-auto">
+      <div className="flex items-center max-w-4xl w-full m-auto">
         <div className="flex flex-wrap w-full m-auto md:my-32 flex-col-reverse md:flex-row">
           <div className="w-full md:w-2/3 p-8 flex items-center">
             <div>
@@ -29,13 +29,13 @@ const Home = ({ParasLink, data}) => {
                 </div>
               </div>
               <h2 className="text-4xl heading uppercase tracking-wide font-bold">I'm {data.profile.name}</h2>
-              <p className="text-gray-900">{data.profile.description}</p>
-              <div className="flex flex-wrap mt-8 md:px-0">
+              <p className="text-lg text-gray-900">{data.profile.descriptionHtml}</p>
+              <div className="flex flex-wrap mt-16 md:px-0">
                 {
                   data.profile.accountList.map((account, idx) => {
                     return (
                       <div key={idx} className="">
-                        <a target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
+                        <a className="social" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
                           <i className={`icofont-${account.service} text-2xl mr-4 text-white bg-gray-900 p-2 `}></i>
                         </a>
                       </div>

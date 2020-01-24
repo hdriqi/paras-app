@@ -105,6 +105,14 @@ const Dashboard = () => {
 			const newProfile = {
 				name: name,
 				description: description,
+				descriptionHtml: anchorme(description, {
+					attributes: [
+						{
+							name:"target",
+							value:"_blank"
+						}
+					]
+				}),
 				avatarUrl: avatarUrl,
 				accountList: accountList,
 				theme: theme
@@ -234,7 +242,7 @@ const Dashboard = () => {
 			theme: theme
 		}))
 		if(currentData.description) {
-			currentData.description = anchorme(currentData.description, {
+			currentData.descriptionHtml = anchorme(currentData.description, {
 				attributes: [
 					{
 						name:"target",
