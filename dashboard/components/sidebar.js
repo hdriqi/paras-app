@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { useDispatch, useSelector } from 'react-redux'
 import stringify from 'fast-json-stable-stringify'
 import { CirclePicker  } from 'react-color'
@@ -45,6 +46,8 @@ const Sidebar = ({
 	const profile = useSelector(state => state.profile)
 	const [showNestedSidebar, setShowNestedSidebar] = useState('')
 	const [showConfirmModal, setShowConfirmModal] = useState(false)
+	const [avatarCropUrl, setAvatarCropUrl] = useState('')
+	const [showAvatarCropModal, setShowAvatarCropModal] = useState(false)
 
 	const readFileAsUrl = (file) => {
 		const temporaryFileReader = new FileReader()
@@ -59,10 +62,14 @@ const Sidebar = ({
 
 	const updateAvatarUrl = async (files) => {
     if(files.length > 0) {
-      const imgUrl = await readFileAsUrl(files[0])
-      setAvatarUrl(imgUrl)
-      setAvatarFile(files[0])
-    }
+			const imgUrl = await readFileAsUrl(files[0])
+			setAvatarCropUrl(imgUrl)
+			setShowAvatarCropModal(true)
+			// setAvatarUrl(imgUrl)
+			// setShowAvatarCropModal(true)
+      // setAvatarFile(files[0])
+		}
+
   }
 
 	const back = () => {
@@ -133,10 +140,41 @@ const Sidebar = ({
 		return false
 	}
 
+	let cropper = null
+	useEffect(() => {
+		if(typeof window !== 'undefined' && showAvatarCropModal === true) {
+			const Croppie  = require('croppie')
+			cropper = new Croppie(document.getElementById('sidebar-avatar'), {
+				boundary: { width: `100%`, height: 256 },
+				viewport: { width: 200, height: 200, type: 'square' }
+			})
+		}
+	}, [showAvatarCropModal])
+
+	const updateAvatar = async () => {
+		const result = await cropper.result({ 
+			type: 'blob',
+			size: {
+				width: 512,
+				height: 512
+			}
+		})
+		result.lastModifiedDate = new Date()
+		result.name = `avatar.png`
+		const imgUrl = await readFileAsUrl(result)
+		setAvatarUrl(imgUrl)
+		setAvatarFile(result)
+		setShowAvatarCropModal(false)
+	}
+
+	const closeAvatarCropModal = () => {
+		setShowAvatarCropModal(false)
+	}
+
 	return (
 		<React.Fragment>
 			<style jsx>
-				{
+		{
 					`
 					.lds-ring-container {
 						display: flex;
@@ -190,7 +228,7 @@ const Sidebar = ({
 									<button className="mr-4 bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
 										setShowConfirmModal(false)
 									}}>Cancel</button>
-									<button className="border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
+									<button className="font-semibold border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
 										dispatch(saveProfileData(profile))
 										setShowNestedSidebar(false)
 										setShowConfirmModal(false)
@@ -310,7 +348,7 @@ const Sidebar = ({
 													<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path fillRule="evenodd" clipRule="evenodd" d="M6.93702 5.84538C7.00787 5.74688 7.08656 5.62631 7.18689 5.46372C7.22356 5.40431 7.32355 5.23934 7.39799 5.11653L7.4818 4.97841C8.31079 3.62239 8.91339 3 10 3H15V5H10C9.91327 5 9.6405 5.28172 9.1882 6.02159L9.11542 6.14154L9.11524 6.14183C9.04019 6.26566 8.93096 6.44589 8.88887 6.51409C8.76592 6.71332 8.66375 6.86988 8.56061 7.01326C8.11237 7.63641 7.66434 8 7 8H4C3.44772 8 3 8.44772 3 9V18C3 18.5523 3.44772 19 4 19H20C20.5523 19 21 18.5523 21 18V12H23V18C23 19.6569 21.6569 21 20 21H4C2.34315 21 1 19.6569 1 18V9C1 7.34315 2.34315 6 4 6H6.8162C6.84949 5.96194 6.8903 5.91033 6.93702 5.84538ZM17 8V6H19V4H21V6H23V8H21V10H19V8H17ZM12 18C9.23858 18 7 15.7614 7 13C7 10.2386 9.23858 8 12 8C14.7614 8 17 10.2386 17 13C17 15.7614 14.7614 18 12 18ZM12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16Z" fill="white"/>
 													</svg>
-														<input className="absolute cursor-pointer inset-0 opacity-0 w-full" type="file" accept="image/*" onChange={(e) => updateAvatarUrl(e.target.files)} />
+														<input className="absolute cursor-pointer inset-0 opacity-0 w-full" type="file" accept="image/*" onClick={(e) => e.target.value = null}  onChange={(e) => updateAvatarUrl(e.target.files)} />
 													</div>
 												</div>
 											</div>
@@ -404,6 +442,28 @@ const Sidebar = ({
 					</div>
 				</div>
 			</div>
+			{
+				showAvatarCropModal && (
+					<Modal closeModal={() => closeAvatarCropModal(false)}>
+						<div className="max-w-xs md:max-w-md p-4 pt-16 m-auto w-full">
+							<div className="bg-white p-4 rounded-lg">
+								<div className="flex flex-col">
+									<div className="w-full">
+										<img id="sidebar-avatar" style={{
+											width: `200px`,
+											height: `200px`
+										}} src={avatarCropUrl} />
+									</div>
+									<div className="w-full flex  justify-end">
+										<button className="font-semibold mr-4 border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => closeAvatarCropModal(false)}>Cancel</button>
+										<button className="bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => { updateAvatar() }}>Save</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</Modal>
+				)
+			}
 		</React.Fragment>
 	)
 }
