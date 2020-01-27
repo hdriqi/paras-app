@@ -48,7 +48,7 @@ const Home = ({ParasLink, data}) => {
               <h2 style={{
                 color: `${data.profile.themeColor || `#111111`}`
               }} className="text-4xl heading tracking-wide font-bold">{data.profile.name}</h2>
-              <p className="text-lg mt-2 text-gray-900">{data.profile.descriptionHtml}</p>
+              <p className="whitespace-pre-line text-lg mt-2 text-gray-900">{data.profile.descriptionHtml}</p>
             </div>
           </div>
         </div>

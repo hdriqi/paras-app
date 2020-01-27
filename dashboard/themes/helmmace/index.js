@@ -34,7 +34,7 @@ const Home = ({ParasLink, data}) => {
               }} className="text-4xl uppercase tracking-wide text-center md:text-left">{data.profile.name}</p>
             </div>
             <div className="mt-4">
-              <p className="text-lg text-center md:text-left text-gray-800">{data.profile.descriptionHtml}</p>
+              <p className="whitespace-pre-line text-lg text-center md:text-left text-gray-800">{data.profile.descriptionHtml}</p>
             </div>
             <div className="flex flex-wrap mt-8 justify-center md:justify-start">
               {

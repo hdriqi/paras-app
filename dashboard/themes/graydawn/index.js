@@ -24,7 +24,7 @@ const Home = ({ParasLink, data}) => {
           </div>
           <div className="mt-8 text-center mw-4">
             <h2 className="text-3xl text-gray-900 font-bold">{data.profile.name}</h2>
-            <h4 className="text-lg mt-1 text-gray-700">{data.profile.descriptionHtml}</h4>
+            <h4 className="whitespace-pre-line text-lg mt-1 text-gray-700">{data.profile.descriptionHtml}</h4>
           </div>
         </div>
         <div className="flex flex-wrap mt-32 max-w-sm m-auto">

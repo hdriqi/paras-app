@@ -33,7 +33,7 @@ const Home = ({ParasLink, data}) => {
               <h2 style={{
                   color: data.profile.themeColor || `#111111`
                 }} className="text-4xl heading uppercase tracking-wide font-bold">I'm {data.profile.name}</h2>
-              <p className="text-lg text-gray-900">{data.profile.descriptionHtml}</p>
+              <p className="text-lg text-gray-900 whitespace-pre-line">{data.profile.descriptionHtml}</p>
               <div className="flex flex-wrap mt-16 md:px-0">
                 {
                   data.profile.accountList.map((account, idx) => {
