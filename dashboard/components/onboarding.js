@@ -8,6 +8,8 @@ const Onboarding = ({
 	description, setDescription, 
 	avatarUrl, setAvatarUrl, 
 	avatarFile, setAvatarFile, 
+	setAvatarCropUrl,
+	setShowAvatarCropModal,
 	accountList, setAccountList, 
 	theme, setTheme,
 	themeList, setThemeList,
@@ -77,8 +79,8 @@ const Onboarding = ({
 	const updateAvatarUrl = async (files) => {
     if(files.length > 0) {
       const imgUrl = await readFileAsUrl(files[0])
-      setAvatarUrl(imgUrl)
-      setAvatarFile(files[0])
+      setAvatarCropUrl(imgUrl)
+			setShowAvatarCropModal(true)
 		}
 	}
 

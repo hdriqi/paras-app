@@ -14,6 +14,7 @@ import Onboarding from '../components/onboarding'
 import Loading from '../components/loading'
 import ParasHome from '../components/parasHome'
 import ParasBlog from '../components/parasBlog'
+import Modal from '../components/modal'
 
 import { saveAuthData, saveUserId } from '../actions/auth'
 import { saveProfileData } from '../actions/profile'
@@ -32,6 +33,8 @@ const readFileAsBuffer = (file) => {
 	})
 }
 
+
+
 const PreviewHead = React.memo(({ theme }) => {
 	const ThemeHead = dynamic(() => import(`../themes/${theme || 'powerbreeze'}/head`))
 	return (
@@ -40,8 +43,6 @@ const PreviewHead = React.memo(({ theme }) => {
 })
 
 const Preview = React.memo(({ previewPath, setPreviewPath, previewData }) => {
-	// const ThemeHead = dynamic(() => import(`../themes/${previewData.profile.theme || 'powerbreeze'}/head`))
-
 	switch (previewPath) {
 		case '/': 
 			return (
@@ -75,6 +76,7 @@ const Dashboard = () => {
 	const [accountList, setAccountList] = useState([])
 	const [themeList, setThemeList] = useState([])
 	const [theme, setTheme] = useState('')
+	const [themeColor, setThemeColor] = useState('')
 	const [identifier, setIdentifier] = useState('')
 	const [submitState, setSubmitState] = useState('')
 	const [loadingState, setLoadingState] = useState(true)
@@ -83,6 +85,9 @@ const Dashboard = () => {
 		profile: {},
 		posts: []
 	})
+
+	const [avatarCropUrl, setAvatarCropUrl] = useState('')
+	const [showAvatarCropModal, setShowAvatarCropModal] = useState(false)
 
 	const authData = useSelector(state => state.auth.authData)
 	const parasUrl = useSelector(state => state.auth.identifier) 
@@ -105,9 +110,18 @@ const Dashboard = () => {
 			const newProfile = {
 				name: name,
 				description: description,
+				descriptionHtml: anchorme(description, {
+					attributes: [
+						{
+							name:"target",
+							value:"_blank"
+						}
+					]
+				}),
 				avatarUrl: avatarUrl,
 				accountList: accountList,
-				theme: theme
+				theme: theme,
+				themeColor: themeColor || `#111111`
 			}
 			if(avatarFile) {
 				const buff = await readFileAsBuffer(avatarFile)
@@ -214,6 +228,9 @@ const Dashboard = () => {
 			}
 			setAvatarUrl(profile.avatarUrl)
 		}
+		if(profile.themeColor) {
+			setThemeColor(profile.themeColor || '#111111')
+		}
 		if(profile.theme) {
 			const cloneTheme = JSON.parse(JSON.stringify(profile.theme))
 			if(themeList.indexOf(cloneTheme) === -1) {
@@ -231,10 +248,11 @@ const Dashboard = () => {
 			description: description,
 			avatarUrl: avatarUrl,
 			accountList: accountList,
-			theme: theme
+			theme: theme,
+			themeColor: themeColor
 		}))
 		if(currentData.description) {
-			currentData.description = anchorme(currentData.description, {
+			currentData.descriptionHtml = anchorme(currentData.description, {
 				attributes: [
 					{
 						name:"target",
@@ -247,21 +265,53 @@ const Dashboard = () => {
 		setPreviewData({
 			profile: currentData
 		})
-	}, [theme, name, description, avatarUrl, accountList])
+	}, [theme, themeColor, name, description, avatarUrl, accountList])
 
 	const toggleProfileSidebar = () => {
 		setShowProfileSidebar(!showProfileSidebar)
 	}
 
-	let ThemeHead = () => {
-		return (
-			<div></div>
-		)
+	let cropper = null
+	useEffect(() => {
+		if(typeof window !== 'undefined' && showAvatarCropModal === true) {
+			const Croppie  = require('croppie')
+			cropper = new Croppie(document.getElementById('sidebar-avatar'), {
+				boundary: { width: `100%`, height: 256 },
+				viewport: { width: 200, height: 200, type: 'square' }
+			})
+		}
+	}, [showAvatarCropModal])
+
+	const readFileAsUrl = (file) => {
+		const temporaryFileReader = new FileReader()
+	
+		return new Promise((resolve, reject) => {
+			temporaryFileReader.onload = () => {
+				resolve(temporaryFileReader.result)
+			}
+			temporaryFileReader.readAsDataURL(file)
+		})
 	}
 
-	useEffect(() => {
-		ThemeHead = dynamic(() => import(`../themes/${previewData.profile.theme || 'powerbreeze'}/head`))
-	}, [previewData])
+	const updateAvatar = async () => {
+		const result = await cropper.result({ 
+			type: 'blob',
+			size: {
+				width: 512,
+				height: 512
+			}
+		})
+		result.lastModifiedDate = new Date()
+		result.name = `avatar.png`
+		const imgUrl = await readFileAsUrl(result)
+		setAvatarUrl(imgUrl)
+		setAvatarFile(result)
+		setShowAvatarCropModal(false)
+	}
+
+	const closeAvatarCropModal = () => {
+		setShowAvatarCropModal(false)
+	}
 
 	return (
 		<Layout>
@@ -293,6 +343,8 @@ const Dashboard = () => {
 						setAvatarUrl={setAvatarUrl}
 						avatarFile={avatarFile}
 						setAvatarFile={setAvatarFile}  
+						setAvatarCropUrl={setAvatarCropUrl}
+						setShowAvatarCropModal={setShowAvatarCropModal}
 						theme={theme}
 						setTheme={setTheme}
 						themeList={themeList}
@@ -314,9 +366,13 @@ const Dashboard = () => {
 				avatarUrl={avatarUrl}
 				setAvatarUrl={setAvatarUrl}
 				avatarFile={avatarFile}
-				setAvatarFile={setAvatarFile}  
+				setAvatarFile={setAvatarFile} 
+				setAvatarCropUrl={setAvatarCropUrl}
+				setShowAvatarCropModal={setShowAvatarCropModal}
 				theme={theme}
 				setTheme={setTheme}
+				themeColor={themeColor}
+				setThemeColor={setThemeColor}
 				themeList={themeList}
 				submit={submit}
 				submitState={submitState}
@@ -330,6 +386,28 @@ const Dashboard = () => {
 			}}>
 				<Preview previewPath={previewPath} setPreviewPath={setPreviewPath} previewData={previewData} />
 			</Frame>
+			{
+				showAvatarCropModal && (
+					<Modal closeModal={() => closeAvatarCropModal(false)}>
+						<div className="max-w-xs md:max-w-md p-4 pt-16 m-auto w-full">
+							<div className="bg-white p-4 rounded-lg">
+								<div className="flex flex-col">
+									<div className="w-full">
+										<img id="sidebar-avatar" style={{
+											width: `200px`,
+											height: `200px`
+										}} src={avatarCropUrl} />
+									</div>
+									<div className="w-full flex  justify-end">
+										<button className="font-semibold mr-4 border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => closeAvatarCropModal(false)}>Cancel</button>
+										<button className="bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => { updateAvatar() }}>Save</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</Modal>
+				)
+			}
 		</Layout>
 	)
 }

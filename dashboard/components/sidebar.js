@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import stringify from 'fast-json-stable-stringify'
+import { CirclePicker  } from 'react-color'
 
 import Modal from './modal'
 
 import { saveProfileData } from '../actions/profile'
+
+const paletteColors = [
+	`#0074D9`,
+	'#7FDBFF',
+	'#39CCCC',
+	'#3D9970',
+	'#2ECC40',
+	'#01FF70',
+	'#FFDC00',
+	'#FF851B',
+	'#FF4136',
+	'#85144b',
+	'#F012BE',
+	'#B10DC9',
+	'#111111',
+	'#AAAAAA',
+	'#DDDDDD'
+]
 
 const Sidebar = ({ 
 	style,
@@ -12,8 +31,11 @@ const Sidebar = ({
 	description, setDescription, 
 	avatarUrl, setAvatarUrl, 
 	avatarFile, setAvatarFile, 
+	setAvatarCropUrl,
+	setShowAvatarCropModal,
 	accountList, setAccountList, 
 	theme, setTheme,
+	themeColor, setThemeColor,
 	themeList, setThemeList,
 	submit,
 	submitState,
@@ -39,10 +61,10 @@ const Sidebar = ({
 
 	const updateAvatarUrl = async (files) => {
     if(files.length > 0) {
-      const imgUrl = await readFileAsUrl(files[0])
-      setAvatarUrl(imgUrl)
-      setAvatarFile(files[0])
-    }
+			const imgUrl = await readFileAsUrl(files[0])
+			setAvatarCropUrl(imgUrl)
+			setShowAvatarCropModal(true)
+		}
   }
 
 	const back = () => {
@@ -51,10 +73,15 @@ const Sidebar = ({
 			description: description,
 			avatarUrl: avatarUrl,
 			accountList: accountList,
-			theme: theme
+			theme: theme,
+			themeColor: themeColor
 		}
 		// if data is not changed, allow user to navigate to main sidebar
-		if(stringify(profile) === stringify(newProfile)) {
+		// strip profile
+		const curProfile = JSON.parse(JSON.stringify(profile))
+		delete curProfile.descriptionHtml
+		
+		if(stringify(curProfile) === stringify(newProfile)) {
 			setShowNestedSidebar(false)
 		}
 		// if data is changed, prompt confirmation window
@@ -111,7 +138,7 @@ const Sidebar = ({
 	return (
 		<React.Fragment>
 			<style jsx>
-				{
+		{
 					`
 					.lds-ring-container {
 						display: flex;
@@ -165,7 +192,7 @@ const Sidebar = ({
 									<button className="mr-4 bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
 										setShowConfirmModal(false)
 									}}>Cancel</button>
-									<button className="border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
+									<button className="font-semibold border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => {
 										dispatch(saveProfileData(profile))
 										setShowNestedSidebar(false)
 										setShowConfirmModal(false)
@@ -285,7 +312,7 @@ const Sidebar = ({
 													<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 														<path fillRule="evenodd" clipRule="evenodd" d="M6.93702 5.84538C7.00787 5.74688 7.08656 5.62631 7.18689 5.46372C7.22356 5.40431 7.32355 5.23934 7.39799 5.11653L7.4818 4.97841C8.31079 3.62239 8.91339 3 10 3H15V5H10C9.91327 5 9.6405 5.28172 9.1882 6.02159L9.11542 6.14154L9.11524 6.14183C9.04019 6.26566 8.93096 6.44589 8.88887 6.51409C8.76592 6.71332 8.66375 6.86988 8.56061 7.01326C8.11237 7.63641 7.66434 8 7 8H4C3.44772 8 3 8.44772 3 9V18C3 18.5523 3.44772 19 4 19H20C20.5523 19 21 18.5523 21 18V12H23V18C23 19.6569 21.6569 21 20 21H4C2.34315 21 1 19.6569 1 18V9C1 7.34315 2.34315 6 4 6H6.8162C6.84949 5.96194 6.8903 5.91033 6.93702 5.84538ZM17 8V6H19V4H21V6H23V8H21V10H19V8H17ZM12 18C9.23858 18 7 15.7614 7 13C7 10.2386 9.23858 8 12 8C14.7614 8 17 10.2386 17 13C17 15.7614 14.7614 18 12 18ZM12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16Z" fill="white"/>
 													</svg>
-														<input className="absolute cursor-pointer inset-0 opacity-0 w-full" type="file" accept="image/*" onChange={(e) => updateAvatarUrl(e.target.files)} />
+														<input className="absolute cursor-pointer inset-0 opacity-0 w-full" type="file" accept="image/*" onClick={(e) => e.target.value = null}  onChange={(e) => updateAvatarUrl(e.target.files)} />
 													</div>
 												</div>
 											</div>
@@ -333,13 +360,26 @@ const Sidebar = ({
 						{
 							showNestedSidebar === 'theme' && (
 								<div className="overflow-y-scroll max-h-full py-2 max-h-full overflow-y-scroll">
+									<div className="mb-4">
+										<p className="font-bold">Theme Color</p>
+										<div className="mt-2">
+											<CirclePicker
+												width={`100%`}
+												color={ themeColor }
+												onChangeComplete={ (color) => setThemeColor(color.hex) }
+												colors={paletteColors}
+												circleSize={26}
+												circleSpacing={13}
+											/>
+										</div>
+									</div>
 									{
 										themeList.map(theme => {
 											return (
 												<div className="mb-4" key={theme}>
 													{/* onclick change theme */}
 													<div onClick={() => setTheme(theme)}>
-														<label className="capitalize">{theme}</label>
+														<label className="capitalize font-semibold">{theme}</label>
 														<div className="relative border-solid border rounded-sm border-gray-300" style={{
 															height: `200px`,
 															width: `100%`,

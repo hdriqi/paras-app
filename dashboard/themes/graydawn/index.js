@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = ({ParasLink, data}) => {
   return (
-	  <div className="max-w-3xl m-auto py-8 px-4">
+	  <div className="max-w-4xl m-auto py-8 px-4">
       {/* <nav className="flex max-w-md m-auto">
         <div className="w-1/2 text-center">
           <ParasLink path="/">Home</ParasLink>
@@ -24,7 +24,7 @@ const Home = ({ParasLink, data}) => {
           </div>
           <div className="mt-8 text-center mw-4">
             <h2 className="text-3xl text-gray-900 font-bold">{data.profile.name}</h2>
-            <h4 className="text-lg mt-1 text-gray-700">{data.profile.description}</h4>
+            <h4 className="whitespace-pre-line text-lg mt-1 text-gray-700">{data.profile.descriptionHtml}</h4>
           </div>
         </div>
         <div className="flex flex-wrap mt-32 max-w-sm m-auto">
@@ -33,7 +33,7 @@ const Home = ({ParasLink, data}) => {
               return (
                 <div key={idx} className="flex-1 w-1/3 text-center">
                   <h5 className="text-base">
-                    <a className="font-bold text-gray-600 hover:text-gray-900" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
+                    <a className="font-bold" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
                       /{account.service}
                     </a>
                   </h5>
@@ -43,6 +43,26 @@ const Home = ({ParasLink, data}) => {
           }
         </div>
       </div>
+      <style>
+        {
+        ` body {
+            background: white;
+            font-family: Nanum Gothic Coding;
+          }
+          a {
+            cursor: pointer;
+            font-weight: 600;
+            color: ${data.profile.themeColor || '#111111'};
+            opacity: 0.8;
+          }
+          
+          a:hover {
+            font-weight: 600;
+            color: ${data.profile.themeColor || '#111111'};
+          }
+        `
+        }
+      </style>
 	  </div>
   )
 }

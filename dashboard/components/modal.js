@@ -7,7 +7,7 @@ const Modal = ({ closeModal, children }) => {
 	}
 
 	return (
-		<div id="modal-overlay" className="absolute inset-0 z-20" onClick={(e) => close(e)} style={{
+		<div id="modal-overlay" className="absolute inset-0 z-50" onClick={(e) => close(e)} style={{
 			backgroundColor: `rgba(0,0,0,0.3)`
 		}}>
 			{ children }

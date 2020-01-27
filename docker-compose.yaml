@@ -4,7 +4,7 @@ services:
   mongo:
     image: mongo
     volumes:
-      - ~/data/mongodb:/data/db
+      - ~/data/mongodb2:/data/db
     ports:
       - 27017:27017
     networks:

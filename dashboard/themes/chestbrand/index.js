@@ -17,7 +17,7 @@ const Home = ({ParasLink, data}) => {
                       data.profile.accountList.map((account, idx) => {
                         return (
                           <div key={idx} className="">
-                            <a target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
+                            <a className="border-0" target="_blank" href={`https://${account.service}.com/${account.identifier}`}>
                               <i className={`icofont-${account.service} text-lg m-2 md:mr-4 bg-white border-1 p-2 rounded-full `}></i>
                             </a>
                           </div>
@@ -45,12 +45,29 @@ const Home = ({ParasLink, data}) => {
           </div>
           <div className="w-full md:w-1/2 p-8 flex items-center">
             <div className=" text-center md:text-left">
-              <h2 className="text-4xl heading tracking-wide font-bold">{data.profile.name}</h2>
-              <p className="mt-2 text-gray-900">{data.profile.description}</p>
+              <h2 style={{
+                color: `${data.profile.themeColor || `#111111`}`
+              }} className="text-4xl heading tracking-wide font-bold">{data.profile.name}</h2>
+              <p className="whitespace-pre-line text-lg mt-2 text-gray-900">{data.profile.descriptionHtml}</p>
             </div>
           </div>
         </div>
       </div>
+      <style>
+        {
+          `
+          a {
+            color: ${data.profile.themeColor || `#111111`};
+            border-bottom: dotted 3px ${data.profile.themeColor || `#111111`};
+          }
+          
+          a:hover {
+            color: ${data.profile.themeColor || `#111111`};
+            border-bottom: solid 3px ${data.profile.themeColor || `#111111`};
+          }
+          `
+        }
+      </style>
 	  </div>
   )
 }

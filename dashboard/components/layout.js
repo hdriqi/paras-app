@@ -7,6 +7,7 @@ const Layout = ({ children }) => (
       <link rel='icon' href={`${process.env.APP_DOMAIN}/favicon.ico`} />
       <meta charSet="utf-8" />
 			<link href={`${process.env.APP_DOMAIN}/tailwind.min.css`} rel="stylesheet"></link>
+      <link href={`${process.env.APP_DOMAIN}/croppie.css`} rel="stylesheet"></link>
     </Head>
     <style jsx global>
       {

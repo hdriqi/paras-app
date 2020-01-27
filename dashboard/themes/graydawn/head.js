@@ -18,18 +18,6 @@ const Head = () => {
           `
         }
       </style>
-      <style>
-        {
-        ` body {
-            background: white;
-            font-family: Nanum Gothic Coding;
-          }
-          a {
-            cursor: pointer;
-          }
-        `
-        }
-      </style>
     </React.Fragment>
   )
 }
