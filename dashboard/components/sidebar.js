@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import { useDispatch, useSelector } from 'react-redux'
 import stringify from 'fast-json-stable-stringify'
 import { CirclePicker  } from 'react-color'
@@ -32,6 +31,8 @@ const Sidebar = ({
 	description, setDescription, 
 	avatarUrl, setAvatarUrl, 
 	avatarFile, setAvatarFile, 
+	setAvatarCropUrl,
+	setShowAvatarCropModal,
 	accountList, setAccountList, 
 	theme, setTheme,
 	themeColor, setThemeColor,
@@ -46,8 +47,6 @@ const Sidebar = ({
 	const profile = useSelector(state => state.profile)
 	const [showNestedSidebar, setShowNestedSidebar] = useState('')
 	const [showConfirmModal, setShowConfirmModal] = useState(false)
-	const [avatarCropUrl, setAvatarCropUrl] = useState('')
-	const [showAvatarCropModal, setShowAvatarCropModal] = useState(false)
 
 	const readFileAsUrl = (file) => {
 		const temporaryFileReader = new FileReader()
@@ -65,11 +64,7 @@ const Sidebar = ({
 			const imgUrl = await readFileAsUrl(files[0])
 			setAvatarCropUrl(imgUrl)
 			setShowAvatarCropModal(true)
-			// setAvatarUrl(imgUrl)
-			// setShowAvatarCropModal(true)
-      // setAvatarFile(files[0])
 		}
-
   }
 
 	const back = () => {
@@ -138,37 +133,6 @@ const Sidebar = ({
 			return true
 		}
 		return false
-	}
-
-	let cropper = null
-	useEffect(() => {
-		if(typeof window !== 'undefined' && showAvatarCropModal === true) {
-			const Croppie  = require('croppie')
-			cropper = new Croppie(document.getElementById('sidebar-avatar'), {
-				boundary: { width: `100%`, height: 256 },
-				viewport: { width: 200, height: 200, type: 'square' }
-			})
-		}
-	}, [showAvatarCropModal])
-
-	const updateAvatar = async () => {
-		const result = await cropper.result({ 
-			type: 'blob',
-			size: {
-				width: 512,
-				height: 512
-			}
-		})
-		result.lastModifiedDate = new Date()
-		result.name = `avatar.png`
-		const imgUrl = await readFileAsUrl(result)
-		setAvatarUrl(imgUrl)
-		setAvatarFile(result)
-		setShowAvatarCropModal(false)
-	}
-
-	const closeAvatarCropModal = () => {
-		setShowAvatarCropModal(false)
 	}
 
 	return (
@@ -442,28 +406,6 @@ const Sidebar = ({
 					</div>
 				</div>
 			</div>
-			{
-				showAvatarCropModal && (
-					<Modal closeModal={() => closeAvatarCropModal(false)}>
-						<div className="max-w-xs md:max-w-md p-4 pt-16 m-auto w-full">
-							<div className="bg-white p-4 rounded-lg">
-								<div className="flex flex-col">
-									<div className="w-full">
-										<img id="sidebar-avatar" style={{
-											width: `200px`,
-											height: `200px`
-										}} src={avatarCropUrl} />
-									</div>
-									<div className="w-full flex  justify-end">
-										<button className="font-semibold mr-4 border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => closeAvatarCropModal(false)}>Cancel</button>
-										<button className="bg-gray-900 text-white border-solid border-2 rounded-lg border-gray-900 px-4 py-1 text-sm" onClick={() => { updateAvatar() }}>Save</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</Modal>
-				)
-			}
 		</React.Fragment>
 	)
 }
