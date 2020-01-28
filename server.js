@@ -106,6 +106,38 @@ const main = async () => {
       })
     })
 
+    server.get('/api/users', async (req, res) => {
+      const { page = 1 } = req.query
+
+      if(1 > page) {
+        return res.status(400).json({
+          status: 'error',
+          message: `invalid parameters`
+        })
+      }
+
+      const users = await mongo.collection('radiks-server-data').find({
+        radiksType: 'Identifier'
+      }, {
+        limit: 10,
+        skip: (page - 1) * 10,
+        sort: {
+          createdAt: -1
+        },
+        projection: {
+          identifier: 1,
+          createdAt: 1,
+          [`profile.name`]: 1,
+          [`profile.avatarUrl`]: 1,
+        }
+      }).toArray()
+
+      res.json({
+        status: 'success',
+        data: users
+      })
+    })
+
     server.get('/api/users/:username', async (req, res) => {
       const user = await mongo.collection('radiks-server-data').findOne({
         identifier: req.params.username
