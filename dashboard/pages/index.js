@@ -1,11 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import axios from 'axios'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
 
 import Layout from '../components/layout'
 import LandingNav from '../components/landingNav'
 
-const Home = () => {
+const LeftArrow = ({ onClick }) => {
+	return (
+		<div className="absolute">
+			<button onClick={() => onClick()} className="relative focus:outline-none" style={{
+					top: `-30px`
+				}}>
+				<svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M14.5 7L9.5 12L14.5 17V7Z" fill="black" fill-opacity="0.54"/>
+				</svg>
+			</button>
+		</div>
+	)
+}
+
+const RightArrow = ({ onClick }) => {
+	return (
+		<div className="absolute right-0">
+			<button onClick={() => onClick()} className="relative focus:outline-none" style={{
+				top: `-30px`
+			}} >
+				<svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M9.5 17L14.5 12L9.5 7V17Z" fill="black" fill-opacity="0.54"/>
+				</svg>	
+			</button>
+		</div>
+	)
+}
+
+const responsive = {
+	desktop: {
+		breakpoint: { max: 3000, min: 1024 },
+		items: 3,
+		partialVisibilityGutter: 30
+	},
+	tablet: {
+		breakpoint: { max: 1024, min: 464 },
+		items: 2,
+		partialVisibilityGutter: 30
+	},
+	mobile: {
+		breakpoint: { max: 464, min: 0 },
+		items: 1,
+		partialVisibilityGutter: 20
+	},
+}
+
+const Home = ({ data }) => {
 	const [timeElapsed, setTimeElapsed] = useState(0)
 
 	useEffect(() => {
@@ -32,7 +81,7 @@ const Home = () => {
 			<Layout>
 				<LandingNav />
 				<div>
-					<div id="home" className="flex flex-col md:flex-row items-center mb-24 md:max-w-4xl xl:max-w-6xl m-auto px-4" style={{
+					<div id="home" className="flex flex-col md:flex-row items-center md:max-w-4xl xl:max-w-6xl m-auto px-4" style={{
 						minHeight: '90vh'
 					}}>
 						<div className="w-full pb-2 pt-24 text-center md:text-left md:pt-0 md:w-1/2">
@@ -49,75 +98,105 @@ const Home = () => {
 							<img className="w-full" src="/hero2.png" />
 						</div>
 					</div>
-					<div className="py-8 bg-gray-100 relative">
-						<div className="absolute bg-gray-100" style={{
+					<div className="py-16 bg-gray-900 relative">
+						{/* <div className="absolute bg-gray-100" style={{
 							transform: `skew(0, -3deg)`,
 							height: `150px`,
 							width: `100%`,
 							zIndex: `-1`,
 							top: `-75px`
-						}}></div>
+						}}></div> */}
 						<div className="max-w-2xl m-auto px-4">
-							<p className="text-center text-lg text-gray-800 font-medium">
+							<p className="text-center text-lg text-white font-medium">
 								Paras helps you to create personal landing page in just a minute, super fast without hassle. We strip out the complicated part of website builder, leaving only a few important options for you to set up your personal site.
 							</p>
 						</div>
-						<div className="absolute bg-gray-100" style={{
+						{/* <div className="absolute bg-gray-100" style={{
 							transform: `skew(0, -3deg)`,
 							height: `150px`,
 							width: `100%`,
 							zIndex: `-1`,
 							bottom: `-75px`
-						}}></div>
+						}}></div> */}
 					</div>
-					<div id="features" className="py-32">
-						<div>
-							<div className="max-w-2xl m-auto flex flex-wrap items-center md:flex-row-reverse pb-8 px-4">
-								<div className="w-full md:w-2/5 pb-4">
+					<div className="max-w-4xl m-auto py-16">
+						<p className="text-center text-3xl text-gray-900 font-semibold mb-8">Newest Paras</p>
+						<Carousel 
+							responsive={responsive}
+							ssr={true}
+							slidesToSlide={1}
+							customLeftArrow={<LeftArrow />}
+							customRightArrow={<RightArrow />}
+						>
+							{data.map((user, idx) => {
+									return (
+										<a className="hover:opacity-75 block" target="_blank" href={`https://${user.identifier}.paras.id`}>
+											<div key={idx} className="text-center">
+												<div className="m-auto" style={{
+													height: `160px`,
+													width: `160px`,
+													backgroundImage: `url(${user.profile.avatarUrl})`,
+													backgroundSize: `cover`,
+													backgroundPosition: `center`,
+												}}></div>
+												<div>
+												<p className="text-lg text-gray-900 font-semibold mt-3">{user.profile.name}</p>
+												<a className="text-gray-700 font-semibold" target="_blank" href={`https://${user.identifier}.paras.id`}>{`https://${user.identifier}.paras.id`}</a>
+												</div>
+											</div>
+										</a>
+									)
+								})}
+						</Carousel>
+					</div>
+					<div id="features" className="max-w-4xl m-auto py-16">
+						<p className="text-center text-3xl text-gray-900 font-semibold">Features</p>
+						<div className="flex flex-wrap">
+							<div className="w-full md:w-1/3 p-4 pt-0">
+								<div className="w-full">
 									<img src="/beauty.jpg" className="m-auto h-64"/>
 								</div>
-								<div className="w-full md:w-3/5">
-									<p className="text-lg text-gray-900 font-semibold mb-2">Beauty by Default</p>
-									<p className="text-lg text-gray-600">
-										Website built on Paras guarantee to be modern, eye-catching and fully responsive.
-										{/* Every theme built on Paras is modern, eye-catching and fully responsive. Means that no matter which device open your website, it will automatically adapts to the screen and present your beautiful website. */}
+								<div className="w-full text-center relative" style={{
+									top: `-1rem`
+								}}>
+									<p className="text-lg text-gray-900 font-semibold mb-2">Beauty & Responsive</p>
+									<p className="text-base text-gray-600">
+										A modern and fully responsive personal website for you
 									</p>
 								</div>
 							</div>
-							<div className="max-w-2xl m-auto flex flex-wrap items-center pb-8 px-4">
-								<div className="w-full md:w-2/5 pb-4">
+							<div className="w-full md:w-1/3 p-4 pt-0">
+								<div className="w-full">
 									<img src="/fast.jpg" className="m-auto h-64"/>
 								</div>
-								<div className="w-full md:w-3/5">
-									<p className="text-lg text-gray-900 font-semibold mb-2">Fast at Everything</p>
-									<p className="text-lg text-gray-600">
-										Get your personal landing page in just a few seconds. It also load really fast!
-										{/* Create your own personal landing page in just a minute, zero configuration needed! But that’s not the only thing we excel at, your website load will also be blazingly fast and SEO friendly. */}
+								<div className="w-full text-center relative" style={{
+									top: `-1rem`
+								}}>
+									<p className="text-lg text-gray-900 font-semibold mb-2">Really Fast</p>
+									<p className="text-base text-gray-600">
+										Totally simple and easy to use website builder
 									</p>
 								</div>
 							</div>
-							<div className="max-w-2xl m-auto flex flex-wrap items-center md:flex-row-reverse pb-8 px-4">
-								<div className="w-full md:w-2/5 pb-4">
+							<div className="w-full md:w-1/3 p-4 pt-0">
+								<div className="w-full">
 									<img src="/secure.jpg" className="m-auto h-64"/>
 								</div>
-								<div className="w-full md:w-3/5">
-									<p className="text-lg text-gray-900 font-semibold mb-2">Decentralized Data Ownership</p>
-									<p className="text-lg text-gray-600">
-										Paras leverage decentralized tech so you can totally own your website data.
-										{/* By leveraging decentralized data storage by Blockstack, your website will be stored in decentralized manner which means you fully own your data and your website can work even without our service. */}
+								<div className="w-full text-center relative" style={{
+									top: `-1rem`
+								}}>
+									<p className="text-lg text-gray-900 font-semibold mb-2">Secure Data Ownership</p>
+									<p className="text-base text-gray-600">
+										Own your data in a secure and decentralized manner
 									</p>
 								</div>
 							</div>
 						</div>
+						<div className="max-w-3xl m-auto">
+							<img src="/lp-preview.png" />
+						</div>
 					</div>
 					<div className="pt-16 bg-gray-900 relative">
-						<div className="absolute bg-gray-900" style={{
-							transform: `skew(0, -3deg)`,
-							height: `200px`,
-							width: `100%`,
-							zIndex: `-1`,
-							top: `-100px`
-						}}></div>
 						<div className="max-w-2xl m-auto px-4">
 							<p className="text-lg text-white font-medium mb-8 text-center">
 								Alright you already spend {timeElapsed} secs on this page, in the next 60 secs we better use it to create your own personal website. Only a minute and we’re done.
@@ -130,7 +209,7 @@ const Home = () => {
 								</Link>
 							</div>
 						</div>
-						<div className="md:max-w-4xl xl:max-w-6xl m-auto px-4 py-4 mt-32">
+						<div className="md:max-w-4xl xl:max-w-6xl m-auto px-4 py-4 mt-24">
 							<div className="flex items-center justify-center ">
 								<div className="flex">
 									<div className="px-2 cursor-pointer">
@@ -158,6 +237,26 @@ const Home = () => {
 			</Layout>
     </div>
   )
+}
+
+Home.getInitialProps = async () => {
+  const response = await axios.get(`${process.env.APP_DOMAIN}/api/users`)
+	const data = response.data.data
+	return {
+		data: [
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
+		]
+	}
+  // return {
+  //   data: data
+  // }
 }
 
 export default Home
