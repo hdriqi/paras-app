@@ -242,21 +242,9 @@ const Home = ({ data }) => {
 Home.getInitialProps = async () => {
   const response = await axios.get(`${process.env.APP_DOMAIN}/api/users`)
 	const data = response.data.data
-	return {
-		data: [
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-			{"_id":"4c5bae200e78-450d-a13f-9810101d8508","identifier":"albariqi","profile":{"name":"Rahmat Albariqi","avatarUrl":"http://localhost:4000/proxy?url=https://gaia.blockstack.org/hub/16VrYQZcdFQUoXbR5k2Dknekwy4spS7vYh/avatar.png"},"createdAt":1580105252005},
-		]
-	}
-  // return {
-  //   data: data
-  // }
+  return {
+    data: data
+  }
 }
 
 export default Home
