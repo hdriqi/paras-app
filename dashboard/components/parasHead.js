@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 
 const Head = ({ data }) => {
   // check user theme
-  if(!data.profile.theme) {
+  if(!data.profile.theme || (data.profile.theme && data.profile.theme.name)) {
     data.profile.theme = 'powerbreeze'
   }
   const Theme = dynamic(() => import(`../themes/${data.profile.theme}/head`))

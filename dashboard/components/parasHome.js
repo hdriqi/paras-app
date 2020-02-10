@@ -6,7 +6,7 @@ import ParasLink from './parasLink'
 
 const Home = React.memo(({data, preview, setPreviewPath}) => {
   // check user theme
-  if(!data.profile.theme) {
+  if(!data.profile.theme || (data.profile.theme && data.profile.theme.name)) {
     data.profile.theme = 'powerbreeze'
   }
   if(!data.profile.descriptionHtml) {
