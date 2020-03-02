@@ -81,10 +81,10 @@ const Home = ({ data }) => {
 			<Layout>
 				<LandingNav />
 				<div>
-					<div id="home" className="flex flex-col md:flex-row items-center md:max-w-4xl xl:max-w-6xl m-auto px-4" style={{
+					<div id="home" className="flex flex-col md:flex-row items-center md:max-w-4xl xl:max-w-6xl m-auto px-4 pt-32 md:pt-24" style={{
 						minHeight: '90vh'
 					}}>
-						<div className="w-full pb-2 pt-24 text-center md:text-left md:pt-0 md:w-1/2">
+						<div className="w-full pb-2 text-center md:text-left md:pt-0 md:w-1/2">
 							<p className="text-3xl text-gray-900 font-semibold mb-2">Your Decentralized Personal Website</p>
 							<p className="text-xl text-gray-600">Create your own personal website in a minute.</p>
 							<p className="text-xl text-gray-600 mb-8">Zero config. Zero fee. Zero headache.</p>
@@ -130,7 +130,7 @@ const Home = ({ data }) => {
 						>
 							{data.map((user, idx) => {
 									return (
-										<a className="hover:opacity-75 block" target="_blank" href={`https://${user.identifier}.paras.id`}>
+										<a key={idx} className="hover:opacity-75 block" target="_blank" href={`https://${user.identifier}.paras.id`}>
 											<div key={idx} className="text-center">
 												<div className="m-auto" style={{
 													height: `160px`,
@@ -141,7 +141,7 @@ const Home = ({ data }) => {
 												}}></div>
 												<div>
 												<p className="text-lg text-gray-900 font-semibold mt-3">{user.profile.name}</p>
-												<a className="text-gray-700 font-semibold" target="_blank" href={`https://${user.identifier}.paras.id`}>{`https://${user.identifier}.paras.id`}</a>
+												<p className="text-gray-700 font-semibold" target="_blank" href={`https://${user.identifier}.paras.id`}>{`https://${user.identifier}.paras.id`}</p>
 												</div>
 											</div>
 										</a>

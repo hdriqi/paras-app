@@ -4,6 +4,11 @@ import Link from 'next/link'
 const Nav = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-20 bg-white border-solid border-b border-gray-300">
+			<div className="bg-gray-900">
+				<div className="md:max-w-4xl xl:max-w-6xl m-auto text-center px-2 py-1">
+					<p className="text-white">We are launching new concept of Paras. <br className="md:hidden"/> <a href="https://landing.paras.id" className="underline" target="_blank" >Learn more</a></p>
+				</div>
+			</div>
 			<div className="md:max-w-4xl xl:max-w-6xl m-auto">
 				<div className="flex items-center justify-between">
 					<Link href="/">
